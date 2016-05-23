@@ -1,8 +1,7 @@
 
 from .utils import crawl_data
 
-
-class Player(object):
+class player(object):
     def __init__(self, data):
         self.type = 'player'
         self.data = data
@@ -12,7 +11,7 @@ class Player(object):
     def players_from_data(cls, player_data, api_key=None):
         players = {}
         for pd in player_data:
-            newplayer = Player(pd)
+            newplayer = player(pd)
             players[newplayer.name] = newplayer
         return players
 
