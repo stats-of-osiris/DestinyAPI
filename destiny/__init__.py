@@ -1,2 +1,2 @@
-from .game import Game
-from .player import Player
+from .ActivityInfo import ActivityInfo
+from .CarnageReport import CarnageReport
