@@ -1,0 +1,156 @@
+{"ErrorCode": 1,
+ "ErrorStatus": "Success",
+ "Message": "Ok",
+ "MessageData": {},
+ "Response": {"data": {
+   "activityDetails": {
+     "activityTypeHashOverride": 736189348,
+     "instanceId": "4892996696",
+     "mode": 14,
+     "referenceId": 3848655103
+   },
+   "entries": [{
+     "characterId": "2305843009215820974",
+     "extended": {
+       "values": {
+         "allMedalsEarned": {
+           "basic": {"displayValue": "4", "value": 4.0}},
+         "allMedalsScore": {
+           "basic": {"displayValue": "545", "value": 545.0}},
+         "allParticipantsCount": {
+           "basic": {"displayValue": "6", "value": 6.0}},
+         "allParticipantsScore": {
+           "basic": {"displayValue": "5", "value": 5.0}},
+         "allParticipantsTimePlayed": {
+           "basic": {"displayValue": "37m 28s", "value": 2248.0}},
+         "averageKillDistance": {
+           "basic": {"displayValue": "27.0", "value": 27.0}},
+         "averageLifespan": {
+           "basic": {"displayValue": "2m 4s", "value": 124.33333333333333}},
+         "averageScorePerKill": {
+           "basic": {"displayValue": "1", "value": 1.25}},
+         "averageScorePerLife": {
+           "basic": {"displayValue": "2", "value": 1.6666666666666667}},
+         "combatRating": {
+           "basic": {"displayValue": "602.68", "value": 602.6809651474532}},
+         "dailyMedalsEarned": {
+           "basic": {"displayValue": "4", "value": 4.0}},
+         "deaths": {
+           "basic": {"displayValue": "2", "value": 2.0}},
+         "deathsFromPlayerHunter": {
+           "basic": {"displayValue": "2", "value": 2.0}},
+         "fireTeamId": {
+           "basic": {"displayValue": "-2147483648", "value": -3.396765873353862e+18}},
+         "kills": {
+           "basic": {"displayValue": "4", "value": 4.0}},
+         "killsOfPlayerHunter": {
+           "basic": {"displayValue": "3", "value": 3.0}},
+         "killsOfPlayerWarlock": {
+           "basic": {"displayValue": "1", "value": 1.0}},
+         "longestKillSpree": {
+           "basic": {"displayValue": "4", "value": 4.0}},
+         "longestSingleLife": {
+           "basic": {"displayValue": "0m 49s", "value": 49.0}},
+         "medalsActivityCompleteVictoryEliminationShutout": {
+           "basic": {"displayValue": "1", "value": 1.0},
+           "weighted": {"displayValue": "380", "value": 380.0}},
+         "medalsCloseCallTalent": {
+           "basic": {"displayValue": "1", "value": 1.0},
+           "weighted": {"displayValue": "90", "value": 90.0}},
+         "medalsKillHeadshot": {
+           "basic": {"displayValue": "1", "value": 1.0},
+           "weighted": {"displayValue": "50", "value": 50.0}},
+         "medalsPaybackKill": {
+           "basic": {"displayValue": "1", "value": 1.0},
+           "weighted": {"displayValue": "25", "value": 25.0}},
+         "orbsGathered": {
+           "basic": {"displayValue": "2", "value": 2.0}},
+         "precisionKillOfPlayerHunter": {
+           "basic": {"displayValue": "3", "value": 3.0}},
+         "precisionKillOfPlayerWarlock": {
+           "basic": {"displayValue": "1", "value": 1.0}},
+         "precisionKills": {
+           "basic": {"displayValue": "4", "value": 4.0}},
+         "resurrectionsPerformed": {
+           "basic": {"displayValue": "1", "value": 1.0}},
+         "resurrectionsReceived": {
+           "basic": {"displayValue": "1", "value": 1.0}},
+         "score": {
+           "basic": {"displayValue": "5", "value": 5.0}},
+         "secondsPlayed": {
+           "basic": {"displayValue": "6m 13s", "value": 373.0}},
+         "totalActivityDurationSeconds": {
+           "basic": {"displayValue": "6m 18s", "value": 378.0}},
+         "totalKillDistance": {
+           "basic": {"displayValue": "108.0", "value": 108.0}},
+         "weaponBestType": {
+           "basic": {"displayValue": "Auto Rifle", "value": 1.0}},
+         "weaponKillsAutoRifle": {
+           "basic": {"displayValue": "3", "value": 3.0}},
+         "weaponKillsPrecisionKillsAutoRifle": {
+           "basic": {"displayValue": "100%", "value": 1.0}},
+         "weaponKillsPrecisionKillsSniper": {
+           "basic": {"displayValue": "100%", "value": 1.0}},
+         "weaponKillsSniper": {
+           "basic": {"displayValue": "1", "value": 1.0}},
+         "weaponPrecisionKillsAutoRifle": {
+           "basic": {"displayValue": "3", "value": 3.0}},
+         "weaponPrecisionKillsSniper": {
+           "basic": {"displayValue": "1", "value": 1.0}}
+       },
+       "weapons": [
+         {"referenceId": 1173766590, "values": {
+           "uniqueWeaponKills": {"basic": {"displayValue": "3", "value": 3.0}},
+           "uniqueWeaponKillsPrecisionKills": {"basic": {"displayValue": "100%", "value": 1.0}},
+           "uniqueWeaponPrecisionKills": {"basic": {"displayValue": "3", "value": 3.0}}
+         }},
+         {"referenceId": 1604125378, "values": {
+           "uniqueWeaponKills": {"basic": {"displayValue": "1", "value": 1.0}},
+           "uniqueWeaponKillsPrecisionKills": {"basic": {"displayValue": "100%", "value": 1.0}},
+           "uniqueWeaponPrecisionKills": {"basic": {"displayValue": "1", "value": 1.0}}
+         }}
+       ]
+     },
+     "player": {
+       "bungieNetUserInfo": {
+         "displayName": "John of Mars",
+         "iconPath": "https://halo.bungie.net/Stats/emblem.ashx?s=90&0=18&1=18&2=2&3=2&fi=19&bi=0&fl=0&m=2",
+         "membershipId": "46959",
+         "membershipType": 254
+       },
+       "characterClass": "Titan",
+       "characterLevel": 40,
+       "clanName": "Dawnstrider",
+       "clanTag": "TDS",
+       "destinyUserInfo": {
+         "displayName": "JohnOfMars",
+         "iconPath": "/common/destiny_content/icons/a98e1affe89620be1dd76f3f8d9a44ca.jpg",
+         "membershipId": "4611686018428616390",
+         "membershipType": 2
+       },
+       "lightLevel": 323
+     },
+     "score": {"basic": {"displayValue": "5", "value": 5.0}},
+     "standing": 0,
+     "values": {
+       "activityDurationSeconds": {"basic": {"displayValue": "6m 18s", "value": 378.0}},
+       "assists": {"basic": {"displayValue": "0", "value": 0.0}},
+       "averageScorePerKill": {"basic": {"displayValue": "1", "value": 1.25}},
+       "averageScorePerLife": {"basic": {"displayValue": "2", "value": 1.6666666666666667}},
+       "completed": {"basic": {"displayValue": "Yes", "value": 1.0}},
+       "completionReason": {"basic": {"displayValue": "0", "value": 0.0}},
+       "deaths": {"basic": {"displayValue": "2", "value": 2.0}},
+       "fireTeamId": {"basic": {"displayValue": "", "value": 0.0}},
+       "kills": {"basic": {"displayValue": "4", "value": 4.0}},
+       "killsDeathsAssists": {"basic": {"displayValue": "2.00", "value": 2.0}},
+       "killsDeathsRatio": {"basic": {"displayValue": "2.00", "value": 2.0}},
+       "leaveRemainingSeconds": {"basic": {"displayValue": "0m 0s", "value": 0.0}},
+       "playerCount": {"basic": {"displayValue": "6", "value": 6.0}},
+       "score": {"basic": {"displayValue": "5", "value": 5.0}},
+       "standing": {"basic": {"displayValue": "Victory", "value": 0.0}},
+       "team": {"basic": {"displayValue": "Alpha", "value": 16.0}},
+       "teamScore": {"basic": {"displayValue": "5", "value": 5.0}}
+     }
+   }]
+ }},
+ "ThrottleSeconds": 0}

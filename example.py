@@ -1,5 +1,5 @@
 
-import time
+from __future__ import print_function
 import pandas as pd
 
 import destiny
@@ -12,7 +12,7 @@ dfStats = pd.DataFrame(columns=())
 # export BUNGIE_NET_API_KEY='key'
 api_key = None
 
-games = destiny.game.games_from_ids(game_ids, api_key)
+games = destiny.Game.games_from_ids(game_ids, api_key)
 
 for game_id in game_ids:
     players = games[game_id].players
@@ -24,4 +24,4 @@ for game_id in game_ids:
             })
         dfStats = dfStats.append(dfAppend, ignore_index=True)
 
-print dfStats
+print(dfStats)
