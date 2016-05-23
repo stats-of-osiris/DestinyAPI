@@ -25,4 +25,4 @@ for activity_id in activity_ids:
 
 print(dfStats)
 
-print(destiny.Player.player_info('psn','JohnOfMars').get('membershipId'))
+print(destiny.Player('psn', 'JohnOfMars').id)

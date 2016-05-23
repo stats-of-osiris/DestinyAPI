@@ -19,9 +19,10 @@ class Player(object):
         data = get_json(path, api_key)
         self.data = data['Response'][0]
         self.api_wait = data['ThrottleSeconds']
+        self.id = data['Response'][0]['membershipId']
 
     @classmethod
-    def player_info(cls, membership_type, display_name, api_key=None):
+    def player_from_name(cls, membership_type, display_name, api_key=None):
         player = Player(membership_type, display_name, api_key)
         if player.api_wait > 0:
             print("Pausing for {wait} seconds for rate limiting".format(**locals()))
