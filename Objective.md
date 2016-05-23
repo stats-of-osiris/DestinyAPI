@@ -1,6 +1,7 @@
 Trials Report Card
 
 Teammates (1-3)
+
 	Overall:
 		K -
 		D -
