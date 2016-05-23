@@ -1,6 +1,6 @@
 
 from .utils import crawl_data
-
+# from .constants import KEY_STATS
 
 class Player(object):
     def __init__(self, data):
