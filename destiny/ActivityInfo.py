@@ -12,7 +12,8 @@ class ActivityInfo(object):
         if not api_key:
             api_key = os.environ['BUNGIE_NET_API_KEY']
         self.activity_id = str(activity_id)
-        data = get_json(activity_id, api_key)
+        path = 'Stats/PostGameCarnageReport/' + str(activity_id)
+        data = get_json(path, api_key)
         self.api_wait = data['ThrottleSeconds']
         # separate player data and game data
         character_data = data['Response']['data'].pop('entries')

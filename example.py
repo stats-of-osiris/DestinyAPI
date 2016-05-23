@@ -24,3 +24,5 @@ for activity_id in activity_ids:
         dfStats = dfStats.append(dfAppend, ignore_index=True)
 
 print(dfStats)
+
+print(destiny.Player.player_info('psn','JohnOfMars').get('membershipId'))

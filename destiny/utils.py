@@ -4,8 +4,9 @@ import requests
 
 
 # perform the request and turn it into a dict tree
-def get_json(game_id, api_key):
-    url = 'https://www.bungie.net/Platform/Destiny/Stats/PostGameCarnageReport/' + str(game_id)
+def get_json(path, api_key):
+    base = 'https://www.bungie.net/Platform/Destiny/'
+    url = base + path
     headers = {'X-API-Key': api_key}
     response = requests.get(url, headers=headers)
     response.raise_for_status()
@@ -13,8 +14,8 @@ def get_json(game_id, api_key):
 
 
 # crawl dict tree via period-delimited string
-def crawl_data(destiny_object, datapath):
-    path = datapath.split('.')
+def crawl_data(destiny_object, data_path):
+    path = data_path.split('.')
     # start at top of path
     loc = destiny_object.data
     for p in path:
