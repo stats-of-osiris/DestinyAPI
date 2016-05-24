@@ -1,55 +1,19 @@
 # DestinyAPI
 Project to pull stats from Destiny's API to support a team-based performance analysis for a Trials of Osiris passage.
 
+## Report Template
+[Template located here.](https://github.com/yergi/DestinyAPI/blob/master/Results_Template.md) Sections for Team Identification, Team Performance & Card Total Individual Performance.
 
-##Trials Report Card
+## Architecture
+`example.py` is main script & imports the `destiny` subfolder
 
-###Team Summary
-
-	1. %s - The %s-wielding %s (player_name, weapon_best_type, player_class)
-	2. %s - The %s-wielding %s (player_name, weapon_best_type, player_class)
-	3. %s - The %s-wielding %s (player_name, weapon_best_type, player_class)
-
-	playing on %s (Map)
-
-###Overall Team Performance
-
-	(Graph of) Round Scores by Game
-	
-	Total Card Playtime
-
-	Num of Aces
-	Num of Annilations
-
-	Num of Rezzes Allowed
-	Num of Orbs Missed
-
-###Individual Detailed Performance (1-3)
-
-	Overall:
-		K -
-		D -
-		A - 
-		K/D -
-	
-	% Contribution 
-		individual((K+A/2)/D)/team((K+A/2)/D))
-		OR
-	Score Contribution 
-		(need to determine this metric. A start:
-			+100 for Kills
-			+50 for Assists
-			+50 for Rezzes
-			-100 for Deaths)
-	
-	% Primary vs Secondary
-	
-	Num of Sniper Headshots / Total Sniper Kills
-		OR
-	Num of Shotgun Kills w/ Num of Melee/Grenades
-
-	Num of Last Guardian Actions
-	Num of Wrecking Balls
-	Longest Kill Streak
-	Longest Life
-
+- `___init___.py` imports game & player
+- `constants.py` 
+	- list of key stats to collect from API response, based on ['stats_blob.txt`](https://github.com/yergi/DestinyAPI/blob/master/destiny/stats_blob.txt)
+- `game.py`
+	- calls `__init__.py` & uses `utils` to find player games.
+- `player.py`
+	- isolates player data
+- `utils.py` 
+	- `get_json`: API call, dict transform & returns the response. 
+	- `craw_data`: Response crawl to look for stats & return possible values for stats not found.
