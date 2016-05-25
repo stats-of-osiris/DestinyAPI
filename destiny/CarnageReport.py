@@ -12,6 +12,7 @@ from . import utils
 import os
 import time
 
+API_PATH = 'Stats/PostGameCarnageReport/{self.activity_id}'
 
 class CarnageReport(object):
     """
@@ -21,7 +22,7 @@ class CarnageReport(object):
     Usage::
 
         >>> import destiny
-        >>> pgcr = destiny.CarnageReport('4892996696').data
+        >>> pgcr = destiny.CarnageReport('4892996696')
         >>> pgcr.get('mode')
         '14'
     """
@@ -29,8 +30,7 @@ class CarnageReport(object):
     def __init__(self, activity_id, **kwargs):
         self.type = 'Post Game Carnage Report'
         self.activity_id = str(activity_id)
-        path = 'Stats/PostGameCarnageReport/{0}'.format(self.activity_id)
-        data = utils.get_json(path, **kwargs)
+        data = utils.get_json(API_PATH.format(**locals()), **kwargs)
         self.api_wait = data['ThrottleSeconds']
         # separate player data and game data
         player_data = data['Response']['data'].pop('entries')
@@ -64,8 +64,18 @@ class CarnageReport(object):
 
 
 class CarnagePlayers(object):
+    """
+    :param data: JSON blob specific to this player and report
+
+    Usage::
+
+        >>> import destiny
+        >>> pgcr = destiny.CarnageReport('4892996696')
+        >>> pgcr.players[0].name
+        'JohnOfMars'
+    """
+
     def __init__(self, data):
-        self.type = 'player'
         self.data = data
         self.name = self.get('player.destinyUserInfo.displayName')
 
@@ -78,4 +88,9 @@ class CarnagePlayers(object):
         return players
 
     def get(self, datapath):
+        """
+        Get the value from a dict entry by specifying a period-delimited string
+        :param data_path: period-delimited string defining path to wanted value
+        :return: value of specified key from underlying JSON object
+        """
         return utils.crawl_data(self, datapath)
