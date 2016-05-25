@@ -1,0 +1,63 @@
+---
+layout: post
+title: Report Card
+excerpt: "Test"
+modified: 2016-05-25
+categories: articles
+tags: [pvp,trials,data]
+image:
+  feature: header.png
+comments: true
+share: true
+---
+
+##Trials Report Card
+
+###Team Summary
+
+1. Player 1 - The Weapon-wielding Character Class
+2. Player 2 - The Weapon-wielding Character Class
+3. Player 3 - The Weapon-wielding Character Class
+
+
+###Overall Team Performance
+
+Playing on Map for Time
+	
+Round Scores by Game
+![](http://johnofmars.github.io/images/headers/trials2.jpg)
+	
+- N Aces
+- N Annilations
+- N Rezzes Allowed
+- N Orbs Missed
+
+
+
+###Individual Detailed Performance
+
+| Stat                       | Player 1 | Player 2 | Player 3 |
+|----------------------------|----------|----------|----------|
+| Kills                      |          |          |          |
+| Assists                    |          |          |          |
+| Deaths                     |          |          |          |
+| K/D                        |          |          |          |
+| % Contribution             |          |          |          |
+| Score Contribution         |          |          |          |
+
+
+| Stat                       | Player 1 | Player 2 | Player 3 |
+|----------------------------|----------|----------|----------|
+| % Primary vs Secondary     |          |          |          |
+| # of Last Guardian Actions |          |          |          |
+| # of Wrecking Balls        |          |          |          |
+| Longest Kill Streak        |          |          |          |
+| Longest Life               |          |          |          |
+
+
+| Stat                       | Player 1 | Player 2 | Player 3 |
+|----------------------------|----------|----------|----------|
+| Rezzes                     |          |          |          |
+| Rezzed                     |          |          |          |
+| Orbs Generated             |          |          |          |
+| Orbs Missed                |          |          |          |
