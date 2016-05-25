@@ -34,9 +34,8 @@ class CarnageReport(object):
         self.api_wait = data['ThrottleSeconds']
         # separate player data and game data
         player_data = data['Response']['data'].pop('entries')
-        self.data = data['Response']['data']
-        self.player_data = player_data
         self.players = CarnagePlayers.players_from_data(player_data)
+        self.data = data['Response']['data']
 
     @classmethod
     def reports_from_ids(cls, activity_ids, **kwargs):
@@ -48,7 +47,7 @@ class CarnageReport(object):
         """
         activities = {}
         for activity_id in activity_ids:
-            activities[activity_id] = CarnageReport(activity_id, **kwargs)
+            activities[activity_id] = cls(activity_id, **kwargs)
             if activities[activity_id].api_wait > 0:
                 print("Pausing for {0} seconds "
                       "for rate limiting".format(activities[activity_id].api_wait))
@@ -68,15 +67,13 @@ class CarnagePlayers(object):
     def __init__(self, data):
         self.type = 'player'
         self.data = data
-        # not sure if this will work since the object isn't fully created yet
-        # self.name = self.get('player.destinyUserInfo.displayName')
-        self.name = data['player']['destinyUserInfo']['displayName']
+        self.name = self.get('player.destinyUserInfo.displayName')
 
     @classmethod
     def players_from_data(cls, player_data):
         players = {}
         for pd in player_data:
-            newplayer = CarnagePlayers(pd)
+            newplayer = cls(pd)
             players[newplayer.name] = newplayer
         return players
 

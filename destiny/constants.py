@@ -1,27 +1,27 @@
-# platform decode
+# Platform decode
 PLATFORMS = {
-            'xbox'      : '1',
-            'psn'       : '2'
+    'xbox'  : '1',
+    'psn'   : '2'
 }
 
-# Character class decode from hash
-CLASS = {
-    3655393761: 'Titan',
-    2271682572: 'Warlock',
-    671679327: 'Hunter'
+# Guardian class decode from hash
+GUARDIAN_TYPE = {
+    3655393761  : 'Titan',
+    2271682572  : 'Warlock',
+    671679327   : 'Hunter'
 }
 
-# Character race decode from hash
-RACE = {
-    2803282938: 'Awoken',
-    898834093: 'Exo',
-    3887404748: 'Human'
+# Guardian race decode from hash
+GUARDIAN_RACE = {
+    2803282938  : 'Awoken',
+    898834093   : 'Exo',
+    3887404748  : 'Human'
 }
 
-# Character gender decode from hash
-GENDER = {
-    3111576190: 'Male',
-    2204441813: 'Female'
+# Guardian gender decode from hash
+GUARDIAN_GENDER = {
+    3111576190  : 'Male',
+    2204441813  : 'Female'
 }
 
 # List of key stats targeted for report

@@ -21,8 +21,8 @@ class Player(object):
 
     Usage:
         >>> import destiny
-        >>> player_id = destiny.Player('psn', 'JohnOfMars').player_id
-        >>> print(player_id)
+        >>> player = destiny.Player('psn', 'JohnOfMars')
+        >>> print(player.id)
         4611686018428616390
     """
     def __init__(self, membership_type, display_name, **kwargs):
@@ -32,7 +32,7 @@ class Player(object):
             self.membership_type, self.display_name
         )
         data = utils.get_json(path, **kwargs)
-        self.player_id = data['Response']
+        self.id = data['Response']
         self.api_wait = data['ThrottleSeconds']
 
     def get(self, data_path):

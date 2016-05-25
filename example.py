@@ -12,10 +12,10 @@ dfStats = pd.DataFrame(columns=())
 # export BUNGIE_NET_API_KEY='key'
 api_key = None
 
-activities = destiny.CarnageReport.reports_from_ids(activity_ids)
+reports = destiny.CarnageReport.reports_from_ids(activity_ids, api_key=api_key)
 
 for activity_id in activity_ids:
-    players = activities[activity_id].players
+    players = reports[activity_id].players
     for player in players.values():
         dfAppend = pd.DataFrame(
             {
@@ -26,9 +26,10 @@ for activity_id in activity_ids:
             })
         dfStats = dfStats.append(dfAppend, ignore_index=True)
 
-print(dfStats)
+print(dfStats, '\n')
 
-print(destiny.Player('psn', 'JohnOfMars').player_id)
+john = destiny.Account('psn', 'JohnOfMars')
+print(john.membership_id, '\n')
 
-print(json.dumps(destiny.Account('psn', 'JohnOfMars').data,
-      indent=4))
+print(json.dumps(john.data, indent=4), '\n')
+

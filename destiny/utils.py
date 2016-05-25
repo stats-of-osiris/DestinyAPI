@@ -12,7 +12,9 @@ that are also useful for external consumption.
 from __future__ import print_function
 import requests
 import os
+import sys
 
+URL_BASE = 'https://www.bungie.net/Platform/Destiny/'
 
 def get_json(path, **kwargs):
     """
@@ -24,15 +26,24 @@ def get_json(path, **kwargs):
     # check kwargs to see if the api_key was passed in,
     # use environment variable if not
     kwargs = {} if kwargs is None else kwargs
-    api_key = kwargs.get('api_key', os.environ['BUNGIE_NET_API_KEY'])
-    base = 'https://www.bungie.net/Platform/Destiny/'
-    url = base + path
+    api_key = kwargs.get('api_key')
+    api_key = os.environ['BUNGIE_NET_API_KEY'] if api_key is None else api_key
+    url = URL_BASE + path
     headers = {'X-API-Key': api_key}
     # Can't get this to attach to response correctly
-    params = kwargs.get('params', None)
+    params = kwargs.get('params')
     response = requests.get(url, headers=headers, params=params)
     response.raise_for_status()
-    return response.json()
+    response = response.json()
+    validate_json_response(response)
+    return response
+
+def validate_json_response(response):
+    if response['ErrorCode'] != 1:
+        api_error = "[{ErrorCode}] {ErrorStatus}: {Message}"
+        api_error = api_error.format(**response)
+        sys.exit(api_error)
+    return True
 
 
 def crawl_data(destiny_object, data_path):
