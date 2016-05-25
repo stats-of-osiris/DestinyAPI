@@ -4,7 +4,7 @@
 destiny.CarnageReport
 ~~~~~~~~~~~~~~~~
 
-This module provides access to the `PostGameCarnageReport` endpoint of the
+This class provides access to the `PostGameCarnageReport` endpoint of the
 Destiny API.
 
 """
@@ -16,24 +16,22 @@ import time
 class CarnageReport(object):
     """
     :param activity_id: The ID of the activity whose PGCR is requested.
-    :param api_key: API key to authorize access to Destiny API
+    :param api_key: API key to authorize access to Destiny API (optional, keyword)
 
     Usage::
 
         >>> import destiny
-        >>> pgcr = destiny.CarnageReport('4892996696', 'api_key').data
+        >>> pgcr = destiny.CarnageReport('4892996696', api_key='KEY_HERE').data
+        >>> pgcr = destiny.CarnageReport('4892996696').data
         >>> pgcr.get('mode')
         '14'
-
     """
 
-    def __init__(self, activity_id, api_key=None):
-        if not api_key:
-            api_key = os.environ['BUNGIE_NET_API_KEY']
+    def __init__(self, activity_id, **kwargs):
         self.type = 'Post Game Carnage Report'
         self.activity_id = str(activity_id)
         path = 'Stats/PostGameCarnageReport/{0}'.format(self.activity_id)
-        data = utils.get_json(path, api_key)
+        data = utils.get_json(path, **kwargs)
         self.api_wait = data['ThrottleSeconds']
         # separate player data and game data
         player_data = data['Response']['data'].pop('entries')
@@ -42,19 +40,19 @@ class CarnageReport(object):
         self.players = CarnagePlayers.players_from_data(player_data)
 
     @classmethod
-    def activities_from_ids(cls, activity_ids, api_key=None):
+    def reports_from_ids(cls, activity_ids, **kwargs):
         """
-        Pass a list of activity_ids and receive back a list of JSON responses
+        Pass a list of activity_ids and return a list of CarnageReport objects
         :param activity_ids: List of activity_ids
-        :param api_key: API key to authorize access to Destiny API
-        :return: List of dicts
+        :param api_key: API key to authorize access to Destiny API (optional, keyword)
+        :return: List of CarnageReport objects
         """
         activities = {}
         for activity_id in activity_ids:
-            activities[activity_id] = CarnageReport(activity_id, api_key)
+            activities[activity_id] = CarnageReport(activity_id, **kwargs)
             if activities[activity_id].api_wait > 0:
-                print("Pausing for {wait} seconds "
-                      "for rate limiting".format(**locals()))
+                print("Pausing for {0} seconds "
+                      "for rate limiting".format(activities[activity_id].api_wait))
                 time.sleep(activities[activity_id].api_wait + 1)
         return activities
 
@@ -71,10 +69,12 @@ class CarnagePlayers(object):
     def __init__(self, data):
         self.type = 'player'
         self.data = data
+        # not sure if this will work since the object isn't fully created yet
+        # self.name = self.get('player.destinyUserInfo.displayName')
         self.name = data['player']['destinyUserInfo']['displayName']
 
     @classmethod
-    def players_from_data(cls, player_data, api_key=None):
+    def players_from_data(cls, player_data):
         players = {}
         for pd in player_data:
             newplayer = CarnagePlayers(pd)

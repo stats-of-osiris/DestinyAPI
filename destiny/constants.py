@@ -1,3 +1,9 @@
+# platform decode
+PLATFORMS = {
+            'xbox'      : 1
+            'psn'       : 2
+}
+
 # List of key stats targeted for report
 KEY_STATS = [
         #Player & Game Info
