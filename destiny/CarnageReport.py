@@ -32,7 +32,7 @@ class CarnageReport(object):
             api_key = os.environ['BUNGIE_NET_API_KEY']
         self.type = 'Post Game Carnage Report'
         self.activity_id = str(activity_id)
-        path = 'Stats/PostGameCarnageReport/' + str(activity_id)
+        path = 'Stats/PostGameCarnageReport/{0}'.format(self.activity_id)
         data = utils.get_json(path, api_key)
         self.api_wait = data['ThrottleSeconds']
         # separate player data and game data

@@ -9,13 +9,16 @@ Destiny API.
 
 """
 
-from __future__ import print_function
 import os
-import time
 from . import utils
 
 
 class Player(object):
+    """
+    Return JSON object from `SearchDestinyPlayer` endpoint.
+    :param membership_type: 'xbox' or 'psn'; needed to accurately locate player
+    :param display_name: Screen name of the player
+    """
     def __init__(self, membership_type, display_name, api_key=None):
         if not api_key:
             api_key = os.environ['BUNGIE_NET_API_KEY']

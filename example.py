@@ -2,6 +2,7 @@
 from __future__ import print_function
 import pandas as pd
 import destiny
+import json
 
 activity_ids = ['4892996696']
 dfStats = pd.DataFrame(columns=())
@@ -26,3 +27,6 @@ for activity_id in activity_ids:
         dfStats = dfStats.append(dfAppend, ignore_index=True)
 
 print(dfStats)
+
+print(json.dumps(destiny.Account('psn', 'JohnOfMars').data,
+                 indent=4))
