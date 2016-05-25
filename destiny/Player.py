@@ -1,9 +1,18 @@
+# -*- coding: utf-8 -*-
+
+"""
+destiny.Player
+~~~~~~~~~~~~~~~~
+
+This module provides access to the `SearchDestinyPlayer` endpoint of the
+Destiny API.
+
+"""
 
 from __future__ import print_function
 import os
 import time
-from .utils import get_json
-from .utils import crawl_data
+from . import utils
 
 
 class Player(object):
@@ -15,19 +24,18 @@ class Player(object):
         elif membership_type == 'psn':
             self.membership_type = 'TigerPsn'
         self.display_name = str(display_name)
-        path = 'SearchDestinyPlayer/' + self.membership_type + '/' + self.display_name
-        data = get_json(path, api_key)
+        path = 'SearchDestinyPlayer/{0}/{1}'.format(
+            self.membership_type, self.display_name
+        )
+        data = utils.get_json(path, api_key)
         self.data = data['Response'][0]
         self.api_wait = data['ThrottleSeconds']
-        self.id = data['Response'][0]['membershipId']
-
-    @classmethod
-    def player_from_name(cls, membership_type, display_name, api_key=None):
-        player = Player(membership_type, display_name, api_key)
-        if player.api_wait > 0:
-            print("Pausing for {wait} seconds for rate limiting".format(**locals()))
-            time.sleep(player.api_wait + 1)
-        return player
+        self.player_id = data['Response'][0]['membershipId']
 
     def get(self, data_path):
-        return crawl_data(self, data_path)
+        """
+        Get the value from a dict entry by specifying a period-delimited string
+        :param data_path: period-delimited string defining path to wanted value
+        :return: value of specified key from SearchDestinyPlayer JSON object
+        """
+        return utils.crawl_data(self, data_path)

@@ -11,18 +11,18 @@ dfStats = pd.DataFrame(columns=())
 # export BUNGIE_NET_API_KEY='key'
 api_key = None
 
-activities = destiny.ActivityInfo.activities_from_ids(activity_ids, api_key)
+activities = destiny.CarnageReport.activities_from_ids(activity_ids, api_key)
 
 for activity_id in activity_ids:
-    characters = activities[activity_id].characters
-    for character in characters.values():
+    players = activities[activity_id].players
+    for player in players.values():
         dfAppend = pd.DataFrame(
             {
-                'Player Name': [character.get('player.destinyUserInfo.displayName')],
-                'Team Name': [character.get('values.team.basic.displayValue')]
+                'Player Name':
+                    [player.get('player.destinyUserInfo.displayName')],
+                'Team Name':
+                    [player.get('values.team.basic.displayValue')]
             })
         dfStats = dfStats.append(dfAppend, ignore_index=True)
 
 print(dfStats)
-
-print(destiny.Player('psn', 'JohnOfMars').id)
