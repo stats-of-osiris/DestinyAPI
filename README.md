@@ -1,6 +1,10 @@
 # DestinyAPI
 Project to pull stats from Destiny's API to support a team-based performance analysis for a Trials of Osiris passage.
 
+- [Bungie API Wiki](http://bungienetplatform.wikia.com/wiki/Special:WikiActivity)
+- [Bungie API Support Forum](https://www.bungie.net/en/Clan/Forum/39966)
+- [TRON: Legacy Soundtrack](https://www.youtube.com/watch?v=COWrh0eFFWk)
+
 ## Report Template
 [Template located here.](https://github.com/yergi/DestinyAPI/blob/master/Results_Template.md) Sections for Team Identification, Team Performance & Card Total Individual Performance.
 
