@@ -21,7 +21,6 @@ class CarnageReport(object):
     Usage::
 
         >>> import destiny
-        >>> pgcr = destiny.CarnageReport('4892996696', api_key='KEY_HERE').data
         >>> pgcr = destiny.CarnageReport('4892996696').data
         >>> pgcr.get('mode')
         '14'

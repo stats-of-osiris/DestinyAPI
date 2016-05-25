@@ -18,6 +18,12 @@ class Player(object):
     Create Account object using JSON data from the `GetMembershipIdByDisplayName` endpoint.
     :param membership_type: 'xbox' or 'psn'; needed to accurately locate player
     :param display_name: Screen name of the player
+
+    Usage:
+        >>> import destiny
+        >>> player_id = destiny.Player('psn', 'JohnOfMars').player_id
+        >>> print(player_id)
+        4611686018428616390
     """
     def __init__(self, membership_type, display_name, **kwargs):
         self.membership_type = constants.PLATFORMS[membership_type]

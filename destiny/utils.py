@@ -21,13 +21,16 @@ def get_json(path, **kwargs):
     :param api_key: API key to authorize access to Destiny API (optional, keyword)
     :return: JSON object
     """
-    # check kwargs to see if the api_key was passed in, use environment variable if not
+    # check kwargs to see if the api_key was passed in,
+    # use environment variable if not
     kwargs = {} if kwargs is None else kwargs
     api_key = kwargs.get('api_key', os.environ['BUNGIE_NET_API_KEY'])
     base = 'https://www.bungie.net/Platform/Destiny/'
     url = base + path
     headers = {'X-API-Key': api_key}
-    response = requests.get(url, headers=headers)
+    # Can't get this to attach to response correctly
+    params = kwargs.get('params', None)
+    response = requests.get(url, headers=headers, params=params)
     response.raise_for_status()
     return response.json()
 

@@ -4,6 +4,26 @@ PLATFORMS = {
             'psn'       : '2'
 }
 
+# Character class decode from hash
+CLASS = {
+    3655393761: 'Titan',
+    2271682572: 'Warlock',
+    671679327: 'Hunter'
+}
+
+# Character race decode from hash
+RACE = {
+    2803282938: 'Awoken',
+    898834093: 'Exo',
+    3887404748: 'Human'
+}
+
+# Character gender decode from hash
+GENDER = {
+    3111576190: 'Male',
+    2204441813: 'Female'
+}
+
 # List of key stats targeted for report
 KEY_STATS = [
         #Player & Game Info
