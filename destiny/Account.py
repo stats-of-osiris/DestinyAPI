@@ -8,11 +8,10 @@ This class provides access to the `GetDestinyAccountSummary` endpoint of the
 Destiny API.
 
 """
-from . import utils
-from . import constants
-from .Guardian import Guardian
+from . import utils, constants, Guardian
 
 API_PATH = '{self.membership_type}/Account/{self.membership_id}/Summary'
+
 
 class Account(object):
     """
@@ -20,9 +19,12 @@ class Account(object):
     `GetDestinyAccountSummary` endpoint.
     :param membership_type: 'xbox' or 'psn'; needed to accurately locate player
     :param display_name: Screen name of the player
+    :kwarg api_key: API key to authorize access to Destiny API (optional)
+    :kwarg params: Query parameters to pass to the `requests.get()` call
     """
     def __init__(self, membership_type, display_name, **kwargs):
-        self.membership_type = constants.PLATFORMS[str(membership_type).lower()]
+        self.membership_type = constants.PLATFORMS[
+            str(membership_type).lower()]
         self.display_name = str(display_name)
         # self.membership_id = self.get_membership_id(**kwargs)
         self.set_membership_id(**kwargs)
@@ -43,5 +45,7 @@ class Account(object):
         """
         Helper method to get the membership id for the account
         """
-        path = '{self.membership_type}/Stats/GetMembershipIdByDisplayName/{self.display_name}/'
-        self.membership_id = utils.get_json(path.format(**locals()), **kwargs)['Response']
+        path = '{self.membership_type}/Stats/' \
+               'GetMembershipIdByDisplayName/{self.display_name}/'
+        self.membership_id = utils.get_json(path.format(**locals()),
+                                            **kwargs)['Response']

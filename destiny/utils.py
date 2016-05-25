@@ -16,11 +16,13 @@ import sys
 
 URL_BASE = 'https://www.bungie.net/Platform/Destiny/'
 
+
 def get_json(path, **kwargs):
     """
     Construct the appropriate syntax for a `requests.get()` call.
     :param path: uri path to append to base API path
-    :param api_key: API key to authorize access to Destiny API (optional, keyword)
+    :kwarg api_key: API key to authorize access to Destiny API (optional)
+    :kwarg params: Query parameters to pass to the `requests.get()` call
     :return: JSON object
     """
     # check kwargs to see if the api_key was passed in,
@@ -30,13 +32,14 @@ def get_json(path, **kwargs):
     api_key = os.environ['BUNGIE_NET_API_KEY'] if api_key is None else api_key
     url = URL_BASE + path
     headers = {'X-API-Key': api_key}
-    # Can't get this to attach to response correctly
+    # TODO: Can't get this to attach to response correctly
     params = kwargs.get('params')
     response = requests.get(url, headers=headers, params=params)
     response.raise_for_status()
     response = response.json()
     validate_json_response(response)
     return response
+
 
 def validate_json_response(response):
     if response['ErrorCode'] != 1:
@@ -49,8 +52,10 @@ def validate_json_response(response):
 def crawl_data(destiny_object, data_path):
     """
     Crawl dict tree via period-delimited string
-    :param destiny_object: module object with a data variable containing the JSON response to crawl
-    :param data_path: period-delimited string that specificies which value to return
+    :param destiny_object: module object with a data variable
+        containing the JSON response to crawl
+    :param data_path: period-delimited string that
+        specifies which value to return
     :return: single value, could be a string or int
     """
     path = data_path.split('.')

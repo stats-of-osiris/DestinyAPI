@@ -9,15 +9,16 @@ Destiny API.
 
 """
 from . import utils
-import os
 import time
 
 API_PATH = 'Stats/PostGameCarnageReport/{self.activity_id}'
 
+
 class CarnageReport(object):
     """
     :param activity_id: The ID of the activity whose PGCR is requested.
-    :param api_key: API key to authorize access to Destiny API (optional, keyword)
+    :kwarg api_key: API key to authorize access to Destiny API (optional)
+    :kwarg params: Query parameters to pass to the `requests.get()` call
 
     Usage::
 
@@ -42,15 +43,14 @@ class CarnageReport(object):
         """
         Pass a list of activity_ids and return a list of CarnageReport objects
         :param activity_ids: List of activity_ids
-        :param api_key: API key to authorize access to Destiny API (optional, keyword)
         :return: List of CarnageReport objects
         """
         activities = {}
         for activity_id in activity_ids:
             activities[activity_id] = cls(activity_id, **kwargs)
             if activities[activity_id].api_wait > 0:
-                print("Pausing for {0} seconds "
-                      "for rate limiting".format(activities[activity_id].api_wait))
+                print("Pausing for {0} seconds for rate limiting".format(
+                    activities[activity_id].api_wait))
                 time.sleep(activities[activity_id].api_wait + 1)
         return activities
 
@@ -83,14 +83,14 @@ class CarnagePlayers(object):
     def players_from_data(cls, player_data):
         players = {}
         for pd in player_data:
-            newplayer = cls(pd)
-            players[newplayer.name] = newplayer
+            new_player = cls(pd)
+            players[new_player.name] = new_player
         return players
 
-    def get(self, datapath):
+    def get(self, data_path):
         """
         Get the value from a dict entry by specifying a period-delimited string
         :param data_path: period-delimited string defining path to wanted value
         :return: value of specified key from underlying JSON object
         """
-        return utils.crawl_data(self, datapath)
+        return utils.crawl_data(self, data_path)

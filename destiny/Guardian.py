@@ -8,8 +8,8 @@ This class provides access to the `GetDestinyAccountSummary` endpoint of the
 Destiny API.
 
 """
-from . import utils
-from . import constants
+from . import utils, constants
+
 
 class Guardian(object):
     """
@@ -39,11 +39,11 @@ class Guardian(object):
             guardians.append(cls(gd))
         return guardians
 
-    def get(self, datapath):
+    def get(self, data_path):
         """
         Get the value from a dict entry by specifying a period-delimited string
         :param data_path: period-delimited string defining path to wanted value
         :return: value of specified key from underlying JSON object
         """
-        return utils.crawl_data(self, datapath)
+        return utils.crawl_data(self, data_path)
 
