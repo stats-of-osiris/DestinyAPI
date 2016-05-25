@@ -11,6 +11,7 @@ that are also useful for external consumption.
 
 from __future__ import print_function
 import requests
+import os
 
 
 def get_json(path, **kwargs):

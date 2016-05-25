@@ -12,7 +12,7 @@ dfStats = pd.DataFrame(columns=())
 # export BUNGIE_NET_API_KEY='key'
 api_key = None
 
-activities = destiny.CarnageReport.activities_from_ids(activity_ids, api_key)
+activities = destiny.CarnageReport.reports_from_ids(activity_ids)
 
 for activity_id in activity_ids:
     players = activities[activity_id].players
@@ -28,5 +28,7 @@ for activity_id in activity_ids:
 
 print(dfStats)
 
+print(destiny.Player('psn', 'JohnOfMars').player_id)
+
 print(json.dumps(destiny.Account('psn', 'JohnOfMars').data,
-                 indent=4))
+      indent=4))

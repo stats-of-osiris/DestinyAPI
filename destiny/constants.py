@@ -1,7 +1,7 @@
 # platform decode
 PLATFORMS = {
-            'xbox'      : 1
-            'psn'       : 2
+            'xbox'      : '1',
+            'psn'       : '2'
 }
 
 # List of key stats targeted for report
