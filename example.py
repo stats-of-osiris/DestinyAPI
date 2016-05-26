@@ -35,7 +35,8 @@ print(john.guardians, '\n')
 
 # Account.guardians dict needs a better index
 titan = john.guardians['2305843009215820974']
-print(titan.guardian_id, titan.type, titan.race, titan.gender, '\n')
+print(titan.guardian_id, 'Light level {0}'.format(titan.light_level),
+      titan.type, titan.race, titan.gender, '\n')
 
 last_10_trials = destiny.CarnageReport.reports_from_guardian(titan)
 print('TRIALS, SON')

@@ -8,10 +8,8 @@ This class provides access to the `PostGameCarnageReport` endpoint of the
 Destiny API.
 
 """
-from . import utils
+from . import utils, constants
 import time
-
-API_PATH = 'Stats/PostGameCarnageReport/{self.activity_id}'
 
 
 class CarnageReport(object):
@@ -31,7 +29,9 @@ class CarnageReport(object):
     def __init__(self, activity_id, **kwargs):
         self.type = 'Post Game Carnage Report'
         self.activity_id = str(activity_id)
-        data = utils.get_json(API_PATH.format(**locals()), **kwargs)
+        data = utils.get_json(constants.API_PATHS[
+            'get_post_game_carnage_report'
+        ].format(**locals()), **kwargs)
         self.api_wait = data['ThrottleSeconds']
         # separate player data and game data
         player_data = data['Response']['data'].pop('entries')
@@ -55,22 +55,25 @@ class CarnageReport(object):
         return reports
 
     @classmethod
-    def reports_from_guardian(cls, guardian, n='10', game_mode='14', activity_id=None, **kwargs):
+    def reports_from_guardian(cls, guardian, n='10', game_mode='trials',
+                              last_activity_id=None, **kwargs):
         """
         Pass Account object and return a dict of CarnageReport objects
         :param guardian: Guardian object
         :param n: number of games to pull (optional)
-        :param mode: game mode (optional)
-        :param last_activity_id: final activity_id in the series to be pulled (optional, ignored for now)
+        :param game_mode: game mode (optional, defaults to Trials)
+        :param last_activity_id: final activity_id in the series to be pulled
+            (optional, ignored for now)
         :return: List of CarnageReport objects
         """
         params = {
             'count': n,
-            'mode': game_mode
+            'mode': constants.ACTIVITY_MODES[game_mode]
         }
-        path = 'Stats/ActivityHistory/{guardian.account_type}/{guardian.account_id}/{guardian.guardian_id}'
         activity_ids = []
-        data = utils.get_json(path.format(**locals()), params=params, **kwargs)
+        data = utils.get_json(constants.API_PATHS[
+            'get_activity_history'
+        ].format(**locals()), params=params, **kwargs)
         for a in data['Response']['data']['activities']:
             # date for activity: a['period']
             # activity_id may also be: a['activityDetails']['referenceId']

@@ -31,6 +31,8 @@ class Guardian(object):
         self.race = constants.GUARDIAN_RACE[
             self.get('characterBase.raceHash')
         ]
+        self.light_level = self.get('characterBase.powerLevel')
+        self.char_level = self.get('characterLevel')
 
     @classmethod
     def guardians_from_data(cls, guardian_data):

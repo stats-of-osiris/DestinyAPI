@@ -11,8 +11,6 @@ Destiny API.
 from . import utils, constants
 from .Guardian import Guardian
 
-API_PATH = '{self.membership_type}/Account/{self.membership_id}/Summary'
-
 
 class Account(object):
     """
@@ -29,8 +27,11 @@ class Account(object):
         ]
         self.display_name = str(display_name)
         self.set_membership_id(**kwargs)
-        data = utils.get_json(API_PATH.format(**locals()), **kwargs)
+        data = utils.get_json(constants.API_PATHS[
+            'get_destiny_account_summary'
+        ].format(**locals()), **kwargs)
         guardian_data = data['Response']['data'].pop('characters')
+        self.guardian_data = guardian_data
         self.guardians = Guardian.guardians_from_data(guardian_data)
         self.data = data['Response']['data']
 
@@ -46,7 +47,6 @@ class Account(object):
         """
         Helper method to get the membership id for the account
         """
-        path = '{self.membership_type}/Stats/' \
-               'GetMembershipIdByDisplayName/{self.display_name}/'
-        self.membership_id = utils.get_json(path.format(**locals()),
-                                            **kwargs)['Response']
+        self.membership_id = utils.get_json(constants.API_PATHS[
+            'get_membership_id_by_display_name'
+        ].format(**locals()),**kwargs)['Response']
