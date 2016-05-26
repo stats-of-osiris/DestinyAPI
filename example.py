@@ -30,6 +30,14 @@ print(dfStats, '\n')
 
 john = destiny.Account('psn', 'JohnOfMars')
 print(john.membership_id, '\n')
-
 print(json.dumps(john.data, indent=4), '\n')
+print(john.guardians, '\n')
 
+# Account.guardians dict needs a better index
+titan = john.guardians['2305843009215820974']
+print(titan.guardian_id, titan.type, titan.race, titan.gender, '\n')
+
+last_10_trials = destiny.CarnageReport.reports_from_guardian(titan)
+print('TRIALS, SON')
+for activity_id, report in last_10_trials.items():
+    print(activity_id, report.get('activityDetails.mode'))

@@ -19,8 +19,9 @@ class Guardian(object):
     """
     def __init__(self, data):
         self.data = data
-        # not sure if this will work since the object isn't fully created yet
-        # self.name = self.get('characterBase.classHash')
+        self.guardian_id = self.get('characterBase.characterId')
+        self.account_id = self.get('characterBase.membershipId')
+        self.account_type = self.get('characterBase.membershipType')
         self.type = constants.GUARDIAN_TYPE[
             self.get('characterBase.classHash')
         ]
@@ -33,10 +34,10 @@ class Guardian(object):
 
     @classmethod
     def guardians_from_data(cls, guardian_data):
-        guardians = []
+        guardians = {}
         for gd in guardian_data:
-            # TODO: Should we change to dict? What index makes sense?
-            guardians.append(cls(gd))
+            guardian = cls(gd)
+            guardians[guardian.guardian_id] = guardian
         return guardians
 
     def get(self, data_path):

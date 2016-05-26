@@ -8,7 +8,8 @@ This class provides access to the `GetDestinyAccountSummary` endpoint of the
 Destiny API.
 
 """
-from . import utils, constants, Guardian
+from . import utils, constants
+from .Guardian import Guardian
 
 API_PATH = '{self.membership_type}/Account/{self.membership_id}/Summary'
 
@@ -24,9 +25,9 @@ class Account(object):
     """
     def __init__(self, membership_type, display_name, **kwargs):
         self.membership_type = constants.PLATFORMS[
-            str(membership_type).lower()]
+            str(membership_type).lower()
+        ]
         self.display_name = str(display_name)
-        # self.membership_id = self.get_membership_id(**kwargs)
         self.set_membership_id(**kwargs)
         data = utils.get_json(API_PATH.format(**locals()), **kwargs)
         guardian_data = data['Response']['data'].pop('characters')

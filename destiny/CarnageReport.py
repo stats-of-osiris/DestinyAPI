@@ -45,14 +45,38 @@ class CarnageReport(object):
         :param activity_ids: List of activity_ids
         :return: List of CarnageReport objects
         """
-        activities = {}
+        reports = {}
         for activity_id in activity_ids:
-            activities[activity_id] = cls(activity_id, **kwargs)
-            if activities[activity_id].api_wait > 0:
+            reports[activity_id] = cls(activity_id, **kwargs)
+            if reports[activity_id].api_wait > 0:
                 print("Pausing for {0} seconds for rate limiting".format(
-                    activities[activity_id].api_wait))
-                time.sleep(activities[activity_id].api_wait + 1)
-        return activities
+                    reports[activity_id].api_wait))
+                time.sleep(reports[activity_id].api_wait + 1)
+        return reports
+
+    @classmethod
+    def reports_from_guardian(cls, guardian, n='10', game_mode='14', activity_id=None, **kwargs):
+        """
+        Pass Account object and return a dict of CarnageReport objects
+        :param guardian: Guardian object
+        :param n: number of games to pull (optional)
+        :param mode: game mode (optional)
+        :param last_activity_id: final activity_id in the series to be pulled (optional, ignored for now)
+        :return: List of CarnageReport objects
+        """
+        params = {
+            'count': n,
+            'mode': game_mode
+        }
+        path = 'Stats/ActivityHistory/{guardian.account_type}/{guardian.account_id}/{guardian.guardian_id}'
+        activity_ids = []
+        data = utils.get_json(path.format(**locals()), params=params, **kwargs)
+        for a in data['Response']['data']['activities']:
+            # date for activity: a['period']
+            # activity_id may also be: a['activityDetails']['referenceId']
+            activity_ids.append(a['activityDetails']['instanceId'])
+        reports = cls.reports_from_ids(activity_ids, **kwargs)
+        return reports
 
     def get(self, data_path):
         """
