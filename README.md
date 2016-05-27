@@ -6,7 +6,7 @@ Project to pull stats from Destiny's API to support a performance analysis for D
 - [Bungie API Support Forum](https://www.bungie.net/en/Clan/Forum/39966)
 - [TRON: Legacy Soundtrack](https://www.youtube.com/watch?v=COWrh0eFFWk)
 
-## Data set:
+## Data Set Inputs
 The ideal case for when the user builds the data set is for them to give these as required:
 
 * console system
@@ -27,7 +27,7 @@ Oh, and potentially a list of columns to return as an optional argument as well.
 ## Architecture
 
 - `example.py` is a working development script & imports the `destiny` folder
-- `template_write.py` is the script for writing the final report card to a `.md` Markdown file. Not currently connected to the rest of the project for inputs.
+- `trialsreport_write.py` is the script for writing the final report card to a `.md` Markdown file. Not currently connected to the rest of the project for inputs.
 
 ### API Scripts in `destiny` folder
 
