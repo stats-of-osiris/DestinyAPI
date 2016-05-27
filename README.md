@@ -1,13 +1,28 @@
 # DestiPy
-Project to pull stats from Destiny's API to support a team-based performance analysis for a Trials of Osiris passage.
+Project to pull stats from Destiny's API to support a performance analysis for Destiny games.
 
 - [Bungie API Wiki](http://bungienetplatform.wikia.com/wiki/Bungienetplatform_Wikia)
 - [List of all API endpoints](http://bungienetplatform.wikia.com/wiki/Endpoints)
 - [Bungie API Support Forum](https://www.bungie.net/en/Clan/Forum/39966)
 - [TRON: Legacy Soundtrack](https://www.youtube.com/watch?v=COWrh0eFFWk)
 
-## Report Template
-[Template located here.](https://github.com/yergi/DestinyAPI/blob/master/report_card.md) Sections for Team Summary, Overall Team Performance & Detailed Individual Performance.
+## Data set:
+The ideal case for when the user builds the data set is for them to give these as required:
+
+* console system
+* display name
+* game mode
+* number of games
+
+And these as optional:
+
+* start date
+* end date
+* last game id 
+* guardian id
+
+And then the result data set becomes an object for people to run the pre-built reports. 
+Oh, and potentially a list of columns to return as an optional argument as well. Otherwise it includes all columns.
 
 ## Architecture
 
@@ -35,4 +50,11 @@ Project to pull stats from Destiny's API to support a team-based performance ana
 ### Support Scripts in `destiny` folder
 
 - `constants.py` 
-	- list of key stats to collect from API response, based on ['stats_blob.txt`](https://github.com/yergi/DestinyAPI/blob/master/destiny/stats_blob.txt)
+	- Central location for `API_PATHS` to improve readability in other scripts.
+	- Playstation or Xbox `PLATFORMS`
+	- Hashes for `GUARDIAN_TYPE`, `GUARDIAN_RACE`, `GUARDIAN_GENDER`
+	- Codes for `ACTIVITY_MODES`.
+	- list of `KEY_STATS` to collect from API response, currently based on needs of a Trials Report.
+
+## Trials Report Template
+[Template located here.](https://github.com/yergi/DestinyAPI/blob/master/report_card.md) Sections for Team Summary, Overall Team Performance & Detailed Individual Performance.
