@@ -63,7 +63,7 @@ with  open('report_card.txt','a') as myfile:
 #---------------TEAM PERFORMANCE-----------
 
 teamperf = """
-###Overall Team Performance
+### Overall Team Performance
 
 Playing on {Map} for {Time}
 	
@@ -94,7 +94,7 @@ with  open('report_card.txt','a') as myfile:
 
 indiv = """
 
-###Detailed Individual Performance
+### Detailed Individual Performance
 
 | General Summary            | {Player1} | {Player2} | {Player3} |
 |----------------------------|-----------|-----------|-----------|
@@ -109,8 +109,10 @@ indiv = """
 | Wrecking Balls             |           |           |           |
 | Longest Kill Streak        |           |           |           |
 | Longest Life               |           |           |           |
+| Close Calls                |           |           |           |
 
 Last Guardian Actions are:
+
 'Never Say Die' = Kill an enemy as the last guardian standing
 'From the Brink' = Revive a teammate as the last guardian standing
 

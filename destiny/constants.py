@@ -108,6 +108,12 @@ KEY_STATS = [
     {'path':        'extended.values.orbsGathered.basic.value',
      'column_name': 'Orbs Gathered',
      'team':        'us'},
+    {'path':        'extended.values.Lifespan.basic.value',
+     'column_name': 'Longest Life',
+     'team':        'us'},
+    {'path':        'extended.values.longestKillSpree.basic.value',
+     'column_name': 'Longest Kill Spree',
+     'team':        'us'},
     # Weapon Use & Medals
     {'path':        'extended.values.weaponBestType.basic.displayValue',
      'column_name': 'Best Weapon Type',
@@ -122,7 +128,7 @@ KEY_STATS = [
      'column_name': 'Wrecking Ball',
      'team':        'us'},
     {'path':        'extended.values.medalsCloseCallTalent.basic.value',
-     'column_name': 'Wrecking Ball',
+     'column_name': 'Close Call',
      'team':        'us'},
     # Primaries
     {'path':        'extended.values.weaponKillsAutoRifle.basic.value',
@@ -161,6 +167,9 @@ KEY_STATS = [
      'team':        'us'},
     {'path':        'extended.values.weaponKillsFusionRifle.basic.value', # doesn't appear to be working
      'column_name': 'Fusion Rifle Kills',
+     'team':        'us'},
+    {'path':        'extended.values.weaponKillsSideArm.basic.value', # doesn't appear to be working
+     'column_name': 'Sidearm Kills',
      'team':        'us'},
     # Heavy Weapons, Melees, Grenades, Supers
     {'path':        'extended.values.weaponKillsRocketLauncher.basic.value',
