@@ -71,8 +71,8 @@ Round Scores by Game
 ![](http://johnofmars.github.io/images/{graph_path})
 	
 - {N_aces} Aces
-- {N_annil} Annilations
-- {N_rez} Rezzes Allowed
+- {N_adnil} Annihilations
+- {N_rez} Enemy Resurrections Allowed
 - {N_orbs} Orbs Missed
 
 """
@@ -82,7 +82,7 @@ teamperf_context = {
  "Time":"Time",
  "graph_path":"headers/trials2.jpg",
  "N_aces":"N",
- "N_annil":"N",
+ "N_adnil":"N",
  "N_rez":"N",
  "N_orbs":"N",
  } 
@@ -94,30 +94,41 @@ with  open('report_card.txt','a') as myfile:
 
 indiv = """
 
-###Individual Detailed Performance
+###Detailed Individual Performance
 
-| Stat                       | {Player1} | {Player2} | {Player3} |
+| General Summary            | {Player1} | {Player2} | {Player3} |
 |----------------------------|-----------|-----------|-----------|
 | Kills                      |           |           |           |
 | Assists                    |           |           |           |
 | Deaths                     |           |           |           |
 | K/D                        |           |           |           |
+| Sweaty K/D                 |           |           |           |
 | % Contribution             |           |           |           |
 | Score Contribution         |           |           |           |
-
-
-| Stat                       | {Player1} | {Player2} | {Player3} |
-|----------------------------|-----------|-----------|-----------|
-| % Primary vs Secondary     |           |           |           |
-| # of Last Guardian Actions |           |           |           |
-| # of Wrecking Balls        |           |           |           |
+| Last Guardian Actions*     |           |           |           |
+| Wrecking Balls             |           |           |           |
 | Longest Kill Streak        |           |           |           |
 | Longest Life               |           |           |           |
 
-| Stat                       | {Player1} | {Player2} | {Player3} |
+Last Guardian Actions are:
+'Never Say Die' = Kill an enemy as the last guardian standing
+'From the Brink' = Revive a teammate as the last guardian standing
+
+| Kill Method Breakdown      | {Player1} | {Player2} | {Player3} |
 |----------------------------|-----------|-----------|-----------|
-| Rezzes                     |           |           |           |
-| Rezzed                     |           |           |           |
+| % Primary vs Secondary     |           |           |           |
+| Sniper Headshots / Kills   |           |           |           |
+| Shotgun Kills              |           |           |           |
+| Other Special Weapon Kills |           |           |           |
+| Grenade Kills              |           |           |           |
+| Melee Kills                |           |           |           |
+| Super Kills                |           |           |           |
+
+| Resurrections & Orbs       | {Player1} | {Player2} | {Player3} |
+|----------------------------|-----------|-----------|-----------|
+| Resurrections Performed    |           |           |           |
+| Resurrection Received      |           |           |           |
+| Deaths Un-Rezzed           |           |           |           |
 | Orbs Generated             |           |           |           |
 | Orbs Missed                |           |           |           |
 """

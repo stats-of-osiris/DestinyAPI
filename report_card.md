@@ -2,7 +2,7 @@
 layout: post
 title: Report Card
 excerpt: "Test"
-modified: 2016-05-25
+modified: 2016-05-27
 categories: articles
 tags: [pvp,trials,data]
 image:
@@ -28,36 +28,46 @@ Round Scores by Game
 ![](http://johnofmars.github.io/images/headers/trials2.jpg)
 	
 - N Aces
-- N Annilations
-- N Rezzes Allowed
+- N Annihilations
+- N Enemy Resurrections Allowed
 - N Orbs Missed
 
 
 
-###Individual Detailed Performance
+###Detailed Individual Performance
 
-| Stat                       | Player 1 | Player 2 | Player 3 |
-|----------------------------|----------|----------|----------|
-| Kills                      |          |          |          |
-| Assists                    |          |          |          |
-| Deaths                     |          |          |          |
-| K/D                        |          |          |          |
-| % Contribution             |          |          |          |
-| Score Contribution         |          |          |          |
+| General Summary            | Player 1 | Player 2 | Player 3 |
+|----------------------------|-----------|-----------|-----------|
+| Kills                      |           |           |           |
+| Assists                    |           |           |           |
+| Deaths                     |           |           |           |
+| K/D                        |           |           |           |
+| Sweaty K/D                 |           |           |           |
+| % Contribution             |           |           |           |
+| Score Contribution         |           |           |           |
+| Last Guardian Actions*     |           |           |           |
+| Wrecking Balls             |           |           |           |
+| Longest Kill Streak        |           |           |           |
+| Longest Life               |           |           |           |
 
+Last Guardian Actions are:
+'Never Say Die' = Kill an enemy as the last guardian standing
+'From the Brink' = Revive a teammate as the last guardian standing
 
-| Stat                       | Player 1 | Player 2 | Player 3 |
-|----------------------------|----------|----------|----------|
-| % Primary vs Secondary     |          |          |          |
-| # of Last Guardian Actions |          |          |          |
-| # of Wrecking Balls        |          |          |          |
-| Longest Kill Streak        |          |          |          |
-| Longest Life               |          |          |          |
+| Kill Method Breakdown      | Player 1 | Player 2 | Player 3 |
+|----------------------------|-----------|-----------|-----------|
+| % Primary vs Secondary     |           |           |           |
+| Sniper Headshots / Kills   |           |           |           |
+| Shotgun Kills              |           |           |           |
+| Other Special Weapon Kills |           |           |           |
+| Grenade Kills              |           |           |           |
+| Melee Kills                |           |           |           |
+| Super Kills                |           |           |           |
 
-
-| Stat                       | Player 1 | Player 2 | Player 3 |
-|----------------------------|----------|----------|----------|
-| Rezzes                     |          |          |          |
-| Rezzed                     |          |          |          |
-| Orbs Generated             |          |          |          |
-| Orbs Missed                |          |          |          |
+| Resurrections & Orbs       | Player 1 | Player 2 | Player 3 |
+|----------------------------|-----------|-----------|-----------|
+| Resurrections Performed    |           |           |           |
+| Resurrection Received      |           |           |           |
+| Deaths Un-Rezzed           |           |           |           |
+| Orbs Generated             |           |           |           |
+| Orbs Missed                |           |           |           |
