@@ -4,7 +4,7 @@ import pandas as pd
 import destiny
 import json
 
-activity_ids = ['4892996696']
+game_ids = ['4892996696']
 dfStats = pd.DataFrame(columns=())
 
 # either pass in API key here or set as an environment variable
@@ -12,33 +12,33 @@ dfStats = pd.DataFrame(columns=())
 # export BUNGIE_NET_API_KEY='key'
 api_key = None
 
-reports = destiny.CarnageReport.reports_from_ids(activity_ids, api_key=api_key)
+games = destiny.Game.games_from_ids(game_ids, api_key=api_key)
 
-for activity_id in activity_ids:
-    players = reports[activity_id].players
-    for player in players.values():
+for game_id in game_ids:
+    guardians = games[game_id].guardians
+    for guardian in guardians.values():
         dfAppend = pd.DataFrame(
             {
                 'Player Name':
-                    [player.get('player.destinyUserInfo.displayName')],
+                    [guardian.player_name],
                 'Team Name':
-                    [player.get('values.team.basic.displayValue')]
+                    [guardian.get('values.team.basic.displayValue')]
             })
         dfStats = dfStats.append(dfAppend, ignore_index=True)
 
 print(dfStats, '\n')
 
-john = destiny.Account('psn', 'JohnOfMars')
-print(john.membership_id, '\n')
+john = destiny.Player('psn', 'JohnOfMars')
+print(john.id, '\n')
 print(json.dumps(john.data, indent=4), '\n')
 print(john.guardians, '\n')
 
-# Account.guardians dict needs a better index
+# Player.guardians dict needs a better index
 titan = john.guardians['2305843009215820974']
-print(titan.guardian_id, 'Light level {0}'.format(titan.light_level),
-      titan.type, titan.race, titan.gender, '\n')
+print(titan.id, 'Light level {0}'.format(titan.light_level),
+      titan.g_class, '\n')
 
-last_10_trials = destiny.CarnageReport.reports_from_guardian(titan)
+last_10_trials = destiny.Game.games_from_guardian(titan)
 print('TRIALS, SON')
-for activity_id, report in last_10_trials.items():
-    print(activity_id, report.get('activityDetails.mode'))
+for game in last_10_trials.values():
+    print(game.id, game.mode, game.outcome)

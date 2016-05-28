@@ -14,6 +14,8 @@ import requests
 import os
 import sys
 
+from . import constants
+
 URL_BASE = 'https://www.bungie.net/Platform/Destiny/'
 
 
@@ -27,47 +29,72 @@ def get_json(path, **kwargs):
     """
     # check kwargs to see if the api_key was passed in,
     # use environment variable if not
-    kwargs = {} if kwargs is None else kwargs
-    api_key = kwargs.get('api_key')
-    api_key = os.environ['BUNGIE_NET_API_KEY'] if api_key is None else api_key
+    kwargs = {} if not kwargs else kwargs
     url = URL_BASE + path
-    headers = {'X-API-Key': api_key}
-    # TODO: Can't get this to attach to response correctly
     params = kwargs.get('params')
-    response = requests.get(url, headers=headers, params=params)
-    response.raise_for_status()
-    response = response.json()
-    validate_json_response(response)
+    session = build_session(**kwargs)
+    api_wait = 1
+    while api_wait > 0:
+        api_wait = 0
+        response = session.get(url, params=params)
+        response.raise_for_status()
+        response = response.json()
+        api_wait = response['ThrottleSeconds']
+        if api_wait > 0 and response['ErrorCode'] in constants.RATE_LIMIT_ERRORS:
+            print("Hit rate limit, pausing for {0} seconds...".format(api_wait))
+            time.sleep(api_wait + 1)
+    validate_json_response(response, url)
     return response
 
-
-def validate_json_response(response):
+def validate_json_response(response, url):
+    """
+    Check the response for error messages.
+    :param response: the full JSON response
+    :return: True if response has no error message, throws error otherwise
+    """
     if response['ErrorCode'] != 1:
         api_error = "[{ErrorCode}] {ErrorStatus}: {Message}"
-        api_error = api_error.format(**response)
+        api_error = api_error.format(**response) + '\n' + url
         sys.exit(api_error)
     return True
 
+def build_session(**kwargs):
+    kwargs = {} if not kwargs else kwargs
+    session = kwargs.get('session')
+    if not session:
+        api_key = kwargs.get('api_key')
+        api_key = os.environ['BUNGIE_NET_API_KEY'] if not api_key else api_key
+        headers = {'X-API-Key': api_key}
+        session = requests.Session()
+        session.headers.update(headers)
+    return session
 
-def crawl_data(destiny_object, data_path):
+def crawl_data(destipy_object, data_path, throw_error=True):
     """
-    Crawl dict tree via period-delimited string
-    :param destiny_object: module object with a data variable
+    Crawl dict tree via period-delimited string. Used to more easily
+        reference data not explicitly gathered by Destipy.
+    :param destiny_object: Destipy object with a data variable
         containing the JSON response to crawl
     :param data_path: period-delimited string that
         specifies which value to return
+    :param throw_error: if false, hide message and don't throw error
     :return: single value, could be a string or int
     """
     path = data_path.split('.')
     # start at top of path
-    loc = destiny_object.data
+    loc = destipy_object.data
     for p in path:
         if p in loc.keys():
             # continue navigating
             loc = loc[p]
-        else:
+        elif throw_error:
+            # print helpful message
             keys = loc.keys()
-            print("{destiny_object.type}: Using {path}, couldn't find {p}. "
+            object_class = destipy_object.__class__.__name__
+            print("{object_class}: Using {path}, couldn't find {p}. "
                   "Possible values at this level:\n{keys}".format(**locals()))
+            # throw a KeyError
             print(loc[p])
+        else:
+            return None
     return loc
