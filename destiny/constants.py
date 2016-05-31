@@ -1,14 +1,18 @@
 # API endpoints
 API_PATHS = {
-    'get_membership_id_by_display_name': '{self.membership_type}/Stats/'
+    # used in Player.set_id()
+    'get_membership_id_by_display_name': '{self.console_id}/Stats/'
                                          'GetMembershipIdByDisplayName/'
-                                         '{self.display_name}/',
-    'get_destiny_account_summary': '{self.membership_type}/Account/'
-                                   '{self.membership_id}/Summary',
+                                         '{self.name}/',
+    # used in Player.__init__()
+    'get_destiny_account_summary': '{self.console_id}/Account/'
+                                   '{self.id}/Summary',
+    # used in Game.__init__()
     'get_post_game_carnage_report': 'Stats/PostGameCarnageReport/'
-                                    '{self.activity_id}',
-    'get_activity_history': 'Stats/ActivityHistory/{guardian.account_type}/'
-                            '{guardian.account_id}/{guardian.guardian_id}'
+                                    '{self.id}',
+    # used in Game.games_from_guardian()
+    'get_activity_history': 'Stats/ActivityHistory/{guardian.console_id}/'
+                            '{guardian.player_id}/{guardian.id}'
 }
 
 # Platform decode
@@ -67,6 +71,9 @@ ACTIVITY_MODES = {
     'elimination':      '23',
     'rift':             '24'
 }
+
+# List of throttling errors
+RATE_LIMIT_ERRORS = [31, 35, 36, 37]
 
 # List of key stats targeted for report
 KEY_STATS = [
