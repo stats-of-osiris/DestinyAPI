@@ -11,6 +11,7 @@ destiny.Player
 """
 from . import utils, constants
 from .Guardian import Guardian
+from datetime import datetime
 
 
 class Player(object):
@@ -33,7 +34,9 @@ class Player(object):
         # separate Player and Guardian data via .pop()
         self.guardians = Guardian.guardians_from_data(
             self.data.pop('characters'))
-        self.set_last_guardian
+        compare_date = datetime.strptime('2010-01-01T02:30:41Z',
+                                         '%Y-%m-%dT%H:%M:%SZ')
+        self.set_last_guardian()
 
     def set_id(self, **kwargs):
         self.id = utils.get_json(constants.API_PATHS[
@@ -41,12 +44,15 @@ class Player(object):
         ].format(**locals()),**kwargs)['Response']
 
     def set_last_guardian(self):
-        # TODO: fix date logic
-        date = '2010-01-01 00:00:00 PT'
+        # Grabs the dateLastPlayed for each Guardian in the account and finds
+        # the Guardian dict of the one most recently played
+        compare_date = datetime.strptime('2010-01-01T02:30:41Z',
+                                         '%Y-%m-%dT%H:%M:%SZ')
         for g in self.guardians.values():
-            if g.last_played > date:
+            play_time = datetime.strptime(g.last_played, '%Y-%m-%dT%H:%M:%SZ')
+            if play_time > compare_date:
                 self.last_guardian = g
-                date = g.last_played
+                compare_date = play_time
 
     def get(self, data_path):
         return utils.crawl_data(self, data_path)

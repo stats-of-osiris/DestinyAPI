@@ -19,7 +19,7 @@ class Guardian(object):
     """
     def __init__(self, data):
         self.data = data
-        if self.usingPlayerData():
+        if self.using_player_data():
             self.last_played = self.get('characterBase.dateLastPlayed')
             self.id = self.get('characterBase.characterId')
             self.player_id = self.get('characterBase.membershipId')
@@ -46,7 +46,8 @@ class Guardian(object):
     def guardians_from_data(cls, data, player_name=None):
         """
         Create Guardian object using JSON data.
-        :param guardian_data: JSON blob for all guardians
+        :param data: JSON blob for all guardians
+        :param player_name: # TODO: Needs to be documented
         """
         guardians = {}
         for d in data:
@@ -56,7 +57,7 @@ class Guardian(object):
             guardians[guardian.id] = guardian
         return guardians
 
-    def usingPlayerData(self):
+    def using_player_data(self):
         return self.get('characterBase', False)
 
     def get(self, data_path, throw_error=True):

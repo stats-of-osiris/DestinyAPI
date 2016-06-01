@@ -8,6 +8,7 @@ destiny.Fireteam
 
 """
 
+
 class Fireteam(object):
     """
     Create a Fireteam from Guardian objects
