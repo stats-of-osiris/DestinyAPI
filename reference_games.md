@@ -21,7 +21,8 @@ Check games using this template:
 
 #Full Card Identification
 
-Exodus Blue
+Map: Exodus Blue
+
 | #          	| ID         	| Date       	| Time   	|
 |------------	|------------	|------------	|--------	|
 | 1          	| 5051781495 	| 2016/05/28 	| 8:23pm 	|
