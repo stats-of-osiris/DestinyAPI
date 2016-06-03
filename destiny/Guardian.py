@@ -27,7 +27,8 @@ class Guardian(object):
             self.console_id = self.get('characterBase.membershipType')
             self.light_level = self.get('characterBase.powerLevel')
             self.guardian_level = self.get('characterLevel')
-            self.g_class = constants.GUARDIAN_TYPE[self.get('characterBase.classHash')]
+            self.g_class = constants.GUARDIAN_TYPE[self.get(
+                'characterBase.classHash')]
             # self.gender = constants.GUARDIAN_GENDER[self.get('characterBase.genderHash')]
             # self.race = constants.GUARDIAN_RACE[self.get('characterBase.raceHash')]
         else:
@@ -47,7 +48,7 @@ class Guardian(object):
         """
         Create Guardian object using JSON data.
         :param data: JSON blob for all guardians
-        :param player_name: # TODO: Needs to be documented
+        :param player_name: display name of player who owns the guardians
         """
         guardians = {}
         for d in data:

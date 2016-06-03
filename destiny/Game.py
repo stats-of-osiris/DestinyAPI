@@ -31,7 +31,8 @@ class Game(object):
         self.guardians = Guardian.guardians_from_data(self.data.pop('entries'))
         self.outcome = None
         if guardian:
-            self.outcome = self.guardians[guardian.id].get('values.standing.basic.displayValue')
+            self.outcome = self.guardians[guardian.id].get(
+                'values.standing.basic.displayValue')
 
     @classmethod
     def games_from_ids(cls, game_ids, guardian=None, **kwargs):
@@ -47,7 +48,7 @@ class Game(object):
 
     @classmethod
     def games_from_guardian(cls, guardian, n='10', game_mode='trials',
-                              last_activity_id=None, **kwargs):
+                            last_game_id=None, **kwargs):
         """
         Pass Guardian object and return a dict of Game objects
         :param guardian: Guardian object

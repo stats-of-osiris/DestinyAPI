@@ -13,6 +13,7 @@ from __future__ import print_function
 import requests
 import os
 import sys
+import time
 
 from . import constants
 
@@ -35,21 +36,25 @@ def get_json(path, **kwargs):
     session = build_session(**kwargs)
     api_wait = 1
     while api_wait > 0:
-        api_wait = 0
         response = session.get(url, params=params)
         response.raise_for_status()
         response = response.json()
         api_wait = response['ThrottleSeconds']
-        if api_wait > 0 and response['ErrorCode'] in constants.RATE_LIMIT_ERRORS:
-            print("Hit rate limit, pausing for {0} seconds...".format(api_wait))
+        if api_wait > 0 and response['ErrorCode'] in \
+                constants.RATE_LIMIT_ERRORS:
+            print("Hit rate limit, pausing for {0} seconds...".
+                  format(api_wait))
             time.sleep(api_wait + 1)
     validate_json_response(response, url)
+    leave_session(session, **kwargs)
     return response
+
 
 def validate_json_response(response, url):
     """
     Check the response for error messages.
     :param response: the full JSON response
+    :param url: ???
     :return: True if response has no error message, throws error otherwise
     """
     if response['ErrorCode'] != 1:
@@ -57,6 +62,7 @@ def validate_json_response(response, url):
         api_error = api_error.format(**response) + '\n' + url
         sys.exit(api_error)
     return True
+
 
 def build_session(**kwargs):
     kwargs = {} if not kwargs else kwargs
@@ -68,6 +74,14 @@ def build_session(**kwargs):
         session = requests.Session()
         session.headers.update(headers)
     return session
+
+
+def leave_session(session, **kwargs):
+    kwargs = {} if not kwargs else kwargs
+    existing_session = kwargs.get('session')
+    if not existing_session:
+        session.close()
+
 
 def crawl_data(destipy_object, data_path, throw_error=True):
     """
