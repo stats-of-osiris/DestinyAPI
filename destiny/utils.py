@@ -127,18 +127,18 @@ def compare_dates(date_1, date_2,
     :return: Newest or oldest date (based on :param newest:) as a string
     """
     fmt = '%Y-%m-%dT%H:%M:%SZ'
-    date_1 = datetime.strptime(date_1, fmt)
-    date_2 = datetime.strptime(date_2, fmt)
+    date_1_dt = datetime.strptime(date_1, fmt)
+    date_2_dt = datetime.strptime(date_2, fmt)
     if newest is True:
-        if date_1 > date_2:
-            return date_1.strftime(fmt)
+        if date_1_dt >= date_2_dt:
+            return date_1
         else:
-            return date_2.strftime(fmt)
+            return date_2
     else:
-        if date_1 < date_2:
-            return date_1.strftime(fmt)
+        if date_1_dt <= date_2_dt:
+            return date_1
         else:
-            return date_2.strftime(fmt)
+            return date_2
 
 
 

@@ -27,6 +27,7 @@ class Game(object):
         ].format(**locals()), **kwargs)
         self.data = self.get('Response.data')
         self.mode = self.get('activityDetails.mode')
+        self.time = self.data.get('period')
         # separate player data and game data via dict.pop()
         self.guardians = Guardian.guardians_from_data(self.data.pop('entries'))
         self.outcome = None
@@ -48,29 +49,51 @@ class Game(object):
         return games
 
     @classmethod
-    def games_from_guardian(cls, guardian, n='10', game_mode='trials',
+    def games_from_guardian(cls, guardian, n=25, game_mode='trials',
                             last_game_id=None, **kwargs):
         """
         Pass Guardian object and return a dict of Game objects
         :param guardian: Guardian object
-        :param n: number of games to pull (optional)
-        :param game_mode: game mode (optional, defaults to Trials)
+        :param n: number of games to pull (defaults to 25, which is the max
+            for a single API call
+        :param game_mode: game mode (defaults to Trials)
         :param last_game_id: final game_id in the series to be pulled
             (optional)
         :return: List of Game objects
         """
-        params = {
-            'count': n,
-            'mode': constants.ACTIVITY_MODES[game_mode]
-        }
+        page = 0
         game_ids = []
-        data = utils.get_json(constants.API_PATHS[
-            'get_activity_history'
-        ].format(**locals()), params=params, **kwargs)
-        for a in data['Response']['data']['activities']:
+        while True:
+            params = {
+                'page': str(page),
+                'mode': constants.ACTIVITY_MODES[game_mode]
+            }
+            data = utils.get_json(constants.API_PATHS[
+                'get_activity_history'].format(
+                **locals()), params=params, **kwargs)
+            if last_game_id is None:
+                for a in data['Response']['data']['activities']:
+                    game_ids.append(a['activityDetails']['instanceId'])
+                    # Stop append once we hit the requested number of games
+                    if len(game_ids) > n - 1:
+                        break
+            else:
+                last_game_time = Game(last_game_id).time
+                for a in data['Response']['data']['activities']:
+                    if utils.compare_dates(a['period'], last_game_time,
+                                           newest=False) == a['period']:
+                        game_ids.append(a['activityDetails']['instanceId'])
+                        # Stop append once we have the # of games requested
+                        if len(game_ids) > n - 1:
+                            break
+            # Ask for next page if we need more games, else break the loop
+            if len(game_ids) < n - 1:
+                page += 1
+            else:
+                break
+            # TODO: Add error checking for when more games are requested than exist
             # date for activity: a['period']
             # map for activity: a['activityDetails']['referenceId']
-            game_ids.append(a['activityDetails']['instanceId'])
         games = cls.games_from_ids(game_ids, guardian, **kwargs)
         return games
 
