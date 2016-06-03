@@ -2,7 +2,6 @@
 from __future__ import print_function
 import pandas as pd
 import destiny
-import json
 
 game_ids = ['4892996696']
 dfStats = pd.DataFrame(columns=())
@@ -29,9 +28,6 @@ for game_id in game_ids:
 print(dfStats, '\n')
 
 john = destiny.Player('psn', 'JohnOfMars')
-print(john.id, '\n')
-print(json.dumps(john.data, indent=4), '\n')
-print(john.guardians, '\n')
 
 # Player.guardians dict needs a better index
 titan = john.guardians['2305843009215820974']

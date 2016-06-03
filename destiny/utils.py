@@ -14,6 +14,7 @@ import requests
 import os
 import sys
 import time
+from datetime import datetime
 
 from . import constants
 
@@ -46,7 +47,7 @@ def get_json(path, **kwargs):
                   format(api_wait))
             time.sleep(api_wait + 1)
     validate_json_response(response, url)
-    leave_session(session, **kwargs)
+    close_session(session, **kwargs)
     return response
 
 
@@ -76,7 +77,7 @@ def build_session(**kwargs):
     return session
 
 
-def leave_session(session, **kwargs):
+def close_session(session, **kwargs):
     kwargs = {} if not kwargs else kwargs
     existing_session = kwargs.get('session')
     if not existing_session:
@@ -112,3 +113,32 @@ def crawl_data(destipy_object, data_path, throw_error=True):
         else:
             return None
     return loc
+
+
+def compare_dates(date_1, date_2,
+                  newest=True):
+    """
+    Helper function to convert string-formatted dates to datetime objects
+    and compare which ones come first
+    :param date_1: First date to compare
+    :param date_2: Second date to compare
+    :param newest: Determines if we return the newest of the two
+        dates (if True), or the oldest (if False)
+    :return: Newest or oldest date (based on :param newest:) as a string
+    """
+    fmt = '%Y-%m-%dT%H:%M:%SZ'
+    date_1 = datetime.strptime(date_1, fmt)
+    date_2 = datetime.strptime(date_2, fmt)
+    if newest is True:
+        if date_1 > date_2:
+            return date_1.strftime(fmt)
+        else:
+            return date_2.strftime(fmt)
+    else:
+        if date_1 < date_2:
+            return date_1.strftime(fmt)
+        else:
+            return date_2.strftime(fmt)
+
+
+

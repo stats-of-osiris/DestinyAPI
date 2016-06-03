@@ -31,10 +31,13 @@ class ReportContext(object):
     def __init__(self, console, name, **kwargs):
         self.session = build_session(**kwargs)
         self.player = Player(console, name, session=self.session, **kwargs)
-        # TODO: get other kwargs we're interested in
         kwargs = {} if not kwargs else kwargs
         guardian_id = kwargs.get('guardian_id')
+        game_mode = kwargs.get('game_mode')
         last_n = kwargs.get('last_n')
+        last_game_id = kwargs.get('last_game_id')
+        start_datetime = kwargs.get('start_datetime')
+        end_datetime = kwargs.get('end_datetime')
 
         if guardian_id in self.player.guardians:
             guardian = self.player.guardians[guardian_id]

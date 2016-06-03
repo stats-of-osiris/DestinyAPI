@@ -39,6 +39,7 @@ class Game(object):
         """
         Pass a list of game_ids and return a list of CarnageReport objects
         :param game_ids: List of game_ids
+        :param guardian: ???
         :return: List of CarnageReport objects
         """
         games = {}
