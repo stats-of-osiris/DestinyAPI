@@ -1,10 +1,13 @@
 # DestiPy
 Project to pull stats from Destiny's API to support a performance analysis for Destiny games.
 
-- [Bungie API Wiki](http://bungienetplatform.wikia.com/wiki/Bungienetplatform_Wikia)
-- [List of all API endpoints](http://bungienetplatform.wikia.com/wiki/Endpoints)
+- [Unofficial API Github](http://destinydevs.github.io/BungieNetPlatform/)
+- [List of all API endpoints](http://destinydevs.github.io/BungieNetPlatform/docs/Endpoints)
+- [List of all medals](http://destinydevs.github.io/BungieNetPlatform/docs/MedalHistoricalStats)
 - [Bungie API Support Forum](https://www.bungie.net/en/Clan/Forum/39966)
 - [TRON: Legacy Soundtrack](https://www.youtube.com/watch?v=COWrh0eFFWk)
+- [Web-based Activity Viewer](http://destinyactivitydetails.com/)
+
 
 ## Data Set Inputs
 The ideal case for when the user builds the data set is for them to give these as required:
