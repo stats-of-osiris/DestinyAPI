@@ -31,8 +31,9 @@ john = destiny.Player('psn', 'JohnOfMars')
 
 # Player.guardians dict needs a better index
 titan = john.guardians['2305843009215820974']
-print(titan.id, 'Light level {0}'.format(titan.light_level),
-      titan.g_class, '\n')
+print(titan.id, 'Light level {0} {1} {2} {3}'.format(titan.light_level,
+                                                 titan.g_class, titan.gender,
+                                                 titan.race), '\n')
 
 last_10_trials = destiny.Game.games_from_guardian(titan, n=10)
 print('TRIALS, SON')

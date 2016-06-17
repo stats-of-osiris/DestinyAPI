@@ -21,6 +21,7 @@ class Manifest(object):
         self.items = self.data['DestinyInventoryItemDefinition']
         self.activities = self.data['DestinyActivityDefinition']
         self.classes = self.data['DestinyClassDefinition']
+        self.race = self.data['DestinyRaceDefinition']
         self.gender = self.data['DestinyGenderDefinition']
         self.stats = self.data['DestinyStatDefinition']
         self.stat_group = self.data['DestinyStatGroupDefinition']

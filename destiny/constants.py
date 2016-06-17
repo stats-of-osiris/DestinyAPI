@@ -49,26 +49,6 @@ MAN_HASH = {
     'DestinyGrimoireCardDefinition': 'cardId'
 }
 
-# Guardian class decode from hash
-GUARDIAN_TYPE = {
-    3655393761: 'Titan',
-    2271682572: 'Warlock',
-    671679327:  'Hunter'
-}
-
-# Guardian race decode from hash
-GUARDIAN_RACE = {
-    2803282938: 'Awoken',
-    898834093:  'Exo',
-    3887404748: 'Human'
-}
-
-# Guardian gender decode from hash
-GUARDIAN_GENDER = {
-    3111576190: 'Male',
-    2204441813: 'Female'
-}
-
 # List of possible activity modes
 ACTIVITY_MODES = {
     'none':             '0',
