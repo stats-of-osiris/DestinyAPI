@@ -12,6 +12,10 @@ import zipfile, sqlite3, json, os, pickle, sys
 
 
 class Manifest(object):
+    """
+    Access the data contained in Destiny's Manifest database. This is used
+    to interpret the hashes that are present in many API calls.
+    """
     def __init__(self, **kwargs):
         self.data = pull_manifest(**kwargs)
         self.items = self.data['DestinyInventoryItemDefinition']
@@ -23,6 +27,12 @@ class Manifest(object):
 
 
 def pull_manifest(**kwargs):
+    """
+    This function checks with the Destiny API for updates, and if one is
+    detected downloads, unzips, and prepares the database for consumption.
+    :param kwargs: Used in case a session is passed through.
+    :return: The entire Manifest database in dict form.
+    """
     # Find url of the manifest zip file
     api_call = utils.get_json(constants.API_PATHS
                               ['get_manifest'].format(**locals()),
