@@ -6,3 +6,4 @@ from .Player import Player
 from .Game import Game
 from .Guardian import Guardian
 from .ReportContext import ReportContext
+from .Manifest import Manifest

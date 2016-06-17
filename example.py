@@ -38,3 +38,11 @@ last_10_trials = destiny.Game.games_from_guardian(titan, n=10)
 print('TRIALS, SON')
 for game in last_10_trials.values():
     print(game.id, game.mode, game.outcome)
+
+items = destiny.Manifest().items
+hash = 1274330687
+ghorn = items[hash]
+print('Name: {}'.format(ghorn['itemName']))
+print('Type: {}'.format(ghorn['itemTypeName']))
+print('Tier: {}'.format(ghorn['tierTypeName']))
+print(ghorn['itemDescription'])

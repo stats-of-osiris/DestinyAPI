@@ -10,10 +10,7 @@ that are also useful for external consumption.
 """
 
 from __future__ import print_function
-import requests
-import os
-import sys
-import time
+import requests, os, sys, time, zipfile, sqlite3, json
 from datetime import datetime
 
 from . import constants
@@ -115,8 +112,7 @@ def crawl_data(destipy_object, data_path, throw_error=True):
     return loc
 
 
-def compare_dates(date_1, date_2,
-                  newest=True):
+def compare_dates(date_1, date_2, newest=True):
     """
     Helper function to convert string-formatted dates to datetime objects
     and compare which ones come first
@@ -139,6 +135,3 @@ def compare_dates(date_1, date_2,
             return date_1
         else:
             return date_2
-
-
-

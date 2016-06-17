@@ -12,13 +12,41 @@ API_PATHS = {
                                     '{self.id}',
     # used in Game.games_from_guardian()
     'get_activity_history': 'Stats/ActivityHistory/{guardian.console_id}/'
-                            '{guardian.player_id}/{guardian.id}'
+                            '{guardian.player_id}/{guardian.id}',
+    'get_manifest': 'Manifest/'
 }
 
 # Platform decode
 PLATFORMS = {
     'xbox': '1',
     'psn':  '2'
+}
+
+MAN_HASH = {
+    'DestinyActivityDefinition': 'activityHash',
+    'DestinyActivityTypeDefinition': 'activityTypeHash',
+    'DestinyClassDefinition': 'classHash',
+    'DestinyGenderDefinition': 'genderHash',
+    'DestinyInventoryBucketDefinition': 'bucketHash',
+    'DestinyInventoryItemDefinition': 'itemHash',
+    'DestinyProgressionDefinition': 'progressionHash',
+    'DestinyRaceDefinition': 'raceHash',
+    'DestinyTalentGridDefinition': 'gridHash',
+    'DestinyUnlockFlagDefinition': 'flagHash',
+    'DestinyHistoricalStatsDefinition': 'statId',
+    'DestinyDirectorBookDefinition': 'bookHash',
+    'DestinyStatDefinition': 'statHash',
+    'DestinySandboxPerkDefinition': 'perkHash',
+    'DestinyDestinationDefinition': 'destinationHash',
+    'DestinyPlaceDefinition': 'placeHash',
+    'DestinyActivityBundleDefinition': 'bundleHash',
+    'DestinyStatGroupDefinition': 'statGroupHash',
+    'DestinySpecialEventDefinition': 'eventHash',
+    'DestinyFactionDefinition': 'factionHash',
+    'DestinyVendorCategoryDefinition': 'categoryHash',
+    'DestinyEnemyRaceDefinition': 'raceHash',
+    'DestinyScriptedSkullDefinition': 'skullHash',
+    'DestinyGrimoireCardDefinition': 'cardId'
 }
 
 # Guardian class decode from hash
