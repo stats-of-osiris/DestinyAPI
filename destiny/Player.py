@@ -25,7 +25,9 @@ class Player(object):
             str(console).lower()
         ]
         self.name = str(player_name)
-        self.set_id(**kwargs)
+        self.id = utils.get_json(
+            constants.API_PATHS['get_membership_id_by_display_name'].format(
+                **locals()), **kwargs)['Response']
         self.data = utils.get_json(constants.API_PATHS[
             'get_destiny_account_summary'
         ].format(**locals()), **kwargs)
@@ -33,12 +35,7 @@ class Player(object):
         # separate Player and Guardian data via .pop()
         self.guardians = Guardian.guardians_from_data(
             self.data.pop('characters'))
-        self.set_last_guardian()
-
-    def set_id(self, **kwargs):
-        self.id = utils.get_json(constants.API_PATHS[
-            'get_membership_id_by_display_name'
-        ].format(**locals()),**kwargs)['Response']
+        self.last_guardian = self.set_last_guardian()
 
     def set_last_guardian(self):
         # Grabs the dateLastPlayed for each Guardian in the account and finds
@@ -47,8 +44,9 @@ class Player(object):
         for g in self.guardians.values():
             if utils.compare_dates(g.last_played,
                                    compare_date) == g.last_played:
-                self.last_guardian = g
+                last_guardian = g
                 compare_date = g.last_played
+        return last_guardian
 
     def get(self, data_path):
         return utils.crawl_data(self, data_path)
