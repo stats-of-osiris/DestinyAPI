@@ -8,7 +8,7 @@ Created on Sat May 21 21:07:32 2016
 import requests
 import json
 import pandas as pd
-head = {'X-API-Key':'071b767b1d014435b36264bf4f6234fc'}
+head = {'X-API-Key':'key goes here'}
 gameID = ['5051781495','5051794360','5051827975','5051825913','5051858771','5051885731','5051903760',]
 #gameID = ['5100794481','5100843302','5100881734','5100910939','5100940484','5100970909','5101005646','5101033227','5101072353']
 dfStats = pd.DataFrame(columns=())
