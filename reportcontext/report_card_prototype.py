@@ -80,9 +80,6 @@ Playing on {Map} for {Time} minutes
 
 Spawn Side: % Alpha, % Bravo
 
-Graph of Kill Method Distribtuion:
-![](http://johnofmars.github.io/images/{killm_graph_path})
-	
 Round Scores by Game
 ![](http://johnofmars.github.io/images/{game_graph_path})
 
@@ -92,6 +89,9 @@ Round Scores by Game
 - {N_annil} Annihilations vs {N_annild} times Annihilated
 - {N_rez} Resurrections vs {N_enemy_rez} Enemy Resurrections Allowed
 - {N_morbs} Orbs Missed out of {N_orbs} generated
+
+Graph of Kill Method Distribtuion:
+![](http://johnofmars.github.io/images/{killm_graph_path})
 
 """
 
@@ -123,50 +123,141 @@ indiv = """
 
 ### Detailed Individual Performance
 
-| General Summary            | {Player1} | {Player2} | {Player3} |
-|----------------------------|-----------|-----------|-----------|
-| Kills                      |           |           |           |
-| Assists                    |           |           |           |
-| Deaths                     |           |           |           |
-| K/D                        |           |           |           |
-| Sweaty K/D                 |           |           |           |
-| % Contribution             |           |           |           |
-| Last Guardian Actions*     |           |           |           |
-| Wrecking Balls             |           |           |           |
-| Longest Kill Streak        |           |           |           |
-| Longest Life               |           |           |           |
-| Close Calls                |           |           |           |
+| #                      	| {Player1} 	| {Player2} 	| {Player3} 	|
+|------------------------	|-----------	|-----------	|-----------	|
+| Kills                  	| {p1k}     	| {p2k}     	| {p3k}     	|
+| Assists                	| {p1a}     	| {p2a}     	| {p3a}     	|
+| Deaths                 	| {p1d}     	| {p2d}     	| {p3d}     	|
+| K/D                    	| {p1kd}    	| {p2kd}    	| {p3kd}    	|
+| Sweaty K/D             	| {p1skd}   	| {p2skd}   	| {p3kd}    	|
+| Last Guardian Actions* 	| {p1lga}   	| {p2lga}   	| {p3lga}   	|
+| Wrecking Balls         	| {p1wb}    	| {p2wb}    	| {p3wb}    	|
+| Longest Kill Streak    	| {p1mks}   	| {p2mks}   	| {p3mks}   	|
+| Longest Life           	| {p1ll}    	| {p2ll}    	| {p3ll}    	|
+| Close Calls            	| {p1cc}    	| {p2cc}    	| {p3cc}    	|
 
 Last Guardian Actions are:
 
 'Never Say Die' = Kill an enemy as the last guardian standing
 'From the Brink' = Revive a teammate as the last guardian standing
 
-| Kill Method Breakdown      | {Player1} | {Player2} | {Player3} |
-|----------------------------|-----------|-----------|-----------|
-| % Primary vs Secondary     |           |           |           |
-| Sniper Headshots / Kills   |           |           |           |
-| Shotgun Kills              |           |           |           |
-| Other Special Weapon Kills |           |           |           |
-| Heavy Weapon Kills         |           |           |           |
-| Grenade Kills              |           |           |           |
-| Melee Kills                |           |           |           |
-| Super Kills                |           |           |           |
-
-| Resurrections & Orbs       | {Player1} | {Player2} | {Player3} |
-|----------------------------|-----------|-----------|-----------|
-| Resurrections Performed    |           |           |           |
-| Resurrection Received      |           |           |           |
-| Deaths Un-Rezzed           |           |           |           |
-| Orbs Generated             |           |           |           |
-| Orbs Missed                |           |           |           |
 """
 
 indiv_context = {
- "Player1":'Player 1', 
- "Player2":'Player 2', 
- "Player3":'Player 3'
+    "Player1":dfIndiv.iloc[0]['player'], 
+     
+    "p1k":	"%.0f" % 	(dfIndiv.iloc[0]['kills']),
+    "p1a":	"%.0f" % 	(dfIndiv.iloc[0]['assists']),
+    "p1d":	"%.0f" % 	(dfIndiv.iloc[0]['deaths']),
+    "p1kd":	"%.2f" % 	(dfIndiv.iloc[0]['k_d']),
+    "p1skd":	"%.2f" % 	(dfIndiv.iloc[0]['k_d']),
+    "p1lga":	"%.0f" % 	(dfIndiv.iloc[0]['from_the_brink']),
+    "p1wb":	"%.0f" % 	(dfIndiv.iloc[0]['wrecking_ball']),
+    "p1mks":	"%.0f" % 	(dfIndiv.iloc[0]['max_k_spree']),
+    "p1ll":	"%.0f" % 	(dfIndiv.iloc[0]['long_life']),
+    "p1cc":	"%.0f" % 	(dfIndiv.iloc[0]['close_call']),
+ 
+    "Player2":dfIndiv.iloc[1]['player'], 
+    
+    "p2k":	"%.0f" % 	(dfIndiv.iloc[1]['kills']),
+    "p2a":	"%.0f" % 	(dfIndiv.iloc[1]['assists']),
+    "p2d":	"%.0f" % 	(dfIndiv.iloc[1]['deaths']),
+    "p2kd":	"%.2f" % 	(dfIndiv.iloc[1]['k_d']),
+    "p2skd":	"%.2f" % 	(dfIndiv.iloc[1]['k_d']),
+    "p2lga":	"%.0f" % 	(dfIndiv.iloc[1]['from_the_brink']),
+    "p2wb":	"%.0f" % 	(dfIndiv.iloc[1]['wrecking_ball']),
+    "p2mks":	"%.0f" % 	(dfIndiv.iloc[1]['max_k_spree']),
+    "p2ll":	"%.0f" % 	(dfIndiv.iloc[1]['long_life']),
+    "p2cc":	"%.0f" % 	(dfIndiv.iloc[1]['close_call']),
+
+    "Player3":dfIndiv.iloc[2]['player'],
+    
+    "p3k":	"%.0f" % 	(dfIndiv.iloc[2]['kills']),
+    "p3a":	"%.0f" % 	(dfIndiv.iloc[2]['assists']),
+    "p3d":	"%.0f" % 	(dfIndiv.iloc[2]['deaths']),
+    "p3kd":	"%.2f" % 	(dfIndiv.iloc[2]['k_d']),
+    "p3kd":	"%.2f" % 	(dfIndiv.iloc[2]['k_d']),
+    "p3lga":	"%.0f" % 	(dfIndiv.iloc[2]['from_the_brink']),
+    "p3wb":	"%.0f" % 	(dfIndiv.iloc[2]['wrecking_ball']),
+    "p3mks":	"%.0f" % 	(dfIndiv.iloc[2]['max_k_spree']),
+    "p3ll":	"%.0f" % 	(dfIndiv.iloc[2]['long_life']),
+    "p3cc":	"%.0f" % 	(dfIndiv.iloc[2]['close_call'])
  } 
  
 with  open('report_card.txt','a') as myfile:
     myfile.write(indiv.format(**indiv_context))
+    
+indiv2 = """
+
+| Kill Method Breakdown        	| {Player1}      	| {Player2}      	| {Player3}      	|
+|----------------------------	|----------------	|----------------	|----------------	|
+| % Primary vs Secondary     	| {p1pvs} %      	| {p2pvs} %      	| {p3pvs} %      	|
+| Sniper Headshots / Kills   	| {p1shs}/{p1sk} 	| {p2shs}/{p2sk} 	| {p3shs}/{p3sk} 	|
+| Shotgun Kills              	| {p1sg}         	| {p2sg}         	| {p3sg}         	|
+| Other Special Weapon Kills 	| {p1os}         	| {p2os}         	| {p3os}         	|
+| Heavy Weapon Kills         	| {p1hk}         	| {p2hk}         	| {p3hk}         	|
+| Grenade Kills              	| {p1g}          	| {p2g}          	| {p3g}          	|
+| Melee Kills                	| {p1m}          	| {p2m}          	| {p3m}          	|
+| Super Kills                	| {p1s}          	| {p2s}          	| {p3s}          	|
+
+| Resurrections & Orbs      	| {Player1}      	| {Player2}      	| {Player3}      	|
+|----------------------------	|----------------	|----------------	|----------------	|
+| Resurrections Performed    	| {p1rez}        	| {p2rez}        	| {p3rez}        	|
+| Deaths Un-rezzed           	| {p1fail}       	| {p2fail}       	| {p3fail}       	|
+| Orbs Generated             	| {p1ogen}       	| {p2ogen}       	| {p3ogen}       	|
+| Orbs Missed                	| {p1ogath}      	| {p2ogath}      	| {p3ogath}      	|
+"""
+
+indiv_context2 = {
+    "Player1":dfIndiv.iloc[0]['player'], 
+
+    "p1pvs":	"%.0f" % 	(dfIndiv.iloc[0]['n_primary']/(dfIndiv.iloc[0]['n_primary']+dfIndiv.iloc[0]['n_special'])*100),
+    "p1shs":	"%.0f" % 	(dfIndiv.iloc[0]['sniper_hshots']),
+    "p1sk":	"%.0f" % 	(dfIndiv.iloc[0]['sniper_kills']),
+    "p1sg":	"%.0f" % 	(dfIndiv.iloc[0]['shotg_kills']),
+    "p1os":	"%.0f" % 	(dfIndiv.iloc[0]['fr_kills']+dfIndiv.iloc[0]['side_kills']),
+    "p1hk":	"%.0f" % 	(dfIndiv.iloc[0]['rocket_kills']+dfIndiv.iloc[0]['hmg_kills']),
+    "p1g":	"%.0f" % 	(dfIndiv.iloc[0]['melees']),
+    "p1m":	"%.0f" % 	(dfIndiv.iloc[0]['grenades']),
+    "p1s":	"%.0f" % 	(dfIndiv.iloc[0]['supers']),
+    "p1rez":	"%.0f" % 	(dfIndiv.iloc[0]['rezzes']),
+    "p1fail":	"%.0f" % 	(dfIndiv.iloc[0]['deaths']-dfIndiv.iloc[2]['rezzes']),
+    "p1ogen":	"%.0f" % 	(dfIndiv.iloc[0]['orbs_gen']),
+    "p1ogath":	"%.0f" % 	(dfIndiv.iloc[0]['orbs_gath']),
+ 
+    "Player2":dfIndiv.iloc[1]['player'], 
+
+    "p2pvs":	"%.0f" % 	(dfIndiv.iloc[1]['n_primary']/(dfIndiv.iloc[1]['n_primary']+dfIndiv.iloc[1]['n_special'])*100),
+    "p2shs":	"%.0f" % 	(dfIndiv.iloc[1]['sniper_hshots']),
+    "p2sk":	"%.0f" % 	(dfIndiv.iloc[1]['sniper_kills']),
+    "p2sg":	"%.0f" % 	(dfIndiv.iloc[1]['shotg_kills']),
+    "p2os":	"%.0f" % 	(dfIndiv.iloc[1]['fr_kills']+dfIndiv.iloc[1]['side_kills']),
+    "p2hk":	"%.0f" % 	(dfIndiv.iloc[1]['rocket_kills']+dfIndiv.iloc[1]['hmg_kills']),
+    "p2g":	"%.0f" % 	(dfIndiv.iloc[1]['melees']),
+    "p2m":	"%.0f" % 	(dfIndiv.iloc[1]['grenades']),
+    "p2s":	"%.0f" % 	(dfIndiv.iloc[1]['supers']),
+    "p2rez":	"%.0f" % 	(dfIndiv.iloc[1]['rezzes']),
+    "p2fail":	"%.0f" % 	(dfIndiv.iloc[1]['deaths']-dfIndiv.iloc[2]['rezzes']),
+    "p2ogen":	"%.0f" % 	(dfIndiv.iloc[1]['orbs_gen']),
+    "p2ogath":	"%.0f" % 	(dfIndiv.iloc[1]['orbs_gath']),
+
+    "Player3":dfIndiv.iloc[2]['player'],
+
+    "p3pvs":	"%.1f" % 	(dfIndiv.iloc[2]['n_primary']/(dfIndiv.iloc[2]['n_primary']+dfIndiv.iloc[2]['n_special'])*100),
+    "p3shs":	"%.0f" % 	(dfIndiv.iloc[2]['sniper_hshots']),
+    "p3sk":	"%.0f" % 	(dfIndiv.iloc[2]['sniper_kills']),
+    "p3sg":	"%.0f" % 	(dfIndiv.iloc[2]['shotg_kills']),
+    "p3os":	"%.0f" % 	(dfIndiv.iloc[2]['fr_kills']+dfIndiv.iloc[2]['side_kills']),
+    "p3hk":	"%.0f" % 	(dfIndiv.iloc[2]['rocket_kills']+dfIndiv.iloc[2]['hmg_kills']),
+    "p3g":	"%.0f" % 	(dfIndiv.iloc[2]['melees']),
+    "p3m":	"%.0f" % 	(dfIndiv.iloc[2]['grenades']),
+    "p3s":	"%.0f" % 	(dfIndiv.iloc[2]['supers']),
+    "p3rez":	"%.0f" % 	(dfIndiv.iloc[2]['rezzes']),
+    "p3fail":	"%.0f" % 	(dfIndiv.iloc[2]['deaths']-dfIndiv.iloc[2]['rezzes']),
+    "p3ogen":	"%.0f" % 	(dfIndiv.iloc[2]['orbs_gen']),
+    "p3ogath":	"%.0f" % 	(dfIndiv.iloc[2]['orbs_gath'])
+
+ } 
+ 
+with  open('report_card.txt','a') as myfile:
+    myfile.write(indiv2.format(**indiv_context2))
