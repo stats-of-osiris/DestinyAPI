@@ -129,17 +129,31 @@ indiv = """
 | Assists                	| {p1a}     	| {p2a}     	| {p3a}     	|
 | Deaths                 	| {p1d}     	| {p2d}     	| {p3d}     	|
 | K/D                    	| {p1kd}    	| {p2kd}    	| {p3kd}    	|
-| Sweaty K/D             	| {p1skd}   	| {p2skd}   	| {p3kd}    	|
-| Last Guardian Actions* 	| {p1lga}   	| {p2lga}   	| {p3lga}   	|
+| Sweaty K/D*             	| {p1skd}   	| {p2skd}   	| {p3kd}    	|
+| Percent Contribution**  	| {p1cont}   	| {p2cont}   	| {p3cont}   	|
+| Last Guardian Actions*** | {p1lga}   	| {p2lga}   	| {p3lga}   	|
 | Wrecking Balls         	| {p1wb}    	| {p2wb}    	| {p3wb}    	|
 | Longest Kill Streak    	| {p1mks}   	| {p2mks}   	| {p3mks}   	|
 | Longest Life           	| {p1ll}    	| {p2ll}    	| {p3ll}    	|
 | Close Calls            	| {p1cc}    	| {p2cc}    	| {p3cc}    	|
 
-Last Guardian Actions are:
 
-'Never Say Die' = Kill an enemy as the last guardian standing
-'From the Brink' = Revive a teammate as the last guardian standing
+* Sweaty K/D is K/D on matches where the enemy team wins at least 3 rounds.
+
+** Percent contribution is a metric for determining how much you helped or hindered your team.
+
++100 for kills
+-100 for deaths
++33 for assists
++25 for rezzes
++12 for being rezzed
+
+Scores are tabulated across all games for individuals and the team. And then a player's score is shown as percent of the team's total score.
+
+***Last Guardian Actions are:
+
+'Never Say Die' = Kill an enemy as the last guardian standing.
+'From the Brink' = Revive a teammate as the last guardian standing.
 
 """
 
@@ -151,7 +165,8 @@ indiv_context = {
     "p1d":	"%.0f" % 	(dfIndiv.iloc[0]['deaths']),
     "p1kd":	"%.2f" % 	(dfIndiv.iloc[0]['k_d']),
     "p1skd":	"%.2f" % 	(dfIndiv.iloc[0]['k_d']),
-    "p1lga":	"%.0f" % 	(dfIndiv.iloc[0]['from_the_brink']),
+    "p1cont":	"%.1f" % 	(dfIndiv.iloc[0]['p_cont']),
+    "p1lga":	"%.0f" % 	(dfIndiv.iloc[0]['from_the_brink']+dfIndiv.iloc[0]['never_say_die']),
     "p1wb":	"%.0f" % 	(dfIndiv.iloc[0]['wrecking_ball']),
     "p1mks":	"%.0f" % 	(dfIndiv.iloc[0]['max_k_spree']),
     "p1ll":	"%.0f" % 	(dfIndiv.iloc[0]['long_life']),
@@ -164,7 +179,8 @@ indiv_context = {
     "p2d":	"%.0f" % 	(dfIndiv.iloc[1]['deaths']),
     "p2kd":	"%.2f" % 	(dfIndiv.iloc[1]['k_d']),
     "p2skd":	"%.2f" % 	(dfIndiv.iloc[1]['k_d']),
-    "p2lga":	"%.0f" % 	(dfIndiv.iloc[1]['from_the_brink']),
+    "p2cont":	"%.1f" % 	(dfIndiv.iloc[1]['p_cont']),
+    "p2lga":	"%.0f" % 	(dfIndiv.iloc[1]['from_the_brink']+dfIndiv.iloc[1]['never_say_die']),
     "p2wb":	"%.0f" % 	(dfIndiv.iloc[1]['wrecking_ball']),
     "p2mks":	"%.0f" % 	(dfIndiv.iloc[1]['max_k_spree']),
     "p2ll":	"%.0f" % 	(dfIndiv.iloc[1]['long_life']),
@@ -176,8 +192,9 @@ indiv_context = {
     "p3a":	"%.0f" % 	(dfIndiv.iloc[2]['assists']),
     "p3d":	"%.0f" % 	(dfIndiv.iloc[2]['deaths']),
     "p3kd":	"%.2f" % 	(dfIndiv.iloc[2]['k_d']),
-    "p3kd":	"%.2f" % 	(dfIndiv.iloc[2]['k_d']),
-    "p3lga":	"%.0f" % 	(dfIndiv.iloc[2]['from_the_brink']),
+    "p3skd":	"%.2f" % 	(dfIndiv.iloc[2]['k_d']),
+    "p3cont":	"%.1f" % 	(dfIndiv.iloc[2]['p_cont']),
+    "p3lga":	"%.0f" % 	(dfIndiv.iloc[2]['from_the_brink']+dfIndiv.iloc[2]['never_say_die']),
     "p3wb":	"%.0f" % 	(dfIndiv.iloc[2]['wrecking_ball']),
     "p3mks":	"%.0f" % 	(dfIndiv.iloc[2]['max_k_spree']),
     "p3ll":	"%.0f" % 	(dfIndiv.iloc[2]['long_life']),

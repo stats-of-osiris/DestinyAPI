@@ -51,17 +51,31 @@ Graph of Kill Method Distribtuion:
 | Assists                	| 19     	| 15     	| 12     	|
 | Deaths                 	| 23     	| 19     	| 21     	|
 | K/D                    	| 1.17    	| 1.95    	| 3.14    	|
-| Sweaty K/D             	| 1.17   	| 1.95   	| 3.14    	|
-| Last Guardian Actions* 	| 3   	| 7   	| 2   	|
+| Sweaty K/D*             	| 1.17   	| 1.95   	| 3.14    	|
+| Percent Contribution**  	| 14.1   	| 28.5   	| 57.5   	|
+| Last Guardian Actions*** | 4   	| 10   	| 7   	|
 | Wrecking Balls         	| 0    	| 2    	| 3    	|
 | Longest Kill Streak    	| 0   	| 0   	| 0   	|
 | Longest Life           	| 47    	| 61    	| 53    	|
 | Close Calls            	| 2    	| 4    	| 2    	|
 
-Last Guardian Actions are:
 
-'Never Say Die' = Kill an enemy as the last guardian standing
-'From the Brink' = Revive a teammate as the last guardian standing
+* Sweaty K/D is K/D on matches where the enemy team wins at least 3 rounds.
+
+** Percent contribution is a metric for determining how much you helped or hindered your team.
+
++100 for kills
+-100 for deaths
++33 for assists
++25 for rezzes
++12 for being rezzed
+
+Scores are tabulated across all games for individuals and the team. And then a player's score is shown as percent of the team's total score.
+
+***Last Guardian Actions are:
+
+'Never Say Die' = Kill an enemy as the last guardian standing.
+'From the Brink' = Revive a teammate as the last guardian standing.
 
 
 
