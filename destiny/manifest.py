@@ -36,6 +36,7 @@ class Manifest(object):
     VERSION_PICKLE = '{}/man_version.pickle'.format(MAN_DIR)
     MANIFEST_FILE = '{}/manifest.content'.format(MAN_DIR)
     MANIFEST_PICKLE = '{}/manifest.pickle'.format(MAN_DIR)
+    ZIP_FILE = '{}/MAN_ZIP'.format(MAN_DIR)
 
     def update_version(self, db_version, version_file=VERSION_PICKLE,
                        directory=MAN_DIR):
@@ -50,8 +51,7 @@ class Manifest(object):
         return current_version
 
     def update_manifest(self, directory=MAN_DIR,
-                        file_name=MANIFEST_FILE, **kwargs):
-        zip_file = '{}/MAN_ZIP'.format(directory)
+                        file_name=MANIFEST_FILE, zip_file=ZIP_FILE, **kwargs):
         with open(zip_file, 'wb') as zip_file:
             session = utils.build_session(**kwargs)
             response = session.get(self.meta_url, stream=True)
@@ -70,19 +70,18 @@ class Manifest(object):
                         "\r[%s%s]" % ('=' * done, ' ' * (50 - done)))
                     sys.stdout.flush()
                 utils.close_session(session, **kwargs)
-        with zipfile.ZipFile(zip_file) as zip_file:
-            name = zip_file.namelist()
-            zip_file.extractall()
+        self.unzip_manifest()
+        print('Database downloaded')
+
+    def unzip_manifest(self, zip_file=ZIP_FILE, file_name=MANIFEST_FILE):
+        with zipfile.ZipFile(zip_file) as man_zip:
+            name = man_zip.namelist()
+            man_zip.extractall()
         os.rename(name[0], file_name)
         os.remove(zip_file)
-        print('Database downloaded')
 
     def crawl_manifest(self, manifest_file=MANIFEST_FILE,
                        manifest_pickle=MANIFEST_PICKLE):
-
-        # Ensure that a manifest file exists
-        if not os.path.exists(manifest_pickle):
-            self.check_for_update()
         # Connect to the manifest
         conn = sqlite3.connect(manifest_file)
         # Create the cursor object
@@ -128,6 +127,8 @@ class Manifest(object):
                  update=False, directory=MAN_DIR, **kwargs):
         if update or not os.path.exists(directory):
             self.check_for_update(**kwargs)
+        elif not os.path.exists(manifest_pickle):
+            self.crawl_manifest()
         with open(manifest_pickle, 'rb') as data:
             man_data = pickle.load(data)
         return man_data
