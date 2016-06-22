@@ -34,7 +34,7 @@ Round Scores by Game
 - Team K/D of 1.56
 - 6 out of 8 matches we had First Blood	
 - 39 Aces vs 0 times Aced
-- 4 Annihilations vs 1 times Annihilated
+- 3 Annihilations vs 0 times Annihilated
 - 33 Resurrections vs 30 Enemy Resurrections Allowed
 - 13 Orbs Missed out of 24 generated
 

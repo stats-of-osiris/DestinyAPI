@@ -79,7 +79,7 @@ keyStats = [
     {'value':        'medalsCloseCallTalent',
      'column_name': 'close_call',
      'team':        'us'},
-    {'value':        'medalsActivityCompleteVictoryElimination',
+    {'value':        'medalsActivityCompleteVictoryEliminationShutout',
      'column_name': 'annil',
      'team':        'us'},
     # Primaries
@@ -150,7 +150,7 @@ keyStats = [
            # weapon kill sprees
 
 # add immediately
-#   game date
+#   game date & start time
 #   hash for map
 #   player loadouts
 
