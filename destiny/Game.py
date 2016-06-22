@@ -10,7 +10,7 @@ destipy.Game
 
 """
 from . import utils, constants
-from .Guardian import Guardian
+from .guardian import Guardian
 
 
 class Game(object):

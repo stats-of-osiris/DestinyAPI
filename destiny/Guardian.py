@@ -10,7 +10,7 @@ destiny.Guardian
 
 """
 from . import utils, constants
-from .Manifest import Manifest
+from .manifest import Manifest
 
 
 class Guardian(object):

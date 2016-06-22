@@ -10,9 +10,9 @@ destipy.ReportContext
 """
 
 from .utils import build_session
-from .Player import Player
-from .Game import Game
-from .Fireteam import Fireteam
+from .player import Player
+from .game import Game
+from .fireteam import Fireteam
 
 
 class ReportContext(object):

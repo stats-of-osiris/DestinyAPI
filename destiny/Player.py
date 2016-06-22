@@ -10,7 +10,7 @@ destiny.Player
 
 """
 from . import utils, constants
-from .Guardian import Guardian
+from .guardian import Guardian
 
 
 class Player(object):
