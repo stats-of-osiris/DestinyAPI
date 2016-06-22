@@ -1,0 +1,84 @@
+---
+layout: post
+title: Report Card
+excerpt: "Test"
+modified: 2016-06-22
+categories: articles
+tags: [pvp,trials,data]
+image:
+  feature: header.png
+comments: true
+share: true
+---
+
+##Trials Report Card
+
+###Team Summary
+
+1. JohnOfMars - The 1.0-wielding Titan
+2. XpLiCiTOnE - The 2.0-wielding Hunter
+3. igordennis - The 1.0-wielding Hunter
+
+
+### Overall Team Performance
+
+![](https://www.bungie.net/img/theme/destiny/bgs/pgcrs/crucible_exodus_blue.jpg)
+
+Playing on Map for 45.2 minutes
+
+Spawn Side: % Alpha, % Bravo
+
+Graph of Kill Method Distribtuion:
+![](http://johnofmars.github.io/images/headers/trials2.jpg)
+	
+Round Scores by Game
+![](http://johnofmars.github.io/images/headers/trials2.jpg)
+
+- Team K/D of 2.06
+- 5 out of 7 matches we had First Blood	
+- 6 Aces vs 0 times Aced
+- 5 Annihilations vs 0 times Annihilated
+- 25 Resurrections vs 18 Enemy Resurrections Allowed
+- 3 Orbs Missed out of 13 generated
+
+
+
+### Detailed Individual Performance
+
+| General Summary            | Player 1 | Player 2 | Player 3 |
+|----------------------------|-----------|-----------|-----------|
+| Kills                      |           |           |           |
+| Assists                    |           |           |           |
+| Deaths                     |           |           |           |
+| K/D                        |           |           |           |
+| Sweaty K/D                 |           |           |           |
+| % Contribution             |           |           |           |
+| Last Guardian Actions*     |           |           |           |
+| Wrecking Balls             |           |           |           |
+| Longest Kill Streak        |           |           |           |
+| Longest Life               |           |           |           |
+| Close Calls                |           |           |           |
+
+Last Guardian Actions are:
+
+'Never Say Die' = Kill an enemy as the last guardian standing
+'From the Brink' = Revive a teammate as the last guardian standing
+
+| Kill Method Breakdown      | Player 1 | Player 2 | Player 3 |
+|----------------------------|-----------|-----------|-----------|
+| % Primary vs Secondary     |           |           |           |
+| Sniper Headshots / Kills   |           |           |           |
+| Shotgun Kills              |           |           |           |
+| Other Special Weapon Kills |           |           |           |
+| Heavy Weapon Kills         |           |           |           |
+| Grenade Kills              |           |           |           |
+| Melee Kills                |           |           |           |
+| Super Kills                |           |           |           |
+
+| Resurrections & Orbs       | Player 1 | Player 2 | Player 3 |
+|----------------------------|-----------|-----------|-----------|
+| Resurrections Performed    |           |           |           |
+| Resurrection Received      |           |           |           |
+| Deaths Un-Rezzed           |           |           |           |
+| Orbs Generated             |           |           |           |
+| Orbs Missed                |           |           |           |

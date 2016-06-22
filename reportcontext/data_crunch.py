@@ -7,6 +7,7 @@ Created on Sat May 21 21:07:32 2016
 
 import pandas as pd
 from scipy.stats import mode
+import math
 
 
 
@@ -77,7 +78,8 @@ for teams in teams_list:
     
     dfTeamFocus['k_d'] = dfTeamFocus['kills']/dfTeamFocus['deaths']
     dfTeamFocus['alleg'] = mode(dfTeamFull.alleg)[0][0]
-    # annil / 3 round up
+    dfTeamFocus['annil'] = math.ceil(dfTeamFocus.annil/3)
+    # aces / 3 round up
     
     team_drop_rows = [
         'activity_id',
@@ -134,8 +136,11 @@ for player in teammates:
 
     #'avg_life' : average
     #'avg_k_dist' : average
-    # best weapon
-    
+    # best weapon change from numeric to weapon class to loadout
+   
+    # add bravo spawn count
+    # add alpha spawn count   
+   
     indiv_drop_rows = [
         'activity_id',
         'game_N',
@@ -155,3 +160,9 @@ for player in teammates:
 
 # score by game
 # % kill method
+
+# Export to csv -------------------------------------------------------------
+dfStats.to_csv('dfStats.csv', header=True, index=True)
+dfTeams.to_csv('dfTeams.csv', header=True, index=True)
+dfGames.to_csv('dfGames.csv', header=True, index=True)
+dfIndiv.to_csv('dfIndiv.csv', header=True, index=True)

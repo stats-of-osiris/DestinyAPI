@@ -152,8 +152,6 @@ gameN=0
 for game in gameID:
     response = requests.get('https://www.bungie.net/Platform/Destiny/Stats/PostGameCarnageReport/' + game,
                             headers=head)
-                            
-    gameN+=1 #move this to the end.
     
     try:
         response.raise_for_status()
@@ -186,5 +184,10 @@ for game in gameID:
         print(json.dumps(response.json(), indent=4))
     except ValueError:
         print("Cannot decode json, got %s" % response.text)
+
+                            
+    gameN+=1 #move this to the end.
+
+
     dfStats.to_csv('DestinyStats.csv', header=True, index=True)
     

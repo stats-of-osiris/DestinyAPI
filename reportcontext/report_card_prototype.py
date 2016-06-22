@@ -6,6 +6,15 @@ Created on Wed May 25 16:02:11 2016
 """
 
 import time
+import pandas as pd
+
+dfStats = pd.read_csv('DestinyStats.csv')
+
+dfTeams = pd.read_csv('dfTeams.csv')
+dfGames = pd.read_csv('dfGames.csv')
+dfIndiv = pd.read_csv('dfIndiv.csv')
+
+#dfTeams.set_index('alleg', inplace=True)
 
 #---------------HEADER----------------------
 
@@ -46,15 +55,15 @@ summary = """
 """
 
 summary_context = {
- "Player1":'Player 1', 
- "Player1_weapon":"Weapon",
- "Player1_class":"Character Class",
- "Player2":'Player 2', 
- "Player2_weapon":"Weapon",
- "Player2_class":"Character Class",
- "Player3":'Player 3', 
- "Player3_weapon":"Weapon",
- "Player3_class":"Character Class",
+ "Player1":dfIndiv.iloc[0]['player'], 
+ "Player1_weapon":dfIndiv.iloc[0]['best_weap'],
+ "Player1_class":dfIndiv.iloc[0]['pclass'],
+ "Player2":dfIndiv.iloc[1]['player'], 
+ "Player2_weapon":dfIndiv.iloc[1]['best_weap'],
+ "Player2_class":dfIndiv.iloc[1]['pclass'],
+ "Player3":dfIndiv.iloc[2]['player'], 
+ "Player3_weapon":dfIndiv.iloc[2]['best_weap'],
+ "Player3_class":dfIndiv.iloc[2]['pclass'],
  } 
  
 with  open('report_card.txt','a') as myfile:
@@ -65,44 +74,49 @@ with  open('report_card.txt','a') as myfile:
 teamperf = """
 ### Overall Team Performance
 
-![](http://johnofmars.github.io/images/{map_path})
+![]({map_path})
 
-Playing on {Map} for {Time}
+Playing on {Map} for {Time} minutes
+
 Spawn Side: % Alpha, % Bravo
 
-Kill Method Distribtuion:
-% primary
-% secondary
-% Heavy
-% Ability (melee/grenade) 
-% Super
+Graph of Kill Method Distribtuion:
+![](http://johnofmars.github.io/images/{killm_graph_path})
 	
 Round Scores by Game
-![](http://johnofmars.github.io/images/{graph_path})
+![](http://johnofmars.github.io/images/{game_graph_path})
 
-- Team K/D
-- % Matches we had First Kill	
-- {N_aces} Aces vs {N_aces} times Aced
-- {N_annil} Annihilations vs {N_annil} times Annihilated
-- {N_rez} Resurrections vs {N_rez} Enemy Resurrections Allowed
-- {N_orbs} Orbs Missed
+- Team K/D of {teamkd}
+- {N_1stk} out of {N_games} matches we had First Blood	
+- {N_aces} Aces vs {N_aced} times Aced
+- {N_annil} Annihilations vs {N_annild} times Annihilated
+- {N_rez} Resurrections vs {N_enemy_rez} Enemy Resurrections Allowed
+- {N_morbs} Orbs Missed out of {N_orbs} generated
 
 """
 
 teamperf_context = {
- "map_path":"headers/trials2.jpg",
+ "map_path":"https://www.bungie.net/img/theme/destiny/bgs/pgcrs/crucible_exodus_blue.jpg",
  "Map":"Map",
- "Time":"Time",
- "graph_path":"headers/trials2.jpg",
- "N_aces":"N",
- "N_annil":"N",
- "N_rez":"N",
- "N_orbs":"N",
+ "Time":"%.1f" % (dfIndiv.iloc[0]['play_time']/60),
+ "killm_graph_path":"headers/trials2.jpg",
+ "game_graph_path":"headers/trials2.jpg",
+ "teamkd": "%.2f" % dfTeams.iloc[0]['k_d'],
+ "N_1stk": int(dfTeams.iloc[0]['first_blood']),
+ "N_games":len(dfGames),
+ "N_aces":int(dfTeams.iloc[0]['ace']),
+ "N_aced":int(dfTeams.iloc[1]['ace']),
+ "N_annil":int(dfTeams.iloc[0]['annil']),
+ "N_annild":int(dfTeams.iloc[1]['annil']),
+ "N_rez":int(dfTeams.iloc[0]['rezzes']),
+ "N_enemy_rez":int(dfTeams.iloc[1]['rezzes']),
+ "N_morbs":int(dfTeams.iloc[0]['orbs_gen']-dfTeams.iloc[0]['orbs_gath']),
+ "N_orbs":int(dfTeams.iloc[0]['orbs_gen']),
  } 
  
 with  open('report_card.txt','a') as myfile:
     myfile.write(teamperf.format(**teamperf_context))
-
+#
 #---------------INDIV PERFORMANCE-----------
 
 indiv = """
@@ -117,7 +131,6 @@ indiv = """
 | K/D                        |           |           |           |
 | Sweaty K/D                 |           |           |           |
 | % Contribution             |           |           |           |
-| Score Contribution         |           |           |           |
 | Last Guardian Actions*     |           |           |           |
 | Wrecking Balls             |           |           |           |
 | Longest Kill Streak        |           |           |           |
