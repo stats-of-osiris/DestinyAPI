@@ -130,17 +130,17 @@ indiv = """
 | Deaths                 	| {p1d}     	| {p2d}     	| {p3d}     	|
 | K/D                    	| {p1kd}    	| {p2kd}    	| {p3kd}    	|
 | Sweaty K/D*             	| {p1skd}   	| {p2skd}   	| {p3kd}    	|
-| Percent Contribution**  	| {p1cont}   	| {p2cont}   	| {p3cont}   	|
-| Last Guardian Actions*** | {p1lga}   	| {p2lga}   	| {p3lga}   	|
+| Percent Contribution**  	| {p1cont} %  	| {p2cont} %    	| {p3cont} %    	|
+| Last Guardian Actions***   | {p1lga}   	| {p2lga}   	| {p3lga}   	|
 | Wrecking Balls         	| {p1wb}    	| {p2wb}    	| {p3wb}    	|
 | Longest Kill Streak    	| {p1mks}   	| {p2mks}   	| {p3mks}   	|
 | Longest Life           	| {p1ll}    	| {p2ll}    	| {p3ll}    	|
 | Close Calls            	| {p1cc}    	| {p2cc}    	| {p3cc}    	|
 
 
-* Sweaty K/D is K/D on matches where the enemy team wins at least 3 rounds.
+1) **Sweaty K/D** is K/D on matches where the enemy team wins at least 3 rounds.
 
-** Percent contribution is a metric for determining how much you helped or hindered your team.
+2) **Percent contribution** is a metric for determining how much you helped or hindered your team.
 
 - +100 for kills
 - -100 for deaths
@@ -150,10 +150,10 @@ indiv = """
 
 Scores are tabulated across all games for individuals and the team. And then a player's score is shown as percent of the team's total score.
 
-***Last Guardian Actions are:
+3) **Last Guardian Actions** are:
 
-- 'Never Say Die' = Kill an enemy as the last guardian standing.
-- 'From the Brink' = Revive a teammate as the last guardian standing.
+- *'Never Say Die'* = Kill an enemy as the last guardian standing.
+- *'From the Brink'* = Revive a teammate as the last guardian standing.
 """
 
 indiv_context = {
@@ -227,7 +227,7 @@ indiv2 = """
 indiv_context2 = {
     "Player1":dfIndiv.iloc[0]['player'], 
 
-    "p1pvs":	"%.0f" % 	(dfIndiv.iloc[0]['n_primary']/(dfIndiv.iloc[0]['n_primary']+dfIndiv.iloc[0]['n_special'])*100),
+    "p1pvs":	"%.1f" % 	(dfIndiv.iloc[0]['n_primary']/(dfIndiv.iloc[0]['n_primary']+dfIndiv.iloc[0]['n_special'])*100),
     "p1shs":	"%.0f" % 	(dfIndiv.iloc[0]['sniper_hshots']),
     "p1sk":	"%.0f" % 	(dfIndiv.iloc[0]['sniper_kills']),
     "p1sg":	"%.0f" % 	(dfIndiv.iloc[0]['shotg_kills']),
@@ -243,7 +243,7 @@ indiv_context2 = {
  
     "Player2":dfIndiv.iloc[1]['player'], 
 
-    "p2pvs":	"%.0f" % 	(dfIndiv.iloc[1]['n_primary']/(dfIndiv.iloc[1]['n_primary']+dfIndiv.iloc[1]['n_special'])*100),
+    "p2pvs":	"%.1f" % 	(dfIndiv.iloc[1]['n_primary']/(dfIndiv.iloc[1]['n_primary']+dfIndiv.iloc[1]['n_special'])*100),
     "p2shs":	"%.0f" % 	(dfIndiv.iloc[1]['sniper_hshots']),
     "p2sk":	"%.0f" % 	(dfIndiv.iloc[1]['sniper_kills']),
     "p2sg":	"%.0f" % 	(dfIndiv.iloc[1]['shotg_kills']),

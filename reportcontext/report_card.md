@@ -52,17 +52,17 @@ Graph of Kill Method Distribtuion:
 | Deaths                 	| 34     	| 31     	| 37     	|
 | K/D                    	| 1.29    	| 1.48    	| 1.86    	|
 | Sweaty K/D*             	| 1.29   	| 1.48   	| 1.86    	|
-| Percent Contribution**  	| 23.1   	| 30.7   	| 46.2   	|
-| Last Guardian Actions*** | 12   	| 12   	| 8   	|
+| Percent Contribution**  	| 23.1 %  	| 30.7 %    	| 46.2 %    	|
+| Last Guardian Actions***   | 12   	| 12   	| 8   	|
 | Wrecking Balls         	| 0    	| 1    	| 2    	|
 | Longest Kill Streak    	| 4   	| 6   	| 6   	|
 | Longest Life           	| 74    	| 70    	| 71    	|
 | Close Calls            	| 1    	| 4    	| 2    	|
 
 
-* Sweaty K/D is K/D on matches where the enemy team wins at least 3 rounds.
+1) **Sweaty K/D** is K/D on matches where the enemy team wins at least 3 rounds.
 
-** Percent contribution is a metric for determining how much you helped or hindered your team.
+2) **Percent contribution** is a metric for determining how much you helped or hindered your team.
 
 - +100 for kills
 - -100 for deaths
@@ -72,15 +72,15 @@ Graph of Kill Method Distribtuion:
 
 Scores are tabulated across all games for individuals and the team. And then a player's score is shown as percent of the team's total score.
 
-***Last Guardian Actions are:
+3) **Last Guardian Actions** are:
 
-- 'Never Say Die' = Kill an enemy as the last guardian standing.
-- 'From the Brink' = Revive a teammate as the last guardian standing.
+- *'Never Say Die'* = Kill an enemy as the last guardian standing.
+- *'From the Brink'* = Revive a teammate as the last guardian standing.
 
 
 | Kill Method Breakdown        	| JohnOfMars      	| DirtyAquaticApe      	| igordennis      	|
 |----------------------------	|----------------	|----------------	|----------------	|
-| % Primary vs Secondary     	| 78 %      	| 67 %      	| 40.8 %      	|
+| % Primary vs Secondary     	| 77.8 %      	| 66.7 %      	| 40.8 %      	|
 | Sniper Headshots / Kills   	| 4/6 	| 0/0 	| 26/29 	|
 | Shotgun Kills              	| 0         	| 6         	| 0         	|
 | Other Special Weapon Kills 	| 0         	| 4         	| 0         	|
