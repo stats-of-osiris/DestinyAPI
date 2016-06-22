@@ -37,4 +37,4 @@ TO DO:
 
 ## `report_card_prototype.py`
 
-Based on `report_card.py` in main folder. Haven't started working on it yet, but will begin plugging data from `data_crunch.py` into this for export.
+Based on `report_card.py` in main folder. Almost done working on it. Right now it needs implementation of the graphs and hashes. But the `data_crunch.py` needs to be updated for that next.
