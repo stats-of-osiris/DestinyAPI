@@ -38,7 +38,7 @@ header_context = {
  "Date":time.strftime("%Y-%m-%d")
  } 
  
-with  open('report_card.txt','w') as myfile:
+with  open('report_card.md','w') as myfile:
     myfile.write(header.format(**header_context))
 
 #---------------TEAM SUMMARY-----------
@@ -66,7 +66,7 @@ summary_context = {
  "Player3_class":dfIndiv.iloc[2]['pclass'],
  } 
  
-with  open('report_card.txt','a') as myfile:
+with  open('report_card.md','a') as myfile:
     myfile.write(summary.format(**summary_context))
     
 #---------------TEAM PERFORMANCE-----------
@@ -96,7 +96,7 @@ Graph of Kill Method Distribtuion:
 """
 
 teamperf_context = {
- "map_path":"https://www.bungie.net/img/theme/destiny/bgs/pgcrs/crucible_exodus_blue.jpg",
+ "map_path":"https://www.bungie.net/img/theme/destiny/bgs/pgcrs/widows_court.jpg",
  "Map":"Map",
  "Time":"%.1f" % (dfIndiv.iloc[0]['play_time']/60),
  "killm_graph_path":"headers/trials2.jpg",
@@ -114,7 +114,7 @@ teamperf_context = {
  "N_orbs":int(dfTeams.iloc[0]['orbs_gen']),
  } 
  
-with  open('report_card.txt','a') as myfile:
+with  open('report_card.md','a') as myfile:
     myfile.write(teamperf.format(**teamperf_context))
 #
 #---------------INDIV PERFORMANCE-----------
@@ -142,19 +142,18 @@ indiv = """
 
 ** Percent contribution is a metric for determining how much you helped or hindered your team.
 
-+100 for kills
--100 for deaths
-+33 for assists
-+25 for rezzes
-+12 for being rezzed
+- +100 for kills
+- -100 for deaths
+- +33 for assists
+- +25 for rezzes
+- +12 for being rezzed
 
 Scores are tabulated across all games for individuals and the team. And then a player's score is shown as percent of the team's total score.
 
 ***Last Guardian Actions are:
 
-'Never Say Die' = Kill an enemy as the last guardian standing.
-'From the Brink' = Revive a teammate as the last guardian standing.
-
+- 'Never Say Die' = Kill an enemy as the last guardian standing.
+- 'From the Brink' = Revive a teammate as the last guardian standing.
 """
 
 indiv_context = {
@@ -201,7 +200,7 @@ indiv_context = {
     "p3cc":	"%.0f" % 	(dfIndiv.iloc[2]['close_call'])
  } 
  
-with  open('report_card.txt','a') as myfile:
+with  open('report_card.md','a') as myfile:
     myfile.write(indiv.format(**indiv_context))
     
 indiv2 = """
@@ -276,5 +275,5 @@ indiv_context2 = {
 
  } 
  
-with  open('report_card.txt','a') as myfile:
+with  open('report_card.md','a') as myfile:
     myfile.write(indiv2.format(**indiv_context2))

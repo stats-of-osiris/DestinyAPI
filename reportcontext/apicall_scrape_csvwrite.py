@@ -9,8 +9,16 @@ import requests
 import json
 import pandas as pd
 head = {'X-API-Key':'071b767b1d014435b36264bf4f6234fc'}
-gameID = ['5051781495','5051794360','5051827975','5051825913','5051858771','5051885731','5051903760',]
+
+#Scarab Card
+gameID = ["4784376208","4784395782","4784423429","4784444986","4784478654","4784505400","4784538623","4784578379"]
+
+#Thwek card on Exodus Blue
+#gameID = ['5051781495','5051794360','5051827975','5051825913','5051858771','5051885731','5051903760']
+
+#Pantheon
 #gameID = ['5100794481','5100843302','5100881734','5100910939','5100940484','5100970909','5101005646','5101033227','5101072353']
+
 dfStats = pd.DataFrame(columns=())
 
   
@@ -40,7 +48,7 @@ keyStats = [
     {'value':        'averageLifespan',
      'column_name': 'avg_life',
      'team':        'us'},
-    {'value':        'longestKillspree', # broken
+    {'value':        'longestKillSpree', # broken
      'column_name': 'max_k_spree',
      'team':        'us'},
     # Weapon Use & Medals

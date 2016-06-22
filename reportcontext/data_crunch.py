@@ -19,7 +19,7 @@ dfStats = pd.read_csv('DestinyStats.csv')
 
 
 # Generate Team List (need a function for this)
-teammates = ['JohnOfMars','XpLiCiTOnE','igordennis']
+teammates = ['JohnOfMars','DirtyAquaticApe','igordennis']
 
 # Assign Allegiences
 dfStats['alleg'] = '?'

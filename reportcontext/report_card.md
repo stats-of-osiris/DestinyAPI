@@ -16,27 +16,27 @@ share: true
 ###Team Summary
 
 1. JohnOfMars - The 1.0-wielding Titan
-2. XpLiCiTOnE - The 2.0-wielding Hunter
-3. igordennis - The 1.0-wielding Hunter
+2. DirtyAquaticApe - The 2.0-wielding Warlock
+3. igordennis - The 8.0-wielding Hunter
 
 
 ### Overall Team Performance
 
-![](https://www.bungie.net/img/theme/destiny/bgs/pgcrs/crucible_exodus_blue.jpg)
+![](https://www.bungie.net/img/theme/destiny/bgs/pgcrs/widows_court.jpg)
 
-Playing on Map for 45.2 minutes
+Playing on Map for 62.9 minutes
 
 Spawn Side: % Alpha, % Bravo
 
 Round Scores by Game
 ![](http://johnofmars.github.io/images/headers/trials2.jpg)
 
-- Team K/D of 2.06
-- 5 out of 7 matches we had First Blood	
-- 6 Aces vs 0 times Aced
-- 5 Annihilations vs 0 times Annihilated
-- 25 Resurrections vs 18 Enemy Resurrections Allowed
-- 3 Orbs Missed out of 13 generated
+- Team K/D of 1.56
+- 6 out of 8 matches we had First Blood	
+- 39 Aces vs 0 times Aced
+- 4 Annihilations vs 1 times Annihilated
+- 33 Resurrections vs 30 Enemy Resurrections Allowed
+- 13 Orbs Missed out of 24 generated
 
 Graph of Kill Method Distribtuion:
 ![](http://johnofmars.github.io/images/headers/trials2.jpg)
@@ -45,54 +45,53 @@ Graph of Kill Method Distribtuion:
 
 ### Detailed Individual Performance
 
-| #                      	| JohnOfMars 	| XpLiCiTOnE 	| igordennis 	|
+| #                      	| JohnOfMars 	| DirtyAquaticApe 	| igordennis 	|
 |------------------------	|-----------	|-----------	|-----------	|
-| Kills                  	| 27     	| 37     	| 66     	|
-| Assists                	| 19     	| 15     	| 12     	|
-| Deaths                 	| 23     	| 19     	| 21     	|
-| K/D                    	| 1.17    	| 1.95    	| 3.14    	|
-| Sweaty K/D*             	| 1.17   	| 1.95   	| 3.14    	|
-| Percent Contribution**  	| 14.1   	| 28.5   	| 57.5   	|
-| Last Guardian Actions*** | 4   	| 10   	| 7   	|
-| Wrecking Balls         	| 0    	| 2    	| 3    	|
-| Longest Kill Streak    	| 0   	| 0   	| 0   	|
-| Longest Life           	| 47    	| 61    	| 53    	|
-| Close Calls            	| 2    	| 4    	| 2    	|
+| Kills                  	| 44     	| 46     	| 69     	|
+| Assists                	| 21     	| 28     	| 22     	|
+| Deaths                 	| 34     	| 31     	| 37     	|
+| K/D                    	| 1.29    	| 1.48    	| 1.86    	|
+| Sweaty K/D*             	| 1.29   	| 1.48   	| 1.86    	|
+| Percent Contribution**  	| 23.1   	| 30.7   	| 46.2   	|
+| Last Guardian Actions*** | 12   	| 12   	| 8   	|
+| Wrecking Balls         	| 0    	| 1    	| 2    	|
+| Longest Kill Streak    	| 4   	| 6   	| 6   	|
+| Longest Life           	| 74    	| 70    	| 71    	|
+| Close Calls            	| 1    	| 4    	| 2    	|
 
 
 * Sweaty K/D is K/D on matches where the enemy team wins at least 3 rounds.
 
 ** Percent contribution is a metric for determining how much you helped or hindered your team.
 
-+100 for kills
--100 for deaths
-+33 for assists
-+25 for rezzes
-+12 for being rezzed
+- +100 for kills
+- -100 for deaths
+- +33 for assists
+- +25 for rezzes
+- +12 for being rezzed
 
 Scores are tabulated across all games for individuals and the team. And then a player's score is shown as percent of the team's total score.
 
 ***Last Guardian Actions are:
 
-'Never Say Die' = Kill an enemy as the last guardian standing.
-'From the Brink' = Revive a teammate as the last guardian standing.
+- 'Never Say Die' = Kill an enemy as the last guardian standing.
+- 'From the Brink' = Revive a teammate as the last guardian standing.
 
 
-
-| Kill Method Breakdown        	| JohnOfMars      	| XpLiCiTOnE      	| igordennis      	|
+| Kill Method Breakdown        	| JohnOfMars      	| DirtyAquaticApe      	| igordennis      	|
 |----------------------------	|----------------	|----------------	|----------------	|
-| % Primary vs Secondary     	| 100 %      	| 88 %      	| 61.0 %      	|
-| Sniper Headshots / Kills   	| 0/0 	| 3/3 	| 16/16 	|
-| Shotgun Kills              	| 0         	| 0         	| 0         	|
-| Other Special Weapon Kills 	| 0         	| 0         	| 0         	|
-| Heavy Weapon Kills         	| 5         	| 2         	| 0         	|
-| Grenade Kills              	| 1          	| 2          	| 7          	|
-| Melee Kills                	| 0          	| 1          	| 4          	|
-| Super Kills                	| 2          	| 7          	| 10          	|
+| % Primary vs Secondary     	| 78 %      	| 67 %      	| 40.8 %      	|
+| Sniper Headshots / Kills   	| 4/6 	| 0/0 	| 26/29 	|
+| Shotgun Kills              	| 0         	| 6         	| 0         	|
+| Other Special Weapon Kills 	| 0         	| 4         	| 0         	|
+| Heavy Weapon Kills         	| 1         	| 0         	| 0         	|
+| Grenade Kills              	| 4          	| 8          	| 6          	|
+| Melee Kills                	| 3          	| 4          	| 3          	|
+| Super Kills                	| 6          	| 3          	| 9          	|
 
-| Resurrections & Orbs      	| JohnOfMars      	| XpLiCiTOnE      	| igordennis      	|
+| Resurrections & Orbs      	| JohnOfMars      	| DirtyAquaticApe      	| igordennis      	|
 |----------------------------	|----------------	|----------------	|----------------	|
-| Resurrections Performed    	| 6        	| 10        	| 9        	|
-| Deaths Un-rezzed           	| 14       	| 10       	| 12       	|
-| Orbs Generated             	| 3       	| 7       	| 3       	|
-| Orbs Missed                	| 3      	| 1      	| 6      	|
+| Resurrections Performed    	| 12        	| 14        	| 7        	|
+| Deaths Un-rezzed           	| 27       	| 24       	| 30       	|
+| Orbs Generated             	| 10       	| 5       	| 9       	|
+| Orbs Missed                	| 2      	| 7      	| 2      	|
