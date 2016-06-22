@@ -51,7 +51,7 @@ class Manifest(object):
 
     def update_manifest(self, directory=MAN_DIR,
                         file_name=MANIFEST_FILE, **kwargs):
-        zip_file = '{}.MAN_ZIP'.format(directory)
+        zip_file = '{}/MAN_ZIP'.format(directory)
         with open(zip_file, 'wb') as zip_file:
             session = utils.build_session(**kwargs)
             response = session.get(self.meta_url, stream=True)
@@ -125,8 +125,8 @@ class Manifest(object):
             self.crawl_manifest()
 
     def get_data(self, manifest_pickle=MANIFEST_PICKLE,
-                 update=False, **kwargs):
-        if update:
+                 update=False, directory=MAN_DIR, **kwargs):
+        if update or not os.path.exists(directory):
             self.check_for_update(**kwargs)
         with open(manifest_pickle, 'rb') as data:
             man_data = pickle.load(data)
