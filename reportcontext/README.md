@@ -42,31 +42,31 @@ Based on `report_card.py` in main folder. Almost done working on it. Right now i
 # TODO:
 
 ## Display Map
-Collect Map Hash
-Convert Map Hash to Map Name
-Format Map Name
-Locate map image path
+- Collect Map Hash
+- Convert Map Hash to Map Name
+- Format Map Name
+- Locate map image path
 
 ## Plotting
-Plot Round Scores by Game
-Plot Kill Method Distrubution
+- Plot Round Scores by Game
+- Plot Kill Method Distrubution
 
 ##Calculate Sweaty K/D
-dfGames filter by enemy score
-Assign sweaty status
-update dfStats before dfTeams/dfIndiv creation
-Assign sweaty kills
-Assign sweaty deaths
-Calculate sweaty K/D or N/A for no sweaty matches
-Display sweaty K/D
+- dfGames filter by enemy score
+- Assign sweaty status
+- update dfStats before dfTeams/dfIndiv creation
+- Assign sweaty kills
+- Assign sweaty deaths
+- Calculate sweaty K/D or N/A for no sweaty matches
+- Display sweaty K/D
 
 ##Display Best Weapon
-Collect weapon hashes & kill counts 
-Find max kill weapon for each class
-Convert weapon hashes to names
-Cross-reference best weapon class with weapon name
+- Collect weapon hashes & kill counts 
+- Find max kill weapon for each class
+- Convert weapon hashes to names
+- Cross-reference best weapon class with weapon name
 
 ## General Report Fixes
-Updated description:
-"Scores are tabulated across all games for individuals and the team. And then a player's contribution is shown as their percent of the team's total score."
-Format Time better to include seconds
+- Updated description:
+	"Scores are tabulated across all games for individuals and the team. And then a player's contribution is shown as their percent of the team's total score."
+- Format Time better to include seconds
