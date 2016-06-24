@@ -7,6 +7,7 @@ Created on Wed May 25 16:02:11 2016
 
 import time
 import pandas as pd
+from datetime import datetime
 
 dfStats = pd.read_csv('DestinyStats.csv')
 

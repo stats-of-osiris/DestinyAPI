@@ -8,20 +8,30 @@ Created on Sat May 21 21:07:32 2016
 import requests
 import json
 import pandas as pd
+from datetime import datetime
+
+import sys
+sys.path.append("..") # Adds higher directory to python modules path.
+import destiny
+
 head = {'X-API-Key':'071b767b1d014435b36264bf4f6234fc'}
 
 #Scarab Card
 gameID = ["4784376208","4784395782","4784423429","4784444986","4784478654","4784505400","4784538623","4784578379"]
 
+#thwek
+#gameID = ["5051903760"]
+
 #Thwek card on Exodus Blue
 #gameID = ['5051781495','5051794360','5051827975','5051825913','5051858771','5051885731','5051903760']
 
-#Pantheon
+##Pantheon
 #gameID = ['5100794481','5100843302','5100881734','5100910939','5100940484','5100970909','5101005646','5101033227','5101072353']
 
 dfStats = pd.DataFrame(columns=())
-
-  
+dfWeaps = pd.DataFrame(columns=())
+dfAppend2 = pd.DataFrame(columns=('game','player','weap_hash','weap_kills')) 
+ 
 keyStats = [
     # Player Performance
     {'value':        'kills',
@@ -155,6 +165,19 @@ keyStats = [
 #   player loadouts
 
 
+weapon_stats = [
+    {'value':        'referenceId',
+     'column_name': 'weap_hash',
+     'team':        'both'},
+    {'value':        'referenceId',
+     'column_name': 'weap_kills',
+     'team':        'both'},
+     ]
+
+
+# items = destiny.Manifest().items
+# activities = destiny.Manifest().activities 
+
 gameN=0
 
 for game in gameID:
@@ -167,7 +190,8 @@ for game in gameID:
         for item in body['Response']['data']['entries']:
             dfAppend = pd.DataFrame(
                 {
-                    'activity_id': [game],    
+                    'activity_id': [game],
+                    'date': [datetime.strptime(body['Response']['data']['period'], '%Y-%m-%dT%H:%M:%SZ').strftime('%m/%d/%Y')],    ## THIS IS UTC DATE WILL NEED TO FIX  
                     'game_N': [gameN],              
                     'player': [item['player']['destinyUserInfo']['displayName']],
                     'pclass': [item['player']['characterClass']],
@@ -175,9 +199,13 @@ for game in gameID:
                     'score': [item['values']['score']['basic']['displayValue']],
                     'standing': [item['values']['standing']['basic']['displayValue']],
                     'play_time': [item['values']['activityDurationSeconds']['basic']['value']],
+                    'map_hash': [body['Response']['data']['activityDetails']['referenceId']],
+                    'map_name': [activities[body['Response']['data']['activityDetails']['referenceId']]['activityName']],
+                    'map_path': [activities[body['Response']['data']['activityDetails']['referenceId']]['pgcrImage']],        
                     'k_d': [item['values']['killsDeathsRatio']['basic']['value']],        
                     'assists': [item['values']['assists']['basic']['value']]
                 })
+            
                 
             for stat in keyStats:
                 if stat['value'] in item['extended']['values']:
@@ -186,7 +214,29 @@ for game in gameID:
                         index=dfAppend.index)
                 else:
                     dfAppend[stat['column_name']] = 0
+            
+            
+            
+            
             dfStats = dfStats.append(dfAppend, ignore_index=True)
+            
+#-----------------------------------------------------------------            
+ 
+            if 'weapons' in item['extended']:
+                for x in range(0,len(item['extended']['weapons'])):
+                    dfAppend2 = pd.DataFrame(
+                        {
+                            'game_N': [gameN],              
+                            'player': [item['player']['destinyUserInfo']['displayName']],
+                            'weap_hash': [item['extended']['weapons'][x]['referenceId']],
+                            'weap_kills': [item['extended']['weapons'][x]['values']['uniqueWeaponKills']['basic']['value']],
+                            'weap_name':[items[item['extended']['weapons'][x]['referenceId']]['itemName']],
+                            'weap_type':[items[item['extended']['weapons'][x]['referenceId']]['itemSubType']]
+                        })                  
+
+                    dfWeaps = dfWeaps.append(dfAppend2, ignore_index=True)         
+
+            
     except requests.exceptions.HTTPError as err:
         print("Error: {} {}".format(str(response.status_code), err))
         print(json.dumps(response.json(), indent=4))
@@ -194,8 +244,8 @@ for game in gameID:
         print("Cannot decode json, got %s" % response.text)
 
                             
-    gameN+=1 #move this to the end.
+    gameN+=1
 
 
-    dfStats.to_csv('DestinyStats.csv', header=True, index=True)
-    
+dfStats.to_csv('DestinyStats.csv', header=True, index=True)
+dfWeaps.to_csv('DestinyWeaps.csv', header=True, index=True, encoding = "ISO-8859-1")
