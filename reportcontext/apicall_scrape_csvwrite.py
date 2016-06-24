@@ -175,8 +175,8 @@ weapon_stats = [
      ]
 
 
-# items = destiny.Manifest().items
-# activities = destiny.Manifest().activities 
+items = destiny.Manifest().items
+activities = destiny.Manifest().activities 
 
 gameN=0
 

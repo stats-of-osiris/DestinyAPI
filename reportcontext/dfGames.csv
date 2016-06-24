@@ -1,9 +1,9 @@
-game_N,activity_id, play_time,team,standing,score,enemy_score
-0.0,4784376208.0,,Alpha,Victory,5.0,0.0
-1.0,4784395782.0,,Bravo,Victory,5.0,0.0
-2.0,4784423429.0,,Bravo,Victory,5.0,1.0
-3.0,4784444986.0,,Bravo,Victory,5.0,0.0
-4.0,4784478654.0,,Bravo,Victory,5.0,3.0
-5.0,4784505400.0,,Alpha,Victory,5.0,3.0
-6.0,4784538623.0,,Bravo,Defeat,4.0,5.0
-7.0,4784578379.0,,Alpha,Victory,5.0,3.0
+game_N,activity_id,date,play_time,team,standing,score,map_name,map_path,enemy_score
+0.0,4784376208.0,03/21/2016,252.0,Alpha,Victory,5.0,Widow's Court,/img/theme/destiny/bgs/pgcrs/widows_court.jpg,0.0
+1.0,4784395782.0,03/21/2016,309.0,Bravo,Victory,5.0,Widow's Court,/img/theme/destiny/bgs/pgcrs/widows_court.jpg,0.0
+2.0,4784423429.0,03/21/2016,439.0,Bravo,Victory,5.0,Widow's Court,/img/theme/destiny/bgs/pgcrs/widows_court.jpg,1.0
+3.0,4784444986.0,03/21/2016,304.0,Bravo,Victory,5.0,Widow's Court,/img/theme/destiny/bgs/pgcrs/widows_court.jpg,0.0
+4.0,4784478654.0,03/21/2016,582.0,Bravo,Victory,5.0,Widow's Court,/img/theme/destiny/bgs/pgcrs/widows_court.jpg,3.0
+5.0,4784505400.0,03/21/2016,556.0,Alpha,Victory,5.0,Widow's Court,/img/theme/destiny/bgs/pgcrs/widows_court.jpg,3.0
+6.0,4784538623.0,03/21/2016,649.0,Bravo,Defeat,4.0,Widow's Court,/img/theme/destiny/bgs/pgcrs/widows_court.jpg,5.0
+7.0,4784578379.0,03/21/2016,682.0,Alpha,Victory,5.0,Widow's Court,/img/theme/destiny/bgs/pgcrs/widows_court.jpg,3.0

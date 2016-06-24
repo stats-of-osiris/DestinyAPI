@@ -2,7 +2,7 @@
 layout: post
 title: Report Card
 excerpt: "Test"
-modified: 2016-06-22
+modified: 2016-06-24
 categories: articles
 tags: [pvp,trials,data]
 image:
@@ -24,7 +24,7 @@ share: true
 
 ![](https://www.bungie.net/img/theme/destiny/bgs/pgcrs/widows_court.jpg)
 
-Playing on Map for 62.9 minutes
+Playing on Widow's Court for 62.9 minutes on 03/21/2016.
 
 Spawn Side: % Alpha, % Bravo
 
@@ -70,7 +70,7 @@ Graph of Kill Method Distribtuion:
 - +25 for rezzes
 - +12 for being rezzed
 
-Scores are tabulated across all games for individuals and the team. And then a player's score is shown as percent of the team's total score.
+Scores are tabulated across all games for individuals and the team. And then a player's contribution is shown as percent of the team's total score.
 
 3) **Last Guardian Actions** are:
 

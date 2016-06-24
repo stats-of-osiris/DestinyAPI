@@ -7,7 +7,6 @@ Created on Wed May 25 16:02:11 2016
 
 import time
 import pandas as pd
-from datetime import datetime
 
 dfStats = pd.read_csv('DestinyStats.csv')
 
@@ -75,9 +74,9 @@ with  open('report_card.md','a') as myfile:
 teamperf = """
 ### Overall Team Performance
 
-![]({map_path})
+![](https://www.bungie.net{map_path})
 
-Playing on {Map} for {Time} minutes
+Playing on {Map} for {Time} minutes on {Date}.
 
 Spawn Side: % Alpha, % Bravo
 
@@ -97,22 +96,23 @@ Graph of Kill Method Distribtuion:
 """
 
 teamperf_context = {
- "map_path":"https://www.bungie.net/img/theme/destiny/bgs/pgcrs/widows_court.jpg",
- "Map":"Map",
- "Time":"%.1f" % (dfIndiv.iloc[0]['play_time']/60),
- "killm_graph_path":"headers/trials2.jpg",
- "game_graph_path":"headers/trials2.jpg",
- "teamkd": "%.2f" % dfTeams.iloc[0]['k_d'],
- "N_1stk": int(dfTeams.iloc[0]['first_blood']),
- "N_games":len(dfGames),
- "N_aces":int(dfTeams.iloc[0]['ace']),
- "N_aced":int(dfTeams.iloc[1]['ace']),
- "N_annil":int(dfTeams.iloc[0]['annil']),
- "N_annild":int(dfTeams.iloc[1]['annil']),
- "N_rez":int(dfTeams.iloc[0]['rezzes']),
- "N_enemy_rez":int(dfTeams.iloc[1]['rezzes']),
- "N_morbs":int(dfTeams.iloc[0]['orbs_gen']-dfTeams.iloc[0]['orbs_gath']),
- "N_orbs":int(dfTeams.iloc[0]['orbs_gen']),
+ "map_path":    dfGames.iloc[0]['map_path'],
+ "Map":         dfGames.iloc[0]['map_name'],
+ "Time":        "%.1f" % (dfIndiv.iloc[0]['play_time']/60),
+ "Date":        dfIndiv.iloc[0]['date'],
+ "killm_graph_path":    "headers/trials2.jpg",
+ "game_graph_path":     "headers/trials2.jpg",
+ "teamkd":      "%.2f" % dfTeams.iloc[0]['k_d'],
+ "N_1stk":      int(dfTeams.iloc[0]['first_blood']),
+ "N_games":     len(dfGames),
+ "N_aces":      int(dfTeams.iloc[0]['ace']),
+ "N_aced":      int(dfTeams.iloc[1]['ace']),
+ "N_annil":     int(dfTeams.iloc[0]['annil']),
+ "N_annild":    int(dfTeams.iloc[1]['annil']),
+ "N_rez":       int(dfTeams.iloc[0]['rezzes']),
+ "N_enemy_rez": int(dfTeams.iloc[1]['rezzes']),
+ "N_morbs":     int(dfTeams.iloc[0]['orbs_gen']-dfTeams.iloc[0]['orbs_gath']),
+ "N_orbs":      int(dfTeams.iloc[0]['orbs_gen']),
  } 
  
 with  open('report_card.md','a') as myfile:
@@ -149,7 +149,7 @@ indiv = """
 - +25 for rezzes
 - +12 for being rezzed
 
-Scores are tabulated across all games for individuals and the team. And then a player's score is shown as percent of the team's total score.
+Scores are tabulated across all games for individuals and the team. And then a player's contribution is shown as percent of the team's total score.
 
 3) **Last Guardian Actions** are:
 
@@ -246,11 +246,11 @@ indiv_context2 = {
 
     "p2pvs":	"%.1f" % 	(dfIndiv.iloc[1]['n_primary']/(dfIndiv.iloc[1]['n_primary']+dfIndiv.iloc[1]['n_special'])*100),
     "p2shs":	"%.0f" % 	(dfIndiv.iloc[1]['sniper_hshots']),
-    "p2sk":	"%.0f" % 	(dfIndiv.iloc[1]['sniper_kills']),
-    "p2sg":	"%.0f" % 	(dfIndiv.iloc[1]['shotg_kills']),
-    "p2os":	"%.0f" % 	(dfIndiv.iloc[1]['fr_kills']+dfIndiv.iloc[1]['side_kills']),
-    "p2hk":	"%.0f" % 	(dfIndiv.iloc[1]['rocket_kills']+dfIndiv.iloc[1]['hmg_kills']),
-    "p2g":	"%.0f" % 	(dfIndiv.iloc[1]['melees']),
+    "p2sk": 	"%.0f" % 	(dfIndiv.iloc[1]['sniper_kills']),
+    "p2sg": 	"%.0f" % 	(dfIndiv.iloc[1]['shotg_kills']),
+    "p2os": 	"%.0f" % 	(dfIndiv.iloc[1]['fr_kills']+dfIndiv.iloc[1]['side_kills']),
+    "p2hk": 	"%.0f" % 	(dfIndiv.iloc[1]['rocket_kills']+dfIndiv.iloc[1]['hmg_kills']),
+    "p2g":	      "%.0f" % 	(dfIndiv.iloc[1]['melees']),
     "p2m":	"%.0f" % 	(dfIndiv.iloc[1]['grenades']),
     "p2s":	"%.0f" % 	(dfIndiv.iloc[1]['supers']),
     "p2rez":	"%.0f" % 	(dfIndiv.iloc[1]['rezzes']),

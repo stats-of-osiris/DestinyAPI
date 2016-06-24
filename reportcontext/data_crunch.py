@@ -39,6 +39,9 @@ dfStats = dfStats.replace('?','them')
 # sweaty k
 # sweaty d
 
+# average round time
+# average sweaty round time
+
 dfStats['n_primary'] = (dfStats.ar_kills + dfStats.hc_kills + dfStats.pr_kills + dfStats.scout_kills) #/ dfStats.kills
 dfStats['n_special'] = (dfStats.sniper_kills + dfStats.shotg_kills + dfStats.fr_kills + dfStats.side_kills)
 dfStats['n_heavy'] = (dfStats.rocket_kills + dfStats.hmg_kills)
@@ -49,7 +52,7 @@ dfStats['points'] = dfStats.kills*100 + dfStats.deaths*-100 + dfStats.assists*33
 
 # generate games list -------------------------------------------
 # TO DO: Add in Map Hash
-game_stats = ['game_N','activity_id',' play_time','team','standing','score']
+game_stats = ['game_N','activity_id','date','play_time','team','standing','score', 'map_name', 'map_path']
 
 dfGames = dfStats.loc[(dfStats['player'] == 'JohnOfMars'), game_stats]
 dfGames.set_index('game_N', inplace=True)
@@ -130,6 +133,7 @@ for player in teammates:
     dfFocus['player'] = player
     dfFocus['best_weap'] = mode(dfFocusFull.best_weap)[0][0]
     dfFocus['alleg'] = mode(dfFocusFull.alleg)[0][0]
+    dfFocus['date'] = mode(dfFocusFull.date)[0][0]
     
     dfFocus['long_life'] = max(dfFocusFull.long_life)
     dfFocus['max_k_spree'] = max(dfFocusFull.max_k_spree)
