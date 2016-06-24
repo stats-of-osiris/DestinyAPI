@@ -53,7 +53,6 @@ dfStats['n_supers'] = (dfStats.supers)
 dfStats['points'] = dfStats.kills*100 + dfStats.deaths*-100 + dfStats.assists*33 + dfStats.rezzes*25 + dfStats.rezzed*12
 
 # generate games list -------------------------------------------
-# TO DO: Add in Map Hash
 game_stats = ['game_N','activity_id','date','play_time','team','standing','score', 'map_name', 'map_path']
 
 dfGames = dfStats.loc[(dfStats['player'] == 'JohnOfMars'), game_stats]
