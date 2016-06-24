@@ -16,9 +16,9 @@ dfTeams = pd.read_csv('dfTeams.csv')
 dfGames = pd.read_csv('dfGames.csv')
 dfIndiv = pd.read_csv('dfIndiv.csv')
 
-# Need to update this to match github pages report name
-file_name = datetime.strptime(dfGames.iloc[0]['date'], '%Y-%m-%dT%H:%M:%SZ').strftime('%Y%m%d')+re.sub('[^A-Za-z0-9]+', '', dfIndiv.iloc[0]['map_name'])+'ReptCard.md'
 
+#file_name = datetime.strptime(dfGames.iloc[0]['date'], '%Y-%m-%dT%H:%M:%SZ').strftime('%Y%m%d')+re.sub('[^A-Za-z0-9]+', '', dfIndiv.iloc[0]['map_name'])+'ReptCard.md'
+file_name = 'report_card.md'
 
 #---------------HEADER----------------------
 
@@ -85,7 +85,7 @@ Playing on {Map} for {Time} minutes on {Date}.
 Spawn Side: % Alpha, % Bravo
 
 Round Scores by Game
-![](http://johnofmars.github.io/images/{game_graph_path})
+![]({game_graph_path})
 
 - Team K/D of {teamkd}
 - {N_1stk} out of {N_games} matches we had First Blood	
@@ -95,17 +95,18 @@ Round Scores by Game
 - {N_morbs} Orbs Missed out of {N_orbs} generated
 
 Graph of Kill Method Distribtuion:
-![](http://johnofmars.github.io/images/{killm_graph_path})
+![]({killm_graph_path})
 
 """
+#![](http://johnofmars.github.io/images/{game_graph_path})
 
 teamperf_context = {
  "map_path":    dfGames.iloc[0]['map_path'],
  "Map":         dfGames.iloc[0]['map_name'],
  "Time":        "%.1f" % (dfIndiv.iloc[0]['play_time']/60),
  "Date":        dfIndiv.iloc[0]['date'],
- "killm_graph_path":    "headers/trials2.jpg",
- "game_graph_path":     "headers/trials2.jpg",
+ "game_graph_path":     "round_scores.png",
+ "killm_graph_path":    "weapon_method.png",
  "teamkd":      "%.2f" % dfTeams.iloc[0]['k_d'],
  "N_1stk":      int(dfTeams.iloc[0]['first_blood']),
  "N_games":     len(dfGames),
@@ -142,23 +143,6 @@ indiv = """
 | Longest Life           	| {p1ll}    	| {p2ll}    	| {p3ll}    	|
 | Close Calls            	| {p1cc}    	| {p2cc}    	| {p3cc}    	|
 
-
-1) **Sweaty K/D** is K/D on matches where the enemy team wins at least 3 rounds.
-
-2) **Percent contribution** is a metric for determining how much you helped or hindered your team.
-
-- +100 for kills
-- -100 for deaths
-- +33 for assists
-- +25 for rezzes
-- +12 for being rezzed
-
-Scores are tabulated across all games for individuals and the team. And then a player's contribution is shown as percent of the team's total score.
-
-3) **Last Guardian Actions** are:
-
-- *'Never Say Die'* = Kill an enemy as the last guardian standing.
-- *'From the Brink'* = Revive a teammate as the last guardian standing.
 """
 
 indiv_context = {
@@ -227,6 +211,26 @@ indiv2 = """
 | Deaths Un-rezzed           	| {p1fail}       	| {p2fail}       	| {p3fail}       	|
 | Orbs Generated             	| {p1ogen}       	| {p2ogen}       	| {p3ogen}       	|
 | Orbs Missed                	| {p1ogath}      	| {p2ogath}      	| {p3ogath}      	|
+
+
+### Definitions
+
+1) **Sweaty K/D** is K/D on matches where the enemy team wins at least 3 rounds.
+
+2) **Percent contribution** is a metric for determining how much you helped or hindered your team.
+
+- +100 for kills
+- -100 for deaths
+- +33 for assists
+- +25 for rezzes
+- +12 for being rezzed
+
+Scores are tabulated across all games for individuals and the team. And then a player's contribution is shown as percent of the team's total score.
+
+3) **Last Guardian Actions** are:
+
+- *'Never Say Die'* = Kill an enemy as the last guardian standing.
+- *'From the Brink'* = Revive a teammate as the last guardian standing.
 """
 
 indiv_context2 = {

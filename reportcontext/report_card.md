@@ -4,7 +4,7 @@ title: Report Card
 excerpt: "Test"
 modified: 2016-06-24
 categories: articles
-tags: [pvp,trials,data]
+tags: [pvp,trials,data,report_card]
 image:
   feature: header.png
 comments: true
@@ -29,7 +29,7 @@ Playing on Widow's Court for 62.9 minutes on 2016-03-21T00:05:28Z.
 Spawn Side: % Alpha, % Bravo
 
 Round Scores by Game
-![](http://johnofmars.github.io/images/headers/trials2.jpg)
+![](round_scores.png)
 
 - Team K/D of 1.56
 - 6 out of 8 matches we had First Blood	
@@ -39,7 +39,7 @@ Round Scores by Game
 - 13 Orbs Missed out of 24 generated
 
 Graph of Kill Method Distribtuion:
-![](http://johnofmars.github.io/images/headers/trials2.jpg)
+![](weapon_method.png)
 
 
 
@@ -60,23 +60,6 @@ Graph of Kill Method Distribtuion:
 | Close Calls            	| 1    	| 4    	| 2    	|
 
 
-1) **Sweaty K/D** is K/D on matches where the enemy team wins at least 3 rounds.
-
-2) **Percent contribution** is a metric for determining how much you helped or hindered your team.
-
-- +100 for kills
-- -100 for deaths
-- +33 for assists
-- +25 for rezzes
-- +12 for being rezzed
-
-Scores are tabulated across all games for individuals and the team. And then a player's contribution is shown as percent of the team's total score.
-
-3) **Last Guardian Actions** are:
-
-- *'Never Say Die'* = Kill an enemy as the last guardian standing.
-- *'From the Brink'* = Revive a teammate as the last guardian standing.
-
 
 | Kill Method Breakdown        	| JohnOfMars      	| DirtyAquaticApe      	| igordennis      	|
 |----------------------------	|----------------	|----------------	|----------------	|
@@ -95,3 +78,23 @@ Scores are tabulated across all games for individuals and the team. And then a p
 | Deaths Un-rezzed           	| 27       	| 24       	| 30       	|
 | Orbs Generated             	| 10       	| 5       	| 9       	|
 | Orbs Missed                	| 2      	| 7      	| 2      	|
+
+
+## Definitions
+
+1) **Sweaty K/D** is K/D on matches where the enemy team wins at least 3 rounds.
+
+2) **Percent contribution** is a metric for determining how much you helped or hindered your team.
+
+- +100 for kills
+- -100 for deaths
+- +33 for assists
+- +25 for rezzes
+- +12 for being rezzed
+
+Scores are tabulated across all games for individuals and the team. And then a player's contribution is shown as percent of the team's total score.
+
+3) **Last Guardian Actions** are:
+
+- *'Never Say Die'* = Kill an enemy as the last guardian standing.
+- *'From the Brink'* = Revive a teammate as the last guardian standing.
