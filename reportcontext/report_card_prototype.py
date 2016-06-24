@@ -24,7 +24,7 @@ file_name = 'report_card.md'
 
 header = """---
 layout: post
-title: {Title}
+title: Passage Report Card for {Title}
 excerpt: "{Excerpt}"
 modified: {Date}
 categories: articles
@@ -37,8 +37,8 @@ share: true
 """
 
 header_context = {
- "Title":'Report Card', 
- "Excerpt":"Test",
+ "Title":dfIndiv.iloc[0]['map_name'], 
+ "Excerpt":"First Report Card",
  "Date":time.strftime("%Y-%m-%d")
  } 
  
@@ -80,21 +80,22 @@ teamperf = """
 
 ![](https://www.bungie.net{map_path})
 
-Playing on {Map} for {Time} minutes on {Date}.
+Playing on **{Map}** for **{Time}** minutes on **{Date}**.
 
-Spawn Side: % Alpha, % Bravo
+Spawn Side: {alpha_count} times **Alpha**, {bravo_count} times **Bravo**
 
-Round Scores by Game
+####Round Scores by Game
 ![]({game_graph_path})
 
-- Team K/D of {teamkd}
+- Team K/D of {teamkd}, with a sweaty* K/D of {teamskd}
+- Average round time of {round_time} seconds, with {round_stime} seconds when sweaty*
 - {N_1stk} out of {N_games} matches we had First Blood	
 - {N_aces} Aces vs {N_aced} times Aced
 - {N_annil} Annihilations vs {N_annild} times Annihilated
 - {N_rez} Resurrections vs {N_enemy_rez} Enemy Resurrections Allowed
 - {N_morbs} Orbs Missed out of {N_orbs} generated
 
-Graph of Kill Method Distribtuion:
+####The Team's Kill Methods:
 ![]({killm_graph_path})
 
 """
@@ -104,10 +105,15 @@ teamperf_context = {
  "map_path":    dfGames.iloc[0]['map_path'],
  "Map":         dfGames.iloc[0]['map_name'],
  "Time":        "%.1f" % (dfIndiv.iloc[0]['play_time']/60),
- "Date":        dfIndiv.iloc[0]['date'],
+ "Date":        datetime.strptime(dfGames.iloc[0]['date'], '%Y-%m-%dT%H:%M:%SZ').strftime('%m/%d/%Y'),
+ "alpha_count":     dfIndiv.iloc[0]['alpha'],
+ "bravo_count":     dfIndiv.iloc[0]['bravo'],
  "game_graph_path":     "round_scores.png",
  "killm_graph_path":    "weapon_method.png",
+ "teamskd":      "%.2f" % (dfTeams.iloc[0]['sweaty_k'] / dfTeams.iloc[0]['sweaty_d']),
  "teamkd":      "%.2f" % dfTeams.iloc[0]['k_d'],
+ "round_time":         "%.1f" % (np.mean(dfGames.round_time)),
+ "round_stime":        "%.1f" % (np.mean(dfGames.sweaty_round_time)),
  "N_1stk":      int(dfTeams.iloc[0]['first_blood']),
  "N_games":     len(dfGames),
  "N_aces":      int(dfTeams.iloc[0]['ace']),
@@ -135,7 +141,7 @@ indiv = """
 | Assists                	| {p1a}     	| {p2a}     	| {p3a}     	|
 | Deaths                 	| {p1d}     	| {p2d}     	| {p3d}     	|
 | K/D                    	| {p1kd}    	| {p2kd}    	| {p3kd}    	|
-| Sweaty K/D*             	| {p1skd}   	| {p2skd}   	| {p3kd}    	|
+| Sweaty K/D*             	| {p1skd}   	| {p2skd}   	| {p3skd}    	|
 | Percent Contribution**  	| {p1cont} %  	| {p2cont} %    	| {p3cont} %    	|
 | Last Guardian Actions***   | {p1lga}   	| {p2lga}   	| {p3lga}   	|
 | Wrecking Balls         	| {p1wb}    	| {p2wb}    	| {p3wb}    	|
@@ -152,7 +158,7 @@ indiv_context = {
     "p1a":	"%.0f" % 	(dfIndiv.iloc[0]['assists']),
     "p1d":	"%.0f" % 	(dfIndiv.iloc[0]['deaths']),
     "p1kd":	"%.2f" % 	(dfIndiv.iloc[0]['k_d']),
-    "p1skd":	"%.2f" % 	(dfIndiv.iloc[0]['k_d']),
+    "p1skd":	"%.2f" % 	(dfIndiv.iloc[0]['sweaty_k']/dfIndiv.iloc[0]['sweaty_d']),
     "p1cont":	"%.1f" % 	(dfIndiv.iloc[0]['p_cont']),
     "p1lga":	"%.0f" % 	(dfIndiv.iloc[0]['from_the_brink']+dfIndiv.iloc[0]['never_say_die']),
     "p1wb":	"%.0f" % 	(dfIndiv.iloc[0]['wrecking_ball']),
@@ -166,7 +172,7 @@ indiv_context = {
     "p2a":	"%.0f" % 	(dfIndiv.iloc[1]['assists']),
     "p2d":	"%.0f" % 	(dfIndiv.iloc[1]['deaths']),
     "p2kd":	"%.2f" % 	(dfIndiv.iloc[1]['k_d']),
-    "p2skd":	"%.2f" % 	(dfIndiv.iloc[1]['k_d']),
+    "p2skd":	"%.2f" % 	(dfIndiv.iloc[1]['sweaty_k']/dfIndiv.iloc[1]['sweaty_d']),
     "p2cont":	"%.1f" % 	(dfIndiv.iloc[1]['p_cont']),
     "p2lga":	"%.0f" % 	(dfIndiv.iloc[1]['from_the_brink']+dfIndiv.iloc[1]['never_say_die']),
     "p2wb":	"%.0f" % 	(dfIndiv.iloc[1]['wrecking_ball']),
@@ -180,7 +186,7 @@ indiv_context = {
     "p3a":	"%.0f" % 	(dfIndiv.iloc[2]['assists']),
     "p3d":	"%.0f" % 	(dfIndiv.iloc[2]['deaths']),
     "p3kd":	"%.2f" % 	(dfIndiv.iloc[2]['k_d']),
-    "p3skd":	"%.2f" % 	(dfIndiv.iloc[2]['k_d']),
+    "p3skd":	"%.2f" % 	(dfIndiv.iloc[2]['sweaty_k']/dfIndiv.iloc[2]['sweaty_d']),
     "p3cont":	"%.1f" % 	(dfIndiv.iloc[2]['p_cont']),
     "p3lga":	"%.0f" % 	(dfIndiv.iloc[2]['from_the_brink']+dfIndiv.iloc[2]['never_say_die']),
     "p3wb":	"%.0f" % 	(dfIndiv.iloc[2]['wrecking_ball']),

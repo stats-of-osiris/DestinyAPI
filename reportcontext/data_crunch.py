@@ -10,6 +10,7 @@ from scipy.stats import mode
 import math
 import numpy as np
 import matplotlib.pyplot as plt
+import collections
 
 
 dfStats = pd.DataFrame(columns=())
@@ -37,13 +38,6 @@ dfStats.update(dfTeamFull)
 
 dfStats = dfStats.replace('?','them')
 
-#add rows
-# sweaty k
-# sweaty d
-
-# average round time
-# average sweaty round time
-
 dfStats['n_primary'] = (dfStats.ar_kills + dfStats.hc_kills + dfStats.pr_kills + dfStats.scout_kills) #/ dfStats.kills
 dfStats['n_special'] = (dfStats.sniper_kills + dfStats.shotg_kills + dfStats.fr_kills + dfStats.side_kills)
 dfStats['n_heavy'] = (dfStats.rocket_kills + dfStats.hmg_kills)
@@ -69,6 +63,26 @@ dfSample.set_index('game_N', inplace=True)
 dfSample = dfSample.iloc[range(0,len(dfSample),3)]
 
 dfGames['enemy_score']=dfSample['score']
+
+dfGames['sweaty'] = 'no'
+
+for x in dfGames.index:
+    dfGames.loc[x,'round_time'] =  dfGames.loc[x,'play_time']/(dfGames.loc[x,'score']+dfGames.loc[x,'enemy_score'])
+    
+    if dfGames.loc[x,'enemy_score'] >= 3:
+        dfGames.loc[x,'sweaty'] = 'yes'
+        dfGames.loc[x,'sweaty_round_time'] =  dfGames.loc[x,'play_time']/(dfGames.loc[x,'score']+dfGames.loc[x,'enemy_score'])
+
+#dfStats['sweaty_k'] = 'NaN'
+
+for x in dfGames.index:
+    for y in dfStats.index:
+        if dfGames.ix[x,'activity_id'] == dfStats.ix[y,'activity_id']:
+      
+            if dfGames.ix[x]['sweaty'] == 'yes':
+             
+                dfStats.ix[y,'sweaty_k']  = dfStats.ix[y,'kills']
+                dfStats.ix[y,'sweaty_d']  = dfStats.ix[y,'deaths']
 
 # Team Calcs---------------------------------------------------------------
 
@@ -137,6 +151,11 @@ for player in teammates:
     dfFocus['date'] = mode(dfFocusFull.date)[0][0]
     dfFocus['map_name'] = mode(dfFocusFull.map_name)[0][0]
     
+    dfFocus['map_common'] =  mode(dfGames.team)[1][0]   
+
+    dfFocus['alpha'] = collections.Counter(a)['Alpha']
+    dfFocus['bravo'] = collections.Counter(a)['Bravo']
+
     dfFocus['long_life'] = max(dfFocusFull.long_life)
     dfFocus['max_k_spree'] = max(dfFocusFull.max_k_spree)
 
@@ -204,7 +223,7 @@ ax.legend((rects1[0], rects2[0]), ('Us', 'Them'), loc='upper center', bbox_to_an
 
 #plt.show()
 
-plt.savefig('round_scores.png', transparent=True)
+#plt.savefig('round_scores.png', transparent=True)
 
 # % kill method
 

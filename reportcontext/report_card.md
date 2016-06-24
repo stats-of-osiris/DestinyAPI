@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Report Card
-excerpt: "Test"
+title: Passage Report Card for Widow's Court
+excerpt: "First Report Card"
 modified: 2016-06-24
 categories: articles
 tags: [pvp,trials,data,report_card]
@@ -24,21 +24,22 @@ share: true
 
 ![](https://www.bungie.net/img/theme/destiny/bgs/pgcrs/widows_court.jpg)
 
-Playing on Widow's Court for 62.9 minutes on 2016-03-21T00:05:28Z.
+Playing on **Widow's Court** for **62.9** minutes on **03/21/2016**.
 
-Spawn Side: % Alpha, % Bravo
+Spawn Side: 3 times **Alpha**, 5 times **Bravo**
 
-Round Scores by Game
+####Round Scores by Game
 ![](round_scores.png)
 
-- Team K/D of 1.56
+- Team K/D of 1.56, with a sweaty* K/D of 1.10
+- Average round time of 68.2 seconds, with 74.9 when sweaty*
 - 6 out of 8 matches we had First Blood	
 - 39 Aces vs 0 times Aced
 - 3 Annihilations vs 0 times Annihilated
 - 33 Resurrections vs 30 Enemy Resurrections Allowed
 - 13 Orbs Missed out of 24 generated
 
-Graph of Kill Method Distribtuion:
+####The Team's Kill Methods:
 ![](weapon_method.png)
 
 
@@ -51,7 +52,7 @@ Graph of Kill Method Distribtuion:
 | Assists                	| 21     	| 28     	| 22     	|
 | Deaths                 	| 34     	| 31     	| 37     	|
 | K/D                    	| 1.29    	| 1.48    	| 1.86    	|
-| Sweaty K/D*             	| 1.29   	| 1.48   	| 1.86    	|
+| Sweaty K/D*             	| 0.93   	| 1.04   	| 1.33    	|
 | Percent Contribution**  	| 23.1 %  	| 30.7 %    	| 46.2 %    	|
 | Last Guardian Actions***   | 12   	| 12   	| 8   	|
 | Wrecking Balls         	| 0    	| 1    	| 2    	|
@@ -80,7 +81,7 @@ Graph of Kill Method Distribtuion:
 | Orbs Missed                	| 2      	| 7      	| 2      	|
 
 
-## Definitions
+### Definitions
 
 1) **Sweaty K/D** is K/D on matches where the enemy team wins at least 3 rounds.
 
