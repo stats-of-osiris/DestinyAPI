@@ -19,7 +19,7 @@ dfStats = pd.read_csv('DestinyStats.csv')
 
 
 # Generate Team List (need a function for this)
-teammates = ['JohnOfMars','DirtyAquaticApe','igordennis']
+teammates = ['JohnOfMars','XpLiCiTOnE','igordennis']
 
 # Assign Allegiences
 dfStats['alleg'] = '?'
@@ -134,6 +134,7 @@ for player in teammates:
     dfFocus['best_weap'] = mode(dfFocusFull.best_weap)[0][0]
     dfFocus['alleg'] = mode(dfFocusFull.alleg)[0][0]
     dfFocus['date'] = mode(dfFocusFull.date)[0][0]
+    dfFocus['map_name'] = mode(dfFocusFull.map_name)[0][0]
     
     dfFocus['long_life'] = max(dfFocusFull.long_life)
     dfFocus['max_k_spree'] = max(dfFocusFull.max_k_spree)

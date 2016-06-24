@@ -7,6 +7,8 @@ Created on Wed May 25 16:02:11 2016
 
 import time
 import pandas as pd
+from datetime import datetime
+import re
 
 dfStats = pd.read_csv('DestinyStats.csv')
 
@@ -14,7 +16,9 @@ dfTeams = pd.read_csv('dfTeams.csv')
 dfGames = pd.read_csv('dfGames.csv')
 dfIndiv = pd.read_csv('dfIndiv.csv')
 
-#dfTeams.set_index('alleg', inplace=True)
+# Need to update this to match github pages report name
+file_name = datetime.strptime(dfGames.iloc[0]['date'], '%Y-%m-%dT%H:%M:%SZ').strftime('%Y%m%d')+re.sub('[^A-Za-z0-9]+', '', dfIndiv.iloc[0]['map_name'])+'ReptCard.md'
+
 
 #---------------HEADER----------------------
 
@@ -24,7 +28,7 @@ title: {Title}
 excerpt: "{Excerpt}"
 modified: {Date}
 categories: articles
-tags: [pvp,trials,data]
+tags: [pvp,trials,data,report_card]
 image:
   feature: header.png
 comments: true
@@ -38,7 +42,7 @@ header_context = {
  "Date":time.strftime("%Y-%m-%d")
  } 
  
-with  open('report_card.md','w') as myfile:
+with  open(file_name,'w') as myfile:
     myfile.write(header.format(**header_context))
 
 #---------------TEAM SUMMARY-----------
@@ -66,7 +70,7 @@ summary_context = {
  "Player3_class":dfIndiv.iloc[2]['pclass'],
  } 
  
-with  open('report_card.md','a') as myfile:
+with  open(file_name,'a') as myfile:
     myfile.write(summary.format(**summary_context))
     
 #---------------TEAM PERFORMANCE-----------
@@ -115,7 +119,7 @@ teamperf_context = {
  "N_orbs":      int(dfTeams.iloc[0]['orbs_gen']),
  } 
  
-with  open('report_card.md','a') as myfile:
+with  open(file_name,'a') as myfile:
     myfile.write(teamperf.format(**teamperf_context))
 #
 #---------------INDIV PERFORMANCE-----------
@@ -201,7 +205,7 @@ indiv_context = {
     "p3cc":	"%.0f" % 	(dfIndiv.iloc[2]['close_call'])
  } 
  
-with  open('report_card.md','a') as myfile:
+with  open(file_name,'a') as myfile:
     myfile.write(indiv.format(**indiv_context))
     
 indiv2 = """
@@ -276,5 +280,5 @@ indiv_context2 = {
 
  } 
  
-with  open('report_card.md','a') as myfile:
+with  open(file_name,'a') as myfile:
     myfile.write(indiv2.format(**indiv_context2))

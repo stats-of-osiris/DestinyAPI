@@ -1,81 +1,88 @@
 ,game_N,player,weap_hash,weap_kills,weap_name,weap_type
-0,0,JohnOfMars,1173766590,2.0,Doctrine of Passing,6
-1,0,DirtyAquaticApe,1201310194,3.0,Hawksaw,13
-2,0,DirtyAquaticApe,1287343925,1.0,Party Crasher +1,7
-3,0,igordennis,3118679308,1.0,Ice Breaker,12
-4,0,igordennis,1703777169,5.0,1000-Yard Stare,12
-5,0,Munie26,255654879,1.0,Zhalo Supercell,6
-6,0,lilprino,3835813881,1.0,No Land Beyond,12
-7,1,JohnOfMars,1173766590,1.0,Doctrine of Passing,6
-8,1,DirtyAquaticApe,1201310194,2.0,Hawksaw,13
-9,1,igordennis,1173766590,1.0,Doctrine of Passing,6
-10,1,igordennis,1703777169,2.0,1000-Yard Stare,12
-11,1,igordennis,2447423793,1.0,The Last Word,9
-12,1,alex_ya_boii,1346849289,1.0,MIDA Multi-Tool,14
-13,1,spartan2134,2447423793,2.0,The Last Word,9
-14,1,spartan2134,3835813881,1.0,No Land Beyond,12
-15,2,JohnOfMars,1173766590,4.0,Doctrine of Passing,6
-16,2,DirtyAquaticApe,2651271602,2.0,JabberHäkke-D,17
-17,2,DirtyAquaticApe,1201310194,1.0,Hawksaw,13
-18,2,DirtyAquaticApe,1287343925,3.0,Party Crasher +1,7
-19,2,igordennis,2447423793,3.0,The Last Word,9
-20,2,igordennis,1703777169,3.0,1000-Yard Stare,12
-21,2,DarkKnight2427,1173766591,5.0,Doctrine of Passing (Adept),6
-22,2,soops_troops,1173766590,1.0,Doctrine of Passing,6
-23,2,merikazmostwantd,1201310194,1.0,Hawksaw,13
-24,3,JohnOfMars,1173766590,3.0,Doctrine of Passing,6
-25,3,DirtyAquaticApe,2651271602,1.0,JabberHäkke-D,17
-26,3,DirtyAquaticApe,1201310194,1.0,Hawksaw,13
-27,3,igordennis,1173766590,2.0,Doctrine of Passing,6
-28,3,igordennis,1703777169,3.0,1000-Yard Stare,12
-29,3,igordennis,2447423793,3.0,The Last Word,9
-30,3,DrMiguizzz,1173766590,2.0,Doctrine of Passing,6
-31,3,I1IIBarcode1I11,1346849289,1.0,MIDA Multi-Tool,14
-32,3,I1IIBarcode1I11,1703777169,2.0,1000-Yard Stare,12
-33,4,JohnOfMars,1173766590,4.0,Doctrine of Passing,6
-34,4,JohnOfMars,1604125378,1.0,Glass Promontory,12
-35,4,JohnOfMars,2808364178,1.0,Truth,10
-36,4,DirtyAquaticApe,1201310194,4.0,Hawksaw,13
-37,4,DirtyAquaticApe,1287343925,1.0,Party Crasher +1,7
-38,4,igordennis,2447423793,1.0,The Last Word,9
-39,4,igordennis,1703777169,4.0,1000-Yard Stare,12
-40,4,Skull30698,486279087,5.0,Conspiracy Theory-D,7
-41,4,Skull30698,1346849289,1.0,MIDA Multi-Tool,14
-42,4,pnutbutrJLEEtime,2651271602,1.0,JabberHäkke-D,17
-43,4,pnutbutrJLEEtime,1742712674,1.0,Stillpiercer,12
-44,4,pnutbutrJLEEtime,2447423793,2.0,The Last Word,9
-45,4,GreenArrowDC,2447423793,1.0,The Last Word,9
-46,5,JohnOfMars,3118679308,1.0,Ice Breaker,12
-47,5,JohnOfMars,1173766590,2.0,Doctrine of Passing,6
-48,5,DirtyAquaticApe,1201310194,3.0,Hawksaw,13
-49,5,igordennis,2447423793,4.0,The Last Word,9
-50,5,igordennis,1703777169,4.0,1000-Yard Stare,12
-51,5,AK57HuntinU,486279087,1.0,Conspiracy Theory-D,7
-52,5,AK57HuntinU,1346849289,2.0,MIDA Multi-Tool,14
-53,5,lukesnake17,1173766590,2.0,Doctrine of Passing,6
-54,5,lukesnake17,1703777169,1.0,1000-Yard Stare,12
-55,5,lukesnake17,2808364178,1.0,Truth,10
-56,6,JOECOCOA,1346849289,1.0,MIDA Multi-Tool,14
-57,6,GoodNewsDoctor,1703777169,7.0,1000-Yard Stare,12
-58,6,GoodNewsDoctor,1346849289,4.0,MIDA Multi-Tool,14
-59,6,JohnOfMars,3118679308,1.0,Ice Breaker,12
-60,6,JohnOfMars,1173766590,3.0,Doctrine of Passing,6
-61,6,DirtyAquaticApe,1201310194,4.0,Hawksaw,13
-62,6,igordennis,1703777169,4.0,1000-Yard Stare,12
-63,6,igordennis,2447423793,3.0,The Last Word,9
-64,6,collondavis13,2447423793,1.0,The Last Word,9
-65,7,JohnOfMars,3118679308,1.0,Ice Breaker,12
-66,7,JohnOfMars,1173766590,2.0,Doctrine of Passing,6
-67,7,JohnOfMars,1604125378,2.0,Glass Promontory,12
-68,7,DirtyAquaticApe,2651271602,1.0,JabberHäkke-D,17
-69,7,DirtyAquaticApe,1201310194,2.0,Hawksaw,13
-70,7,DirtyAquaticApe,1287343925,1.0,Party Crasher +1,7
-71,7,igordennis,1703777169,3.0,1000-Yard Stare,12
-72,7,igordennis,2447423793,2.0,The Last Word,9
-73,7,B_O_S_S_E_M,1346849289,1.0,MIDA Multi-Tool,14
-74,7,B_O_S_S_E_M,1703777169,1.0,1000-Yard Stare,12
-75,7,B_O_S_S_E_M,1173766591,2.0,Doctrine of Passing (Adept),6
-76,7,MrDaivee,1173766590,4.0,Doctrine of Passing,6
-77,7,MrDaivee,1742712674,4.0,Stillpiercer,12
-78,7,Dakidowns,1346849289,4.0,MIDA Multi-Tool,14
-79,7,Dakidowns,1703777169,4.0,1000-Yard Stare,12
+0,0,JohnOfMars,486279087,1.0,Conspiracy Theory-D,7
+1,0,JohnOfMars,1475134443,1.0,Hung Jury SR4,14
+2,0,igordennis,1173766590,3.0,Doctrine of Passing,6
+3,0,igordennis,1703777169,3.0,1000-Yard Stare,12
+4,0,XpLiCiTOnE,1201310194,3.0,Hawksaw,13
+5,0,bbuck1990,1703777169,4.0,1000-Yard Stare,12
+6,1,hpal09,1200540134,2.0,LDR 5001,12
+7,1,hpal09,2055601061,2.0,SUROS Regime,6
+8,1,leonel2214,2447423793,7.0,The Last Word,9
+9,1,adanmichel,2447423793,5.0,The Last Word,9
+10,1,adanmichel,1703777169,2.0,1000-Yard Stare,12
+11,1,adanmichel,3536592559,1.0,Tormod's Bellows,10
+12,1,JohnOfMars,3491886957,2.0,Cocytus SR4,14
+13,1,JohnOfMars,1475134443,1.0,Hung Jury SR4,14
+14,1,JohnOfMars,486279087,2.0,Conspiracy Theory-D,7
+15,1,igordennis,1703777169,5.0,1000-Yard Stare,12
+16,1,igordennis,1173766590,1.0,Doctrine of Passing,6
+17,1,XpLiCiTOnE,1201310194,3.0,Hawksaw,13
+18,2,JohnOfMars,486279087,2.0,Conspiracy Theory-D,7
+19,2,JohnOfMars,2808364178,3.0,Truth,10
+20,2,igordennis,1703777169,6.0,1000-Yard Stare,12
+21,2,igordennis,1173766590,2.0,Doctrine of Passing,6
+22,2,XpLiCiTOnE,1200540135,3.0,Y-09 Longbow Synthesis,12
+23,2,XpLiCiTOnE,1132793057,1.0,Eyasluna,9
+24,2,lylansin,1703777169,2.0,1000-Yard Stare,12
+25,2,lylansin,1173766590,2.0,Doctrine of Passing,6
+26,2,lylansin,99462853,1.0,Universal Remote,7
+27,2,Brodieskullz06,34013768,1.0,Her Revenge,9
+28,2,BruthaBacca_Fish,1173766590,3.0,Doctrine of Passing,6
+29,3,JohnOfMars,486279087,1.0,Conspiracy Theory-D,7
+30,3,JohnOfMars,1475134443,1.0,Hung Jury SR4,14
+31,3,igordennis,1173766590,4.0,Doctrine of Passing,6
+32,3,igordennis,1703777169,1.0,1000-Yard Stare,12
+33,3,XpLiCiTOnE,1201310194,2.0,Hawksaw,13
+34,3,XpLiCiTOnE,1200540135,1.0,Y-09 Longbow Synthesis,12
+35,3,wifi_down_XD,1200540134,2.0,LDR 5001,12
+36,3,wifi_down_XD,99462853,1.0,Universal Remote,7
+37,4,igordennis,1703777169,2.0,1000-Yard Stare,12
+38,4,igordennis,1173766590,5.0,Doctrine of Passing,6
+39,4,XpLiCiTOnE,1201310194,1.0,Hawksaw,13
+40,4,XpLiCiTOnE,1200540135,1.0,Y-09 Longbow Synthesis,12
+41,4,Fonso123189,1173766591,2.0,Doctrine of Passing (Adept),6
+42,4,VanNos_gaY204,486279087,1.0,Conspiracy Theory-D,7
+43,4,VanNos_gaY204,1177550374,1.0,Bad Juju,13
+44,5,JohnOfMars,3675783241,4.0,The Chaperone,7
+45,5,JohnOfMars,1475134443,2.0,Hung Jury SR4,14
+46,5,igordennis,1173766590,5.0,Doctrine of Passing,6
+47,5,XpLiCiTOnE,1200540135,2.0,Y-09 Longbow Synthesis,12
+48,5,XpLiCiTOnE,1201310194,2.0,Hawksaw,13
+49,5,Bballmiller23,1200540135,1.0,Y-09 Longbow Synthesis,12
+50,5,Bballmiller23,2447423793,1.0,The Last Word,9
+51,5,SaaiNTs_x,1200540135,1.0,Y-09 Longbow Synthesis,12
+52,5,SaaiNTs_x,1173766590,1.0,Doctrine of Passing,6
+53,5,EarlLemongrab69,1200540135,1.0,Y-09 Longbow Synthesis,12
+54,6,JohnOfMars,1475134443,2.0,Hung Jury SR4,14
+55,6,JohnOfMars,3675783241,1.0,The Chaperone,7
+56,6,igordennis,1703777169,3.0,1000-Yard Stare,12
+57,6,igordennis,1173766590,1.0,Doctrine of Passing,6
+58,6,XpLiCiTOnE,1201310194,3.0,Hawksaw,13
+59,6,XpLiCiTOnE,2808364178,1.0,Truth,10
+60,6,XpLiCiTOnE,1200540135,2.0,Y-09 Longbow Synthesis,12
+61,6,Fayrux,1703777169,2.0,1000-Yard Stare,12
+62,6,Fayrux,2447423793,1.0,The Last Word,9
+63,6,javierpark,1173766590,4.0,Doctrine of Passing,6
+64,6,Madt99,1346849289,3.0,MIDA Multi-Tool,14
+65,7,JohnOfMars,1475134443,2.0,Hung Jury SR4,14
+66,7,JohnOfMars,3675783241,4.0,The Chaperone,7
+67,7,igordennis,1173766590,2.0,Doctrine of Passing,6
+68,7,igordennis,1703777169,1.0,1000-Yard Stare,12
+69,7,XpLiCiTOnE,1200540135,3.0,Y-09 Longbow Synthesis,12
+70,7,XpLiCiTOnE,1201310194,1.0,Hawksaw,13
+71,7,giles863,1201310194,1.0,Hawksaw,13
+72,7,giles863,99462852,1.0,Invective,7
+73,7,gatornator_x2560,1287343925,2.0,Party Crasher +1,7
+74,8,JohnOfMars,3675783241,1.0,The Chaperone,7
+75,8,JohnOfMars,1475134443,1.0,Hung Jury SR4,14
+76,8,igordennis,1703777169,3.0,1000-Yard Stare,12
+77,8,igordennis,1173766590,2.0,Doctrine of Passing,6
+78,8,igordennis,2808364178,1.0,Truth,10
+79,8,XpLiCiTOnE,1200540135,2.0,Y-09 Longbow Synthesis,12
+80,8,XpLiCiTOnE,1201310194,3.0,Hawksaw,13
+81,8,glock21sv,1200540134,8.0,LDR 5001,12
+82,8,glock21sv,99462853,2.0,Universal Remote,7
+83,8,iPace22,1703777169,1.0,1000-Yard Stare,12
+84,8,iPace22,3536592559,1.0,Tormod's Bellows,10
+85,8,iPace22,1346849289,1.0,MIDA Multi-Tool,14
+86,8,EckoTheBoss,1201310194,2.0,Hawksaw,13

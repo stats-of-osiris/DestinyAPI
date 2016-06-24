@@ -4,7 +4,7 @@ title: Report Card
 excerpt: "Test"
 modified: 2016-06-24
 categories: articles
-tags: [pvp,trials,data]
+tags: [pvp,trials,data,report_card]
 image:
   feature: header.png
 comments: true
