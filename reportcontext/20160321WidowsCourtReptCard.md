@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Passage Report Card for Widow's Court
-excerpt: "First Report Card"
+excerpt: "First Python-generated Report Card"
 modified: 2016-06-24
 categories: articles
 tags: [pvp,trials,data,report_card]
@@ -11,20 +11,20 @@ comments: true
 share: true
 ---
 
-##Trials Report Card
+##Trials Report Card for Widow's Court
 
 ###Team Summary
 
-1. JohnOfMars - The 1.0-wielding Titan
-2. DirtyAquaticApe - The 2.0-wielding Warlock
-3. igordennis - The 8.0-wielding Hunter
+1. **JohnOfMars** - The Titan
+2. **DirtyAquaticApe** - The Warlock
+3. **igordennis** - The Hunter
 
 
 ### Overall Team Performance
 
 ![](https://www.bungie.net/img/theme/destiny/bgs/pgcrs/widows_court.jpg)
 
-Playing on **Widow's Court** for **62.9** minutes on **03/21/2016**.
+Playing for **62.9** minutes on **03/21/2016**.
 
 Spawn Side: 3 times **Alpha**, 5 times **Bravo**
 

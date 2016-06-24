@@ -8,6 +8,7 @@ Created on Wed May 25 16:02:11 2016
 import time
 import pandas as pd
 from datetime import datetime
+import numpy as np
 import re
 
 dfStats = pd.read_csv('DestinyStats.csv')
@@ -17,8 +18,8 @@ dfGames = pd.read_csv('dfGames.csv')
 dfIndiv = pd.read_csv('dfIndiv.csv')
 
 
-#file_name = datetime.strptime(dfGames.iloc[0]['date'], '%Y-%m-%dT%H:%M:%SZ').strftime('%Y%m%d')+re.sub('[^A-Za-z0-9]+', '', dfIndiv.iloc[0]['map_name'])+'ReptCard.md'
-file_name = 'report_card.md'
+file_name = datetime.strptime(dfGames.iloc[0]['date'], '%Y-%m-%dT%H:%M:%SZ').strftime('%Y%m%d')+re.sub('[^A-Za-z0-9]+', '', dfIndiv.iloc[0]['map_name'])+'ReptCard.md'
+#file_name = 'report_card.md'
 
 #---------------HEADER----------------------
 
@@ -38,7 +39,7 @@ share: true
 
 header_context = {
  "Title":dfIndiv.iloc[0]['map_name'], 
- "Excerpt":"First Report Card",
+ "Excerpt":"First Python-generated Report Card",
  "Date":time.strftime("%Y-%m-%d")
  } 
  
@@ -48,25 +49,23 @@ with  open(file_name,'w') as myfile:
 #---------------TEAM SUMMARY-----------
 
 summary = """
-##Trials Report Card
+##Trials Report Card for {Map}
 
 ###Team Summary
 
-1. {Player1} - The {Player1_weapon}-wielding {Player1_class}
-2. {Player2} - The {Player2_weapon}-wielding {Player2_class}
-3. {Player3} - The {Player3_weapon}-wielding {Player3_class}
+1. **{Player1}** - The {Player1_class}
+2. **{Player2}** - The {Player2_class}
+3. **{Player3}** - The {Player3_class}
 
 """
 
 summary_context = {
+ "Map":         dfGames.iloc[0]['map_name'],
  "Player1":dfIndiv.iloc[0]['player'], 
- "Player1_weapon":dfIndiv.iloc[0]['best_weap'],
  "Player1_class":dfIndiv.iloc[0]['pclass'],
  "Player2":dfIndiv.iloc[1]['player'], 
- "Player2_weapon":dfIndiv.iloc[1]['best_weap'],
  "Player2_class":dfIndiv.iloc[1]['pclass'],
  "Player3":dfIndiv.iloc[2]['player'], 
- "Player3_weapon":dfIndiv.iloc[2]['best_weap'],
  "Player3_class":dfIndiv.iloc[2]['pclass'],
  } 
  
@@ -80,7 +79,7 @@ teamperf = """
 
 ![](https://www.bungie.net{map_path})
 
-Playing on **{Map}** for **{Time}** minutes on **{Date}**.
+Playing for **{Time}** minutes on **{Date}**.
 
 Spawn Side: {alpha_count} times **Alpha**, {bravo_count} times **Bravo**
 
@@ -88,7 +87,7 @@ Spawn Side: {alpha_count} times **Alpha**, {bravo_count} times **Bravo**
 ![]({game_graph_path})
 
 - Team K/D of {teamkd}, with a sweaty* K/D of {teamskd}
-- Average round time of {round_time} seconds, with {round_stime} seconds when sweaty*
+- Average round time of {round_time} seconds, or {round_stime} seconds when sweaty*
 - {N_1stk} out of {N_games} matches we had First Blood	
 - {N_aces} Aces vs {N_aced} times Aced
 - {N_annil} Annihilations vs {N_annild} times Annihilated
@@ -103,7 +102,6 @@ Spawn Side: {alpha_count} times **Alpha**, {bravo_count} times **Bravo**
 
 teamperf_context = {
  "map_path":    dfGames.iloc[0]['map_path'],
- "Map":         dfGames.iloc[0]['map_name'],
  "Time":        "%.1f" % (dfIndiv.iloc[0]['play_time']/60),
  "Date":        datetime.strptime(dfGames.iloc[0]['date'], '%Y-%m-%dT%H:%M:%SZ').strftime('%m/%d/%Y'),
  "alpha_count":     dfIndiv.iloc[0]['alpha'],
@@ -214,6 +212,7 @@ indiv2 = """
 | Resurrections & Orbs      	| {Player1}      	| {Player2}      	| {Player3}      	|
 |----------------------------	|----------------	|----------------	|----------------	|
 | Resurrections Performed    	| {p1rez}        	| {p2rez}        	| {p3rez}        	|
+| Resurrections Recieved        	| {p1rezd}       	| {p2rezd}       	| {p3rezd}       	|
 | Deaths Un-rezzed           	| {p1fail}       	| {p2fail}       	| {p3fail}       	|
 | Orbs Generated             	| {p1ogen}       	| {p2ogen}       	| {p3ogen}       	|
 | Orbs Missed                	| {p1ogath}      	| {p2ogath}      	| {p3ogath}      	|
@@ -252,6 +251,7 @@ indiv_context2 = {
     "p1m":	"%.0f" % 	(dfIndiv.iloc[0]['grenades']),
     "p1s":	"%.0f" % 	(dfIndiv.iloc[0]['supers']),
     "p1rez":	"%.0f" % 	(dfIndiv.iloc[0]['rezzes']),
+    "p1rezd":	"%.0f" % 	(dfIndiv.iloc[0]['rezzed']),
     "p1fail":	"%.0f" % 	(dfIndiv.iloc[0]['deaths']-dfIndiv.iloc[2]['rezzes']),
     "p1ogen":	"%.0f" % 	(dfIndiv.iloc[0]['orbs_gen']),
     "p1ogath":	"%.0f" % 	(dfIndiv.iloc[0]['orbs_gath']),
@@ -268,6 +268,7 @@ indiv_context2 = {
     "p2m":	"%.0f" % 	(dfIndiv.iloc[1]['grenades']),
     "p2s":	"%.0f" % 	(dfIndiv.iloc[1]['supers']),
     "p2rez":	"%.0f" % 	(dfIndiv.iloc[1]['rezzes']),
+    "p2rezd":	"%.0f" % 	(dfIndiv.iloc[1]['rezzed']),
     "p2fail":	"%.0f" % 	(dfIndiv.iloc[1]['deaths']-dfIndiv.iloc[2]['rezzes']),
     "p2ogen":	"%.0f" % 	(dfIndiv.iloc[1]['orbs_gen']),
     "p2ogath":	"%.0f" % 	(dfIndiv.iloc[1]['orbs_gath']),
@@ -284,6 +285,7 @@ indiv_context2 = {
     "p3m":	"%.0f" % 	(dfIndiv.iloc[2]['grenades']),
     "p3s":	"%.0f" % 	(dfIndiv.iloc[2]['supers']),
     "p3rez":	"%.0f" % 	(dfIndiv.iloc[2]['rezzes']),
+    "p3rezd":	"%.0f" % 	(dfIndiv.iloc[2]['rezzed']),
     "p3fail":	"%.0f" % 	(dfIndiv.iloc[2]['deaths']-dfIndiv.iloc[2]['rezzes']),
     "p3ogen":	"%.0f" % 	(dfIndiv.iloc[2]['orbs_gen']),
     "p3ogath":	"%.0f" % 	(dfIndiv.iloc[2]['orbs_gath'])
