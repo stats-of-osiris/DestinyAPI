@@ -21,7 +21,7 @@ class Game(object):
     """
 
     def __init__(self, activity_id, guardian=None, **kwargs):
-        self.id = str(activity_id)
+        self.activity_id = str(activity_id)
         self.data = utils.get_json(constants.API_PATHS[
             'get_post_game_carnage_report'
         ].format(**locals()), **kwargs)
@@ -36,7 +36,7 @@ class Game(object):
                 'values.standing.basic.displayValue')
 
     @classmethod
-    def games_from_ids(cls, game_ids, guardian=None, **kwargs):
+    def games_from_ids(cls, game_ids: list, guardian=None, **kwargs):
         """
         Pass a list of game_ids and return a list of CarnageReport objects
         :param game_ids: List of game_ids

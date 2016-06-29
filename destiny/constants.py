@@ -9,7 +9,7 @@ API_PATHS = {
                                    '{self.player_id}/Summary',
     # used in Game.__init__()
     'get_post_game_carnage_report': 'Stats/PostGameCarnageReport/'
-                                    '{self.id}',
+                                    '{self.activity_id}',
     # used in Game.games_from_guardian()
     'get_activity_history': 'Stats/ActivityHistory/{guardian.console_id}/'
                             '{guardian.player_id}/{guardian.guardian_id}',
@@ -24,49 +24,12 @@ PLATFORMS = {
     'psn':  '2'
 }
 
-TABLES = {
-    'items': 'DestinyInventoryItemDefinition',
-    'buckets': 'DestinyInventoryBucketDefinition',
-    'gender': 'DestinyGenderDefinition',
-    'class': 'DestinyClassDefinition',
-    'race': 'DestinyRaceDefinition'
-}
-
 MAN_DIR = 'manifest'
 
 MANIFEST = {
     'version_file': '{}/man_version.json'.format(MAN_DIR),
     'db': '{}/manifest.content'.format(MAN_DIR),
     'zip': '{}/man_zip'.format(MAN_DIR)
-}
-
-MAN_PATH = 'manifest/manifest.content'
-
-MAN_HASH = {
-    'DestinyActivityDefinition': 'activityHash',
-    'DestinyActivityTypeDefinition': 'activityTypeHash',
-    'DestinyClassDefinition': 'classHash',
-    'DestinyGenderDefinition': 'genderHash',
-    'DestinyInventoryBucketDefinition': 'bucketHash',
-    'DestinyInventoryItemDefinition': 'itemHash',
-    'DestinyProgressionDefinition': 'progressionHash',
-    'DestinyRaceDefinition': 'raceHash',
-    'DestinyTalentGridDefinition': 'gridHash',
-    'DestinyUnlockFlagDefinition': 'flagHash',
-    'DestinyHistoricalStatsDefinition': 'statId',
-    'DestinyDirectorBookDefinition': 'bookHash',
-    'DestinyStatDefinition': 'statHash',
-    'DestinySandboxPerkDefinition': 'perkHash',
-    'DestinyDestinationDefinition': 'destinationHash',
-    'DestinyPlaceDefinition': 'placeHash',
-    'DestinyActivityBundleDefinition': 'bundleHash',
-    'DestinyStatGroupDefinition': 'statGroupHash',
-    'DestinySpecialEventDefinition': 'eventHash',
-    'DestinyFactionDefinition': 'factionHash',
-    'DestinyVendorCategoryDefinition': 'categoryHash',
-    'DestinyEnemyRaceDefinition': 'raceHash',
-    'DestinyScriptedSkullDefinition': 'skullHash',
-    'DestinyGrimoireCardDefinition': 'cardId'
 }
 
 # List of possible activity modes

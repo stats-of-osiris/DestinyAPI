@@ -26,8 +26,6 @@ def get_json(path, **kwargs):
     :kwarg params: Query parameters to pass to the `requests.get()` call
     :return: JSON object
     """
-    # check kwargs to see if the api_key was passed in,
-    # use environment variable if not
     url = URL_BASE + path
     params = kwargs.get('params')
     session = build_session(**kwargs)
@@ -54,7 +52,7 @@ def validate_json_response(response, url):
     """
     Check the response for error messages.
     :param response: the full JSON response
-    :param url: ???
+    :param url: url of the API response
     :return: True if response has no error message, throws error otherwise
     """
     if response['ErrorCode'] != 1:
@@ -85,7 +83,7 @@ def crawl_data(destipy_object, data_path, throw_error=True):
     """
     Crawl dict tree via period-delimited string. Used to more easily
         reference data not explicitly gathered by Destipy.
-    :param destiny_object: Destipy object with a data variable
+    :param destipy_object: Destipy object with a data variable
         containing the JSON response to crawl
     :param data_path: period-delimited string that
         specifies which value to return

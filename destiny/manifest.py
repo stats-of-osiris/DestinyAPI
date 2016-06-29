@@ -156,22 +156,18 @@ def get_table(table, **kwargs):
     """
     kwargs.setdefault('force_update', False)
     check_for_update(force_update=kwargs.get('force_update'))
-    try:
-        tbl = constants.TABLES[str(table).lower()]
-    except KeyError:
-        raise '{0} is not a valid table name.'.format(table)
-    conn = sqlite3.connect(constants.MAN_PATH)
-    query = 'SELECT * FROM {0}'.format(tbl)
+    conn = sqlite3.connect(constants.MANIFEST['db'])
+    query = 'SELECT * FROM {0}'.format(table)
     return pd.read_sql(query, conn, index_col='id')
 
 
 def get_bucket(hash_key, **kwargs):
-    bucket = get_row(hash_key, 'buckets', **kwargs)
+    bucket = get_row(hash_key, 'DestinyInventoryBucketDefinition', **kwargs)
     return bucket['bucketName']
 
 
 def get_item(hash_key, **kwargs):
-    item = get_row(hash_key, 'items', **kwargs)
+    item = get_row(hash_key, 'DestinyInventoryItemDefinition', **kwargs)
     bucket_hash = item['bucketTypeHash']
     bucket = get_bucket(bucket_hash)
     try:
@@ -194,7 +190,7 @@ def get_item(hash_key, **kwargs):
 def get_items(hash_keys: list, **kwargs):
     items = []
     for key in hash_keys:
-        item = get_row(key, 'items', **kwargs)
+        item = get_row(key, 'DestinyInventoryItemDefinition', **kwargs)
         bucket_hash = item['bucketTypeHash']
         bucket = get_bucket(bucket_hash)
         try:
@@ -217,15 +213,15 @@ def get_items(hash_keys: list, **kwargs):
 
 
 def get_gender(hash_key, **kwargs):
-    gender = get_row(hash_key, 'gender', **kwargs)
+    gender = get_row(hash_key, 'DestinyGenderDefinition', **kwargs)
     return gender['genderName']
 
 
 def get_class(hash_key, **kwargs):
-    class_row = get_row(hash_key, 'class', **kwargs)
+    class_row = get_row(hash_key, 'DestinyClassDefinition', **kwargs)
     return class_row['className']
 
 
 def get_race(hash_key, **kwargs):
-    race = get_row(hash_key, 'race', **kwargs)
+    race = get_row(hash_key, 'DestinyRaceDefinition', **kwargs)
     return race['raceName']

@@ -10,7 +10,8 @@ destiny.Player
 
 """
 from . import utils, constants
-from .manifest import get_class, get_gender, get_race, get_items
+from .manifest import get_class, get_gender, get_race, get_items, get_row
+import pandas as pd
 
 
 class Player(object):
@@ -21,6 +22,7 @@ class Player(object):
     :kwarg params: Query parameters to pass to the `requests.get()` call
     """
     def __init__(self, console, player_name, **kwargs):
+        self.console_name = console
         self.console_id = constants.PLATFORMS[
             str(console).lower()
         ]
@@ -32,29 +34,37 @@ class Player(object):
             'get_destiny_account_summary'
         ].format(**locals()), **kwargs)
         self.data = self.get('Response.data')
+        self.grimoire = self.get('grimoireScore')
         # separate Player and Guardian data via .pop()
-        self.guardians = self.data.pop('characters')
-        self.guardian_ids = self.get_guardian_ids()
-        # self.last_guardian = self.set_last_guardian()
+        # self.guardians = self.data.pop('characters')
+        self.guardians = self.pull_guardians()
 
-    def get_guardian_ids(self):
-        guardian_ids = []
-        for guardian in self.guardians:
-            guardian_ids.append(
-                guardian['characterBase']['characterId']
-            )
-        return guardian_ids
-
-    # def set_last_guardian(self):
-    #     # Grabs the dateLastPlayed for each Guardian in the account and finds
-    #     # the Guardian dict of the one most recently played
-    #     compare_date = '2010-01-01T00:00:00Z'
-    #     for g in self.guardians.values():
-    #         if utils.compare_dates(g.last_played,
-    #                                compare_date) == g.last_played:
-    #             last_guardian = g
-    #             compare_date = g.last_played
-    #     return last_guardian
+    def pull_guardians(self):
+        json = self.data.pop('characters')
+        guardians = []
+        for entry in json:
+            summary = pd.DataFrame(
+                {
+                    'class':
+                        get_class(entry['characterBase']['classHash']),
+                    'race':
+                        get_race(entry['characterBase']['raceHash']),
+                    'gender':
+                        get_gender(entry['characterBase']['genderHash']),
+                    'light_lvl':
+                        entry['characterBase']['stats']['STAT_LIGHT']['value'],
+                    'emblem':
+                        get_row(
+                            entry['emblemHash'],
+                            'DestinyInventoryItemDefinition'
+                        )['itemName'],
+                    'minutes_played':
+                        int(entry['characterBase']['minutesPlayedTotal'])
+                },
+                index=[entry['characterBase']['characterId']]
+            ).rename_axis('guardian_id')
+            guardians.append(summary)
+        return pd.concat(guardians)
 
     def get(self, data_path):
         return utils.crawl_data(self, data_path)
@@ -74,6 +84,7 @@ class Guardian(Player):
         self.race = get_race(self.get('characterBase.raceHash'))
         self.gender = get_gender(self.get('characterBase.genderHash'))
         self.equipment = self.get_equipment()
+        self.summary = self.create_summary()
 
     def get_last_guardian(self):
         """
@@ -95,3 +106,19 @@ class Guardian(Player):
         for e in equipment:
             stuff.append(e.get('itemHash'))
         return get_items(stuff)
+
+    def create_summary(self):
+        summary = pd.DataFrame(
+            {
+                'class': get_class(self.get('characterBase.classHash')),
+                'race': get_race(self.get('characterBase.raceHash')),
+                'gender': get_gender(self.get('characterBase.genderHash')),
+                'light_lvl': self.get('characterBase.stats.STAT_LIGHT.value'),
+                'emblem': get_row(
+                    self.get('emblemHash'),
+                    'DestinyInventoryItemDefinition'
+                )['itemName']
+            },
+            index=[self.guardian_id]
+        ).rename_axis('guardian_id')
+        return summary
