@@ -28,13 +28,15 @@ def get_json(path, **kwargs):
     """
     # check kwargs to see if the api_key was passed in,
     # use environment variable if not
-    kwargs = {} if not kwargs else kwargs
     url = URL_BASE + path
     params = kwargs.get('params')
     session = build_session(**kwargs)
     api_wait = 1
     while api_wait > 0:
-        response = session.get(url, params=params)
+        if params is None:
+            response = session.get(url)
+        else:
+            response = session.get(url, params=params)
         response.raise_for_status()
         response = response.json()
         api_wait = response['ThrottleSeconds']
@@ -63,11 +65,10 @@ def validate_json_response(response, url):
 
 
 def build_session(**kwargs):
-    kwargs = {} if not kwargs else kwargs
+    kwargs.setdefault('api_key', os.environ['BUNGIE_NET_API_KEY'])
     session = kwargs.get('session')
-    if not session:
+    if session is None:
         api_key = kwargs.get('api_key')
-        api_key = os.environ['BUNGIE_NET_API_KEY'] if not api_key else api_key
         headers = {'X-API-Key': api_key}
         session = requests.Session()
         session.headers.update(headers)
@@ -75,9 +76,8 @@ def build_session(**kwargs):
 
 
 def close_session(session, **kwargs):
-    kwargs = {} if not kwargs else kwargs
     existing_session = kwargs.get('session')
-    if not existing_session:
+    if existing_session is None:
         session.close()
 
 

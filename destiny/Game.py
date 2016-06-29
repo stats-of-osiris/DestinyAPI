@@ -32,7 +32,7 @@ class Game(object):
         self.guardians = Guardian.guardians_from_data(self.data.pop('entries'))
         self.outcome = None
         if guardian:
-            self.outcome = self.guardians[guardian.id].get(
+            self.outcome = self.guardians[guardian.guardian_id].get(
                 'values.standing.basic.displayValue')
 
     @classmethod

@@ -1,53 +1,50 @@
-from pandas.io.json import json_normalize
-import sqlite3 as sql
-import json
+import os
+import requests
 
-# Connect to manifest
-conn = sql.connect('manifest/manifest.content')
-cursor = conn.cursor()
 
-# Get items and convert to actual JSON
-cursor.execute('SELECT json FROM DestinyInventoryItemDefinition')
-rows = cursor.fetchall()
-item_values = [json.loads(row[0]) for row in rows]
+URL_BASE = 'https://www.bungie.net/Platform/Destiny/'
+PATH = 'Stats/PostGameCarnageReport/{0}'
 
-# Get buckets and convert to actual JSON
-cursor.execute('SELECT json FROM DestinyInventoryBucketDefinition')
-rows = cursor.fetchall()
-bucket_values = [json.loads(row[0]) for row in rows]
 
-# Reshape Items data into usable format
-items = json_normalize(item_values)
+def build_session(**kwargs):
+    kwargs.setdefault('api_key', os.environ['BUNGIE_NET_API_KEY'])
+    session = kwargs.get('session')
+    if session is None:
+        api_key = kwargs.get('api_key')
+        headers = {'X-API-Key': api_key}
+        session = requests.Session()
+        session.headers.update(headers)
+    return session
 
-items = items.loc[:,
-                  ['itemHash', 'itemDescription', 'itemTypeName',
-                   'tierTypeName', 'itemName', 'icon', 'itemType',
-                   'bucketTypeHash']].set_index('itemHash')
+print(
+    build_session().headers
+)
 
-items = items.rename(columns={
-    'itemDescription': 'Description',
-    'itemTypeName': 'Item Type',
-    'tierTypeName': 'Rarity',
-    'itemName': 'Name',
-    'icon': 'Icon',
-    'itemType': 'Item Type Id',
-    'bucketTypeHash': 'bucketHash'
-})
 
-# Reshape Buckets data into usable format
-buckets = json_normalize(bucket_values)
+def close_session(session, **kwargs):
+    existing_session = kwargs.get('session')
+    if existing_session is None:
+        session.close()
 
-buckets = buckets.loc[:, ['bucketHash', 'bucketName']].set_index('bucketHash')
 
-buckets = buckets.rename(columns={
-    'bucketName': 'Item Group'
-})
+def request_json(id, **kwargs):
+    url = URL_BASE + PATH.format(id)
+    params = kwargs.get('params')
+    session = build_session(**kwargs)
+    api_wait = 1
+    while api_wait > 0:
+        if params is None:
+            response = session.get(url)
+        else:
+            response = session.get(url, params=params)
+        response.raise_for_status()
+        response = response.json()
+        api_wait = response['ThrottleSeconds']
 
-# Join Items and Buckets together into a single table
-items = items.join(buckets, on='bucketHash')
+    close_session(session, **kwargs)
+    return response
 
-items = items.drop('bucketHash', axis=1)
+print(
+    request_json('4892996696')
+)
 
-# Push back into our own Sqlite DB
-new_conn = sql.connect('manifest/destipy.content')
-items.to_sql('items', new_conn, if_exists='replace')

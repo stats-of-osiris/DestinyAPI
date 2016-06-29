@@ -3,17 +3,19 @@ API_PATHS = {
     # used in Player.set_id()
     'get_membership_id_by_display_name': '{self.console_id}/Stats/'
                                          'GetMembershipIdByDisplayName/'
-                                         '{self.name}/',
+                                         '{self.player_name}/',
     # used in Player.__init__()
     'get_destiny_account_summary': '{self.console_id}/Account/'
-                                   '{self.id}/Summary',
+                                   '{self.player_id}/Summary',
     # used in Game.__init__()
     'get_post_game_carnage_report': 'Stats/PostGameCarnageReport/'
                                     '{self.id}',
     # used in Game.games_from_guardian()
     'get_activity_history': 'Stats/ActivityHistory/{guardian.console_id}/'
-                            '{guardian.player_id}/{guardian.id}',
-    'get_manifest': 'Manifest/'
+                            '{guardian.player_id}/{guardian.guardian_id}',
+    'get_manifest': 'Manifest/',
+    'get_character': '{self.console_id}/Account/{self.player_id}/'
+                     'Character/{self.guardian_id}/'
 }
 
 # Platform decode
@@ -21,6 +23,24 @@ PLATFORMS = {
     'xbox': '1',
     'psn':  '2'
 }
+
+TABLES = {
+    'items': 'DestinyInventoryItemDefinition',
+    'buckets': 'DestinyInventoryBucketDefinition',
+    'gender': 'DestinyGenderDefinition',
+    'class': 'DestinyClassDefinition',
+    'race': 'DestinyRaceDefinition'
+}
+
+MAN_DIR = 'manifest'
+
+MANIFEST = {
+    'version_file': '{}/man_version.json'.format(MAN_DIR),
+    'db': '{}/manifest.content'.format(MAN_DIR),
+    'zip': '{}/man_zip'.format(MAN_DIR)
+}
+
+MAN_PATH = 'manifest/manifest.content'
 
 MAN_HASH = {
     'DestinyActivityDefinition': 'activityHash',

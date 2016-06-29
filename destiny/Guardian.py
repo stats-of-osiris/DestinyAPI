@@ -10,7 +10,7 @@ destiny.Guardian
 
 """
 from . import utils, constants
-from .manifest import Manifest
+from .manifest import get_class, get_gender, get_race
 
 
 class Guardian(object):
@@ -28,12 +28,9 @@ class Guardian(object):
             self.console_id = self.get('characterBase.membershipType')
             self.light_level = self.get('characterBase.powerLevel')
             self.guardian_level = self.get('characterLevel')
-            self.g_class = Manifest().classes[
-                self.get('characterBase.classHash')]['className']
-            self.gender = Manifest().gender[
-                self.get('characterBase.genderHash')]['genderName']
-            self.race = Manifest().race[
-                self.get('characterBase.raceHash')]['raceName']
+            # self.g_class = get_class(self.get('characterBase.classHash'))
+            # self.gender = get_gender(self.get('characterBase.genderHash'))
+            # self.race = get_race(self.get('characterBase.raceHash'))
         else:
             self.last_played = None
             self.id = self.get('characterId')

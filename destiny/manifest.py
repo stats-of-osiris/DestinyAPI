@@ -8,127 +8,224 @@ SQLite database and pulling values from said database.
 """
 
 from . import utils, constants
-import zipfile, sqlite3, json, os, pickle, sys
+import sqlite3
+import json
+import pandas as pd
+import os
+import sys
+import zipfile
+import datetime
+import requests
+
+# Meta information about manifest version and location from Destiny API
+meta = utils.get_json(constants.API_PATHS['get_manifest'].format(**locals()))
+meta_url = 'http://www.bungie.net{}'.format(
+    meta['Response']['mobileWorldContentPaths']['en'])
+meta_version = meta['Response']['version']
 
 
-class Manifest(object):
+def update_version(db_version):
     """
-    Access the data contained in Destiny's Manifest database. This is used
-    to interpret the hashes that are present in many API calls.
+    Update the current version of the locally stored manfiest file and when
+    an update check was last performed
+    :param db_version: new db version to store
+    :return: None
     """
-    def __init__(self, **kwargs):
-        self.meta = utils.get_json(constants.API_PATHS
-                                   ['get_manifest'].format(**locals()),
-                                   **kwargs)
-        self.meta_url = 'http://www.bungie.net{}'.format(
-            self.meta['Response']['mobileWorldContentPaths']['en'])
-        self.meta_version = self.meta['Response']['version']
-        self.data = self.get_data()
-        self.items = self.data['DestinyInventoryItemDefinition']
-        self.activities = self.data['DestinyActivityDefinition']
-        self.classes = self.data['DestinyClassDefinition']
-        self.race = self.data['DestinyRaceDefinition']
-        self.gender = self.data['DestinyGenderDefinition']
-        self.stats = self.data['DestinyStatDefinition']
-        self.stat_group = self.data['DestinyStatGroupDefinition']
+    payload = {
+        'version': db_version,
+        'date_checked': datetime.date.today().strftime('%Y-%m-%d')
+    }
+    if not os.path.exists(constants.MAN_DIR):
+        os.mkdir(constants.MAN_DIR)
+    with open(constants.MANIFEST['version_file'], 'w') as version:
+        json.dump(payload, version)
 
-    MAN_DIR = 'manifest'
-    VERSION_PICKLE = '{}/man_version.pickle'.format(MAN_DIR)
-    MANIFEST_FILE = '{}/manifest.content'.format(MAN_DIR)
-    MANIFEST_PICKLE = '{}/manifest.pickle'.format(MAN_DIR)
-    ZIP_FILE = '{}/MAN_ZIP'.format(MAN_DIR)
 
-    def update_version(self, db_version, version_file=VERSION_PICKLE,
-                       directory=MAN_DIR):
-        if not os.path.exists(directory):
-            os.mkdir(directory)
-        with open(version_file, 'wb') as version:
-            pickle.dump(db_version, version)
+def check_version():
+    """
+    Load the version JSON file
+    :return: dict object including current version and date when last checked
+    """
+    try:
+        with open(constants.MANIFEST['version_file'], 'r') as version:
+            current_version = json.load(version)
+    except:
+        current_version = None
+    return current_version
 
-    def check_version(self, version_file=VERSION_PICKLE):
-        with open(version_file, 'rb') as version:
-            current_version = pickle.load(version)
-        return current_version
 
-    def update_manifest(self, directory=MAN_DIR,
-                        file_name=MANIFEST_FILE, zip_file=ZIP_FILE, **kwargs):
-        with open(zip_file, 'wb') as zip_file:
-            session = utils.build_session(**kwargs)
-            response = session.get(self.meta_url, stream=True)
-            total_length = response.headers.get('content-length')
-            if total_length == 0:  # no content length header
-                utils.close_session(session, **kwargs)
-                zip_file.write(response.content)
-            else:
-                dl = 0
-                total_length = int(total_length)
-                for data in response.iter_content():
-                    dl += len(data)
-                    zip_file.write(data)
-                    done = int(50 * dl / total_length)
-                    sys.stdout.write(
-                        "\r[%s%s]" % ('=' * done, ' ' * (50 - done)))
-                    sys.stdout.flush()
-                utils.close_session(session, **kwargs)
-        self.unzip_manifest()
-        print('Database downloaded')
+def update_manifest():
+    """
+    Download the zipped manifest file. Shows a progress bar where '=' == 2%
+    :return: None
+    """
+    with open(constants.MANIFEST['zip'], 'wb') as zip_file:
+        response = requests.get(meta_url, stream=True)
+        total_length = response.headers.get('content-length')
+        if total_length == 0:  # no content length header
+            zip_file.write(response.content)
+        else:
+            dl = 0
+            total_length = int(total_length)
+            for data in response.iter_content():
+                dl += len(data)
+                zip_file.write(data)
+                done = int(50 * dl / total_length)
+                sys.stdout.write(
+                    "\r[%s%s]" % ('=' * done, ' ' * (50 - done)))
+                sys.stdout.flush()
+    unzip_manifest()
+    print('Database downloaded')
 
-    def unzip_manifest(self, zip_file=ZIP_FILE, file_name=MANIFEST_FILE):
-        with zipfile.ZipFile(zip_file) as man_zip:
-            name = man_zip.namelist()
-            man_zip.extractall()
-        os.rename(name[0], file_name)
-        os.remove(zip_file)
 
-    def crawl_manifest(self, manifest_file=MANIFEST_FILE,
-                       manifest_pickle=MANIFEST_PICKLE):
-        # Connect to the manifest
-        conn = sqlite3.connect(manifest_file)
-        # Create the cursor object
-        cursor = conn.cursor()
-        # Initialize master dict where all db tables will be stored
-        man_data = {}
+def unzip_manifest():
+    """
+    Helper function to unzip manifest file, and delete the zip file
+    :return: None
+    """
+    with zipfile.ZipFile(constants.MANIFEST['zip']) as zip_file:
+        name = zip_file.namelist()
+        zip_file.extractall()
+    os.rename(name[0], constants.MANIFEST['db'])
+    os.remove(constants.MANIFEST['zip'])
 
-        # Iterate through each table in the db and pull out the JSON
-        for table in constants.MAN_HASH.keys():
-            cursor.execute('SELECT json FROM {}'.format(table))
-            # The result retrieved below is a list of tuples
-            rows = cursor.fetchall()
-            # Parse out the tuples into the actual JSON values
-            row_values = [json.loads(row[0]) for row in rows]
-            # Create a dict of the db table with the hashes as the keys
-            # and the JSON as the values
-            value_dict = {}
-            hash_key = constants.MAN_HASH[table]
-            for value in row_values:
-                value_dict[value[hash_key]] = value
-            # Add the table dict to our master dict,
-            # with the table name as the key
-            man_data[table] = value_dict
-            with open(manifest_pickle, 'wb') as data:
-                pickle.dump(man_data, data)
 
-    def check_for_update(self, version_file=VERSION_PICKLE,
-                         manifest_file=MANIFEST_FILE, **kwargs):
-        # Create version file if it doesn't yet exist
-        if not os.path.exists(version_file):
-            self.update_version(self.meta_version)
-        current_version = self.check_version()
-        cond1 = self.meta_version != current_version
-        cond2 = os.path.exists(manifest_file)
-        if cond1 or not cond2:
+def check_for_update(force_update=False):
+    """
+    When pulling data from the manifest, this will check for an updated version
+    every 30 days, or if the `force_update` flag is flipped
+    :param force_update: Defaults to False. If True, will force an API call
+    to see if a new manifest version exists
+    :return: None
+    """
+    # Create version file if it doesn't yet exist
+    if not os.path.exists(constants.MANIFEST['version_file']):
+        update_version(meta_version)
+
+    # Store values from version_file
+    current_version = check_version()['version']
+    last_checked = datetime.datetime.strptime(
+        check_version()['date_checked'], '%Y-%m-%d')
+
+    # Download manifest if it doesn't exist
+    if not os.path.exists(constants.MANIFEST['db']):
+        print('Manifest not found. Downloading now.')
+        update_manifest()
+        update_version(meta_version)
+
+    # Check every 30 days or when forced
+    gt_30 = (datetime.date.today() - last_checked.date()).days >= 30
+    if gt_30 or force_update:
+        if meta_version != current_version:
             print('Update to Manifest Found')
-            self.update_version(self.meta_version)
-            print('Stored Version Updated')
-            self.update_manifest(**kwargs)
-            self.crawl_manifest()
+            update_manifest()
+        update_version(meta_version)
 
-    def get_data(self, manifest_pickle=MANIFEST_PICKLE,
-                 update=False, directory=MAN_DIR, **kwargs):
-        if update or not os.path.exists(directory):
-            self.check_for_update(**kwargs)
-        elif not os.path.exists(manifest_pickle):
-            self.crawl_manifest()
-        with open(manifest_pickle, 'rb') as data:
-            man_data = pickle.load(data)
-        return man_data
+
+def get_row(hash_key, table, **kwargs):
+    """
+    Method to pull a single row from the manifest database and return it
+    as a JSON formatted string
+    :param hash_key: hash key of item requested
+    :param table: DB table name where hash_key resides
+    :return: JSON formatted string of requested row
+    """
+
+    # Get table from manifest
+    data = get_table(table, **kwargs)
+
+    # Convert hash to unsigned 32bit int and return the value in the
+    # json db column as json.
+    # Not sure why some tables behave differently from others.
+    hash_key = int(hash_key)
+    try:
+        hash_id = hash(hash_key)
+        return json.loads(data.loc[hash_id].values[0])
+    except KeyError:
+        hash_id = hash_key - 4294967296
+        return json.loads(data.loc[hash_id].values[0])
+
+
+def get_table(table, **kwargs):
+    """
+    Helper function to connect to the manifest sqlite database.
+    :param table: Table name to connect to as pulled from constants.TABLES
+    :kwargs force_update: Defaults to False. If True, will force an API call
+    to see if a new manifest version exists
+    :return: Table from manifest as a DataFrame object
+    """
+    kwargs.setdefault('force_update', False)
+    check_for_update(force_update=kwargs.get('force_update'))
+    try:
+        tbl = constants.TABLES[str(table).lower()]
+    except KeyError:
+        raise '{0} is not a valid table name.'.format(table)
+    conn = sqlite3.connect(constants.MAN_PATH)
+    query = 'SELECT * FROM {0}'.format(tbl)
+    return pd.read_sql(query, conn, index_col='id')
+
+
+def get_bucket(hash_key, **kwargs):
+    bucket = get_row(hash_key, 'buckets', **kwargs)
+    return bucket['bucketName']
+
+
+def get_item(hash_key, **kwargs):
+    item = get_row(hash_key, 'items', **kwargs)
+    bucket_hash = item['bucketTypeHash']
+    bucket = get_bucket(bucket_hash)
+    try:
+        description = item['itemDescription']
+    except KeyError:
+        description = None
+    return pd.Series(
+        {
+            'item_id': hash_key,
+            'item_name': item['itemName'],
+            'item_rarity': item['tierTypeName'],
+            'item_type': item['itemTypeName'],
+            'icon': item['icon'],
+            'item_description': description,
+            'item_category': bucket
+        }
+    )
+
+
+def get_items(hash_keys: list, **kwargs):
+    items = []
+    for key in hash_keys:
+        item = get_row(key, 'items', **kwargs)
+        bucket_hash = item['bucketTypeHash']
+        bucket = get_bucket(bucket_hash)
+        try:
+            description = item['itemDescription']
+        except KeyError:
+            description = None
+        item = pd.DataFrame(
+            {
+                'item_name': item['itemName'],
+                'item_rarity': item['tierTypeName'],
+                'item_type': item['itemTypeName'],
+                'icon': item['icon'],
+                'item_description': description,
+                'item_category': bucket
+            },
+            index=[key]
+        ).rename_axis('item_id')
+        items.append(item)
+    return pd.concat(items)
+
+
+def get_gender(hash_key, **kwargs):
+    gender = get_row(hash_key, 'gender', **kwargs)
+    return gender['genderName']
+
+
+def get_class(hash_key, **kwargs):
+    class_row = get_row(hash_key, 'class', **kwargs)
+    return class_row['className']
+
+
+def get_race(hash_key, **kwargs):
+    race = get_row(hash_key, 'race', **kwargs)
+    return race['raceName']
