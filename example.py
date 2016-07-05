@@ -34,7 +34,7 @@ titan = john.guardians['2305843009215820974']
 print(titan.id, 'Light level {0} {1} {2} {3}'.format(
     titan.light_level, titan.g_class, titan.gender, titan.race), '\n')
 
-last_10_trials = destiny.Game.games_from_guardian(titan, n=10)
+last_10_trials = destiny.Game.games_from_guardian(titan, n=14)
 print('TRIALS, SON')
 for game in last_10_trials.values():
     print(game.id, game.mode, game.outcome)

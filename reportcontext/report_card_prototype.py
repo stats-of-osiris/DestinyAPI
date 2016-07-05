@@ -49,9 +49,8 @@ with  open(file_name,'w') as myfile:
 #---------------TEAM SUMMARY-----------
 
 summary = """
-##Trials Report Card for {Map}
 
-###Team Summary
+### Team Summary
 
 1. **{Player1}** - The {Player1_class}
 2. **{Player2}** - The {Player2_class}
@@ -83,18 +82,18 @@ Playing for **{Time}** minutes on **{Date}**.
 
 Spawn Side: {alpha_count} times **Alpha**, {bravo_count} times **Bravo**
 
-####Round Scores by Game
+
 ![]({game_graph_path})
 
-- Team K/D of {teamkd}, with a sweaty* K/D of {teamskd}
-- Average round time of {round_time} seconds, or {round_stime} seconds when sweaty*
+- Team K/D of {teamkd}, with a sweaty[^1] K/D of {teamskd}
+- Average round time of {round_time} seconds, or {round_stime} seconds when sweaty[^1]
 - {N_1stk} out of {N_games} matches we had First Blood	
 - {N_aces} Aces vs {N_aced} times Aced
 - {N_annil} Annihilations vs {N_annild} times Annihilated
 - {N_rez} Resurrections vs {N_enemy_rez} Enemy Resurrections Allowed
 - {N_morbs} Orbs Missed out of {N_orbs} generated
 
-####The Team's Kill Methods:
+#### The Team's Kill Methods:
 ![]({killm_graph_path})
 
 """
@@ -134,18 +133,19 @@ indiv = """
 ### Detailed Individual Performance
 
 | #                      	| {Player1} 	| {Player2} 	| {Player3} 	|
-|------------------------	|-----------	|-----------	|-----------	|
+|:--------|--------:|--------:|--------:|
 | Kills                  	| {p1k}     	| {p2k}     	| {p3k}     	|
 | Assists                	| {p1a}     	| {p2a}     	| {p3a}     	|
 | Deaths                 	| {p1d}     	| {p2d}     	| {p3d}     	|
 | K/D                    	| {p1kd}    	| {p2kd}    	| {p3kd}    	|
-| Sweaty K/D*             	| {p1skd}   	| {p2skd}   	| {p3skd}    	|
-| Percent Contribution**  	| {p1cont} %  	| {p2cont} %    	| {p3cont} %    	|
-| Last Guardian Actions***   | {p1lga}   	| {p2lga}   	| {p3lga}   	|
+| Sweaty K/D[^1]             	| {p1skd}   	| {p2skd}   	| {p3skd}    	|
+| Percent Contribution[^2]  	| {p1cont} %  	| {p2cont} %    	| {p3cont} %    	|
+| Last Guardian Actions[^3]   | {p1lga}   	| {p2lga}   	| {p3lga}   	|
 | Wrecking Balls         	| {p1wb}    	| {p2wb}    	| {p3wb}    	|
 | Longest Kill Streak    	| {p1mks}   	| {p2mks}   	| {p3mks}   	|
 | Longest Life           	| {p1ll}    	| {p2ll}    	| {p3ll}    	|
 | Close Calls            	| {p1cc}    	| {p2cc}    	| {p3cc}    	|
+
 
 """
 
@@ -199,7 +199,7 @@ with  open(file_name,'a') as myfile:
 indiv2 = """
 
 | Kill Method Breakdown        	| {Player1}      	| {Player2}      	| {Player3}      	|
-|----------------------------	|----------------	|----------------	|----------------	|
+|:--------|--------:|--------:|--------:|
 | % Primary vs Secondary     	| {p1pvs} %      	| {p2pvs} %      	| {p3pvs} %      	|
 | Sniper Headshots / Kills   	| {p1shs}/{p1sk} 	| {p2shs}/{p2sk} 	| {p3shs}/{p3sk} 	|
 | Shotgun Kills              	| {p1sg}         	| {p2sg}         	| {p3sg}         	|
@@ -208,34 +208,36 @@ indiv2 = """
 | Grenade Kills              	| {p1g}          	| {p2g}          	| {p3g}          	|
 | Melee Kills                	| {p1m}          	| {p2m}          	| {p3m}          	|
 | Super Kills                	| {p1s}          	| {p2s}          	| {p3s}          	|
+{: .table}
 
 | Resurrections & Orbs      	| {Player1}      	| {Player2}      	| {Player3}      	|
-|----------------------------	|----------------	|----------------	|----------------	|
+|:--------|--------:|--------:|--------:|
 | Resurrections Performed    	| {p1rez}        	| {p2rez}        	| {p3rez}        	|
 | Resurrections Recieved        	| {p1rezd}       	| {p2rezd}       	| {p3rezd}       	|
 | Deaths Un-rezzed           	| {p1fail}       	| {p2fail}       	| {p3fail}       	|
 | Orbs Generated             	| {p1ogen}       	| {p2ogen}       	| {p3ogen}       	|
 | Orbs Missed                	| {p1ogath}      	| {p2ogath}      	| {p3ogath}      	|
+{: .table}
 
+###### Definitions
 
-### Definitions
+[^1]:**Sweaty** stats are based on matches where the enemy team wins at least 3 rounds.
 
-1) **Sweaty K/D** is K/D on matches where the enemy team wins at least 3 rounds.
+[^2]:
+    **Percent contribution** is a metric for determining how much you helped or hindered your team. I started with the points that Destiny awards natively and tweaked them for Trials.
+    
+    - +100 for kills, -100 for deaths, 
+    
+    - +33 for assists, +25 for rezzes, +12 for being rezzed. 
+    
+    Scores are tabulated across all games for individuals and the team. And then a player's contribution is shown as percent of the team's total score.
 
-2) **Percent contribution** is a metric for determining how much you helped or hindered your team.
-
-- +100 for kills
-- -100 for deaths
-- +33 for assists
-- +25 for rezzes
-- +12 for being rezzed
-
-Scores are tabulated across all games for individuals and the team. And then a player's contribution is shown as percent of the team's total score.
-
-3) **Last Guardian Actions** are:
-
-- *'Never Say Die'* = Kill an enemy as the last guardian standing.
-- *'From the Brink'* = Revive a teammate as the last guardian standing.
+[^3]:
+    **Last Guardian Actions** are: 
+   
+    - *'Never Say Die'* = Kill an enemy as the last guardian standing.
+    
+    - *'From the Brink'* = Revive a teammate as the last guardian standing.
 """
 
 indiv_context2 = {

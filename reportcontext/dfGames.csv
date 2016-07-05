@@ -1,9 +1,15 @@
 game_N,activity_id,date,play_time,team,standing,score,map_name,map_path,enemy_score,sweaty,round_time,sweaty_round_time
-0.0,4784376208.0,2016-03-21T00:05:28Z,252.0,Alpha,Victory,5.0,Widow's Court,/img/theme/destiny/bgs/pgcrs/widows_court.jpg,0.0,no,50.4,
-1.0,4784395782.0,2016-03-21T00:10:49Z,309.0,Bravo,Victory,5.0,Widow's Court,/img/theme/destiny/bgs/pgcrs/widows_court.jpg,0.0,no,61.8,
-2.0,4784423429.0,2016-03-21T00:17:02Z,439.0,Bravo,Victory,5.0,Widow's Court,/img/theme/destiny/bgs/pgcrs/widows_court.jpg,1.0,no,73.1666666667,
-3.0,4784444986.0,2016-03-21T00:25:27Z,304.0,Bravo,Victory,5.0,Widow's Court,/img/theme/destiny/bgs/pgcrs/widows_court.jpg,0.0,no,60.8,
-4.0,4784478654.0,2016-03-21T00:31:40Z,582.0,Bravo,Victory,5.0,Widow's Court,/img/theme/destiny/bgs/pgcrs/widows_court.jpg,3.0,yes,72.75,72.75
-5.0,4784505400.0,2016-03-21T00:42:46Z,556.0,Alpha,Victory,5.0,Widow's Court,/img/theme/destiny/bgs/pgcrs/widows_court.jpg,3.0,yes,69.5,69.5
-6.0,4784538623.0,2016-03-21T00:53:30Z,649.0,Bravo,Defeat,4.0,Widow's Court,/img/theme/destiny/bgs/pgcrs/widows_court.jpg,5.0,yes,72.1111111111,72.1111111111
-7.0,4784578379.0,2016-03-21T01:05:37Z,682.0,Alpha,Victory,5.0,Widow's Court,/img/theme/destiny/bgs/pgcrs/widows_court.jpg,3.0,yes,85.25,85.25
+0.0,5187547715.0,2016-07-02T04:20:07Z,605.0,Bravo,Victory,5.0,Firebase Delphi,/img/theme/destiny/bgs/pgcrs/crucible_firebase_delphi.jpg,3.0,yes,75.625,75.625
+1.0,5187635260.0,2016-07-02T04:57:18Z,250.0,Bravo,Victory,5.0,Firebase Delphi,/img/theme/destiny/bgs/pgcrs/crucible_firebase_delphi.jpg,0.0,no,50.0,
+2.0,5187710298.0,2016-07-02T05:23:04Z,380.0,Alpha,Victory,5.0,Firebase Delphi,/img/theme/destiny/bgs/pgcrs/crucible_firebase_delphi.jpg,2.0,no,54.2857142857,
+3.0,5187514849.0,2016-07-02T04:09:24Z,599.0,Bravo,Defeat,3.0,Firebase Delphi,/img/theme/destiny/bgs/pgcrs/crucible_firebase_delphi.jpg,5.0,yes,74.875,74.875
+4.0,5187483457.0,2016-07-02T04:03:26Z,315.0,Bravo,Victory,5.0,Firebase Delphi,/img/theme/destiny/bgs/pgcrs/crucible_firebase_delphi.jpg,0.0,no,63.0,
+5.0,5187332838.0,2016-07-02T03:11:20Z,594.0,Bravo,Tie,4.0,Firebase Delphi,/img/theme/destiny/bgs/pgcrs/crucible_firebase_delphi.jpg,4.0,yes,74.25,74.25
+6.0,5187588401.0,2016-07-02T04:31:31Z,792.0,Bravo,Victory,5.0,Firebase Delphi,/img/theme/destiny/bgs/pgcrs/crucible_firebase_delphi.jpg,3.0,yes,99.0,99.0
+7.0,5187432330.0,2016-07-02T03:45:51Z,367.0,Bravo,Victory,5.0,Firebase Delphi,/img/theme/destiny/bgs/pgcrs/crucible_firebase_delphi.jpg,0.0,no,73.4,
+8.0,5187668011.0,2016-07-02T05:08:43Z,319.0,Alpha,Victory,5.0,Firebase Delphi,/img/theme/destiny/bgs/pgcrs/crucible_firebase_delphi.jpg,0.0,no,63.8,
+9.0,5187466100.0,2016-07-02T03:53:10Z,569.0,Alpha,Victory,5.0,Firebase Delphi,/img/theme/destiny/bgs/pgcrs/crucible_firebase_delphi.jpg,4.0,yes,63.2222222222,63.2222222222
+10.0,5187690866.0,2016-07-02T05:14:40Z,459.0,Alpha,Victory,5.0,Firebase Delphi,/img/theme/destiny/bgs/pgcrs/crucible_firebase_delphi.jpg,2.0,no,65.5714285714,
+11.0,5187653566.0,2016-07-02T05:02:13Z,346.0,Bravo,Victory,5.0,Firebase Delphi,/img/theme/destiny/bgs/pgcrs/crucible_firebase_delphi.jpg,1.0,no,57.6666666667,
+12.0,5187383024.0,2016-07-02T03:23:57Z,746.0,Alpha,Victory,5.0,Firebase Delphi,/img/theme/destiny/bgs/pgcrs/crucible_firebase_delphi.jpg,4.0,yes,82.8888888889,82.8888888889
+13.0,5187411339.0,2016-07-02T03:37:54Z,437.0,Alpha,Victory,5.0,Firebase Delphi,/img/theme/destiny/bgs/pgcrs/crucible_firebase_delphi.jpg,1.0,no,72.8333333333,

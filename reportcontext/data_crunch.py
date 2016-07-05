@@ -21,8 +21,9 @@ dfStats = pd.read_csv('DestinyStats.csv')
 
 
 # Generate Team List (need a function for this)
-teammates = ['JohnOfMars','DirtyAquaticApe','igordennis']
-#teammates = ['JohnOfMars','XpLiCiTOnE','igordennis']
+#teammates = ['JohnOfMars','DirtyAquaticApe','igordennis']
+teammates = ['JohnOfMars','XpLiCiTOnE','igordennis']
+#teammates = ['JohnOfMars','DrDrizzay101','Rubenov25']
 
 # Assign Allegiences
 dfStats['alleg'] = '?'
@@ -153,8 +154,8 @@ for player in teammates:
     
     dfFocus['map_common'] =  mode(dfGames.team)[1][0]   
 
-    dfFocus['alpha'] = collections.Counter(a)['Alpha']
-    dfFocus['bravo'] = collections.Counter(a)['Bravo']
+    dfFocus['alpha'] = collections.Counter(dfFocus)['Alpha']
+    dfFocus['bravo'] = collections.Counter(dfFocus)['Bravo']
 
     dfFocus['long_life'] = max(dfFocusFull.long_life)
     dfFocus['max_k_spree'] = max(dfFocusFull.max_k_spree)
@@ -196,8 +197,6 @@ fig, ax = plt.subplots(figsize=(10, 5))
 rects1 = ax.bar(ind, our_scores, width, color='#3F73CE')
 rects2 = ax.bar(ind, their_scores, width, color='#CE3F3F')
 
-ax.set_title('Round Scores by Game')
-
 ax.set_ylabel('Scores')
 ax.set_yticks(range(-5,6,1))
 ax.set_yticklabels(range(-5,6,1))
@@ -223,7 +222,7 @@ ax.legend((rects1[0], rects2[0]), ('Us', 'Them'), loc='upper center', bbox_to_an
 
 #plt.show()
 
-#plt.savefig('round_scores.png', transparent=True)
+plt.savefig('round_scores.png', transparent=True)
 
 # % kill method
 

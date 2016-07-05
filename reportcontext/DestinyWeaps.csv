@@ -1,81 +1,137 @@
 ,game_N,player,weap_hash,weap_kills,weap_name,weap_type
-0,0,JohnOfMars,1173766590,2.0,Doctrine of Passing,6
-1,0,DirtyAquaticApe,1201310194,3.0,Hawksaw,13
-2,0,DirtyAquaticApe,1287343925,1.0,Party Crasher +1,7
-3,0,igordennis,3118679308,1.0,Ice Breaker,12
-4,0,igordennis,1703777169,5.0,1000-Yard Stare,12
-5,0,Munie26,255654879,1.0,Zhalo Supercell,6
-6,0,lilprino,3835813881,1.0,No Land Beyond,12
-7,1,JohnOfMars,1173766590,1.0,Doctrine of Passing,6
-8,1,DirtyAquaticApe,1201310194,2.0,Hawksaw,13
-9,1,igordennis,1173766590,1.0,Doctrine of Passing,6
-10,1,igordennis,1703777169,2.0,1000-Yard Stare,12
-11,1,igordennis,2447423793,1.0,The Last Word,9
-12,1,alex_ya_boii,1346849289,1.0,MIDA Multi-Tool,14
-13,1,spartan2134,2447423793,2.0,The Last Word,9
-14,1,spartan2134,3835813881,1.0,No Land Beyond,12
-15,2,JohnOfMars,1173766590,4.0,Doctrine of Passing,6
-16,2,DirtyAquaticApe,2651271602,2.0,JabberHäkke-D,17
-17,2,DirtyAquaticApe,1201310194,1.0,Hawksaw,13
-18,2,DirtyAquaticApe,1287343925,3.0,Party Crasher +1,7
-19,2,igordennis,2447423793,3.0,The Last Word,9
-20,2,igordennis,1703777169,3.0,1000-Yard Stare,12
-21,2,DarkKnight2427,1173766591,5.0,Doctrine of Passing (Adept),6
-22,2,soops_troops,1173766590,1.0,Doctrine of Passing,6
-23,2,merikazmostwantd,1201310194,1.0,Hawksaw,13
-24,3,JohnOfMars,1173766590,3.0,Doctrine of Passing,6
-25,3,DirtyAquaticApe,2651271602,1.0,JabberHäkke-D,17
-26,3,DirtyAquaticApe,1201310194,1.0,Hawksaw,13
-27,3,igordennis,1173766590,2.0,Doctrine of Passing,6
-28,3,igordennis,1703777169,3.0,1000-Yard Stare,12
-29,3,igordennis,2447423793,3.0,The Last Word,9
-30,3,DrMiguizzz,1173766590,2.0,Doctrine of Passing,6
-31,3,I1IIBarcode1I11,1346849289,1.0,MIDA Multi-Tool,14
-32,3,I1IIBarcode1I11,1703777169,2.0,1000-Yard Stare,12
-33,4,JohnOfMars,1173766590,4.0,Doctrine of Passing,6
-34,4,JohnOfMars,1604125378,1.0,Glass Promontory,12
-35,4,JohnOfMars,2808364178,1.0,Truth,10
-36,4,DirtyAquaticApe,1201310194,4.0,Hawksaw,13
-37,4,DirtyAquaticApe,1287343925,1.0,Party Crasher +1,7
-38,4,igordennis,2447423793,1.0,The Last Word,9
-39,4,igordennis,1703777169,4.0,1000-Yard Stare,12
-40,4,Skull30698,486279087,5.0,Conspiracy Theory-D,7
-41,4,Skull30698,1346849289,1.0,MIDA Multi-Tool,14
-42,4,pnutbutrJLEEtime,2651271602,1.0,JabberHäkke-D,17
-43,4,pnutbutrJLEEtime,1742712674,1.0,Stillpiercer,12
-44,4,pnutbutrJLEEtime,2447423793,2.0,The Last Word,9
-45,4,GreenArrowDC,2447423793,1.0,The Last Word,9
-46,5,JohnOfMars,3118679308,1.0,Ice Breaker,12
-47,5,JohnOfMars,1173766590,2.0,Doctrine of Passing,6
-48,5,DirtyAquaticApe,1201310194,3.0,Hawksaw,13
-49,5,igordennis,2447423793,4.0,The Last Word,9
-50,5,igordennis,1703777169,4.0,1000-Yard Stare,12
-51,5,AK57HuntinU,486279087,1.0,Conspiracy Theory-D,7
-52,5,AK57HuntinU,1346849289,2.0,MIDA Multi-Tool,14
-53,5,lukesnake17,1173766590,2.0,Doctrine of Passing,6
-54,5,lukesnake17,1703777169,1.0,1000-Yard Stare,12
-55,5,lukesnake17,2808364178,1.0,Truth,10
-56,6,JOECOCOA,1346849289,1.0,MIDA Multi-Tool,14
-57,6,GoodNewsDoctor,1703777169,7.0,1000-Yard Stare,12
-58,6,GoodNewsDoctor,1346849289,4.0,MIDA Multi-Tool,14
-59,6,JohnOfMars,3118679308,1.0,Ice Breaker,12
-60,6,JohnOfMars,1173766590,3.0,Doctrine of Passing,6
-61,6,DirtyAquaticApe,1201310194,4.0,Hawksaw,13
-62,6,igordennis,1703777169,4.0,1000-Yard Stare,12
-63,6,igordennis,2447423793,3.0,The Last Word,9
-64,6,collondavis13,2447423793,1.0,The Last Word,9
-65,7,JohnOfMars,3118679308,1.0,Ice Breaker,12
-66,7,JohnOfMars,1173766590,2.0,Doctrine of Passing,6
-67,7,JohnOfMars,1604125378,2.0,Glass Promontory,12
-68,7,DirtyAquaticApe,2651271602,1.0,JabberHäkke-D,17
-69,7,DirtyAquaticApe,1201310194,2.0,Hawksaw,13
-70,7,DirtyAquaticApe,1287343925,1.0,Party Crasher +1,7
-71,7,igordennis,1703777169,3.0,1000-Yard Stare,12
-72,7,igordennis,2447423793,2.0,The Last Word,9
-73,7,B_O_S_S_E_M,1346849289,1.0,MIDA Multi-Tool,14
-74,7,B_O_S_S_E_M,1703777169,1.0,1000-Yard Stare,12
-75,7,B_O_S_S_E_M,1173766591,2.0,Doctrine of Passing (Adept),6
-76,7,MrDaivee,1173766590,4.0,Doctrine of Passing,6
-77,7,MrDaivee,1742712674,4.0,Stillpiercer,12
-78,7,Dakidowns,1346849289,4.0,MIDA Multi-Tool,14
-79,7,Dakidowns,1703777169,4.0,1000-Yard Stare,12
+0,0,JohnOfMars,3675783241,3.0,The Chaperone,7
+1,0,XpLiCiTOnE,1200540135,2.0,Y-09 Longbow Synthesis,12
+2,0,XpLiCiTOnE,2808364178,1.0,Truth,10
+3,0,XpLiCiTOnE,4068577415,1.0,Grasp of Malok,13
+4,0,igordennis,1703777169,2.0,1000-Yard Stare,12
+5,0,igordennis,2447423793,3.0,The Last Word,9
+6,0,Entirety-,2790109143,4.0,SUROS PDX-45,13
+7,0,Entirety-,1703777169,2.0,1000-Yard Stare,12
+8,0,croh1033,1703777169,1.0,1000-Yard Stare,12
+9,0,E-Thin852,1132793057,1.0,Eyasluna,9
+10,0,E-Thin852,2447423793,1.0,The Last Word,9
+11,0,E-Thin852,1200540135,1.0,Y-09 Longbow Synthesis,12
+12,1,JohnOfMars,3491886957,1.0,Cocytus SR4,14
+13,1,igordennis,1703777169,1.0,1000-Yard Stare,12
+14,1,igordennis,2447423793,4.0,The Last Word,9
+15,1,XpLiCiTOnE,4068577415,1.0,Grasp of Malok,13
+16,1,XpLiCiTOnE,1200540135,3.0,Y-09 Longbow Synthesis,12
+17,2,JohnOfMars,3078564839,1.0,Plan C,11
+18,2,JohnOfMars,3491886957,1.0,Cocytus SR4,14
+19,2,igordennis,2447423793,4.0,The Last Word,9
+20,2,igordennis,1703777169,2.0,1000-Yard Stare,12
+21,2,XpLiCiTOnE,4068577415,1.0,Grasp of Malok,13
+22,2,XpLiCiTOnE,1200540135,2.0,Y-09 Longbow Synthesis,12
+23,2,Maibatsuishi,486279087,3.0,Conspiracy Theory-D,7
+24,2,Kwang68,1287343925,2.0,Party Crasher +1,7
+25,2,Kwang68,803312564,1.0,Tlaloc,14
+26,2,Slowevo13,99462853,1.0,Universal Remote,7
+27,2,Slowevo13,1200540135,1.0,Y-09 Longbow Synthesis,12
+28,3,ComandanteStEvE,2447423793,6.0,The Last Word,9
+29,3,ComandanteStEvE,1305525274,1.0,Binary Dawn,7
+30,3,texasranger27,1703777169,1.0,1000-Yard Stare,12
+31,3,texasranger27,2121113047,1.0,Bretomart's Stand,8
+32,3,El_mamalon52,2447423793,3.0,The Last Word,9
+33,3,JohnOfMars,1475134443,2.0,Hung Jury SR4,14
+34,3,XpLiCiTOnE,4068577415,3.0,Grasp of Malok,13
+35,3,igordennis,3677466369,1.0,The Ash Factory,10
+36,3,igordennis,2447423793,5.0,The Last Word,9
+37,4,JohnOfMars,1475134443,2.0,Hung Jury SR4,14
+38,4,JohnOfMars,3675783241,4.0,The Chaperone,7
+39,4,XpLiCiTOnE,4068577415,2.0,Grasp of Malok,13
+40,4,igordennis,1703777169,3.0,1000-Yard Stare,12
+41,4,igordennis,2447423793,2.0,The Last Word,9
+42,4,Entirety-,3476166867,1.0,The Vanity,9
+43,4,E-Thin852,2447423792,1.0,Hawkmoon,9
+44,5,JohnOfMars,3675783241,2.0,The Chaperone,7
+45,5,JohnOfMars,3491886957,1.0,Cocytus SR4,14
+46,5,XpYoungbroxx123,1703777169,1.0,1000-Yard Stare,12
+47,5,XpLiCiTOnE,4068577415,2.0,Grasp of Malok,13
+48,5,XpLiCiTOnE,1200540135,1.0,Y-09 Longbow Synthesis,12
+49,5,igordennis,1703777169,2.0,1000-Yard Stare,12
+50,5,igordennis,2447423793,1.0,The Last Word,9
+51,5,youngkiller_77,2447423793,6.0,The Last Word,9
+52,5,youngkiller_77,1287343925,1.0,Party Crasher +1,7
+53,5,Tonyx429,4068577415,2.0,Grasp of Malok,13
+54,5,Tonyx429,1287343925,2.0,Party Crasher +1,7
+55,6,JohnOfMars,3675783241,1.0,The Chaperone,7
+56,6,JohnOfMars,1475134443,1.0,Hung Jury SR4,14
+57,6,XpLiCiTOnE,4068577415,3.0,Grasp of Malok,13
+58,6,XpLiCiTOnE,2808364178,1.0,Truth,10
+59,6,XpLiCiTOnE,1200540135,1.0,Y-09 Longbow Synthesis,12
+60,6,igordennis,1703777169,3.0,1000-Yard Stare,12
+61,6,igordennis,2447423793,1.0,The Last Word,9
+62,6,BANANAZ_696969,1703777169,1.0,1000-Yard Stare,12
+63,6,BANANAZ_696969,99462853,2.0,Universal Remote,7
+64,6,BANANAZ_696969,1346849289,1.0,MIDA Multi-Tool,14
+65,6,StealthNinja310,2447423793,5.0,The Last Word,9
+66,7,JohnOfMars,3675783241,3.0,The Chaperone,7
+67,7,JohnOfMars,1475134443,2.0,Hung Jury SR4,14
+68,7,XpLiCiTOnE,1200540135,2.0,Y-09 Longbow Synthesis,12
+69,7,XpLiCiTOnE,4068577415,1.0,Grasp of Malok,13
+70,7,igordennis,1703777169,3.0,1000-Yard Stare,12
+71,7,igordennis,2447423793,1.0,The Last Word,9
+72,7,DiViNe-SiN-525,2781253737,1.0,SUROS JLB-42,10
+73,7,DiViNe-SiN-525,3835813881,1.0,No Land Beyond,12
+74,8,JohnOfMars,3491886957,4.0,Cocytus SR4,14
+75,8,JohnOfMars,3675783241,2.0,The Chaperone,7
+76,8,igordennis,1703777169,3.0,1000-Yard Stare,12
+77,8,igordennis,2447423793,1.0,The Last Word,9
+78,8,XpLiCiTOnE,1200540135,4.0,Y-09 Longbow Synthesis,12
+79,8,AlldayLead05,99462852,4.0,Invective,7
+80,8,AlldayLead05,4068577415,1.0,Grasp of Malok,13
+81,8,Th3-Cr1pPl3r_,4068577415,1.0,Grasp of Malok,13
+82,8,BLU3_PINEAPPLE_B,1200540135,1.0,Y-09 Longbow Synthesis,12
+83,9,JohnOfMars,1475134443,1.0,Hung Jury SR4,14
+84,9,JohnOfMars,3675783241,3.0,The Chaperone,7
+85,9,XpLiCiTOnE,4068577415,4.0,Grasp of Malok,13
+86,9,XpLiCiTOnE,1200540135,3.0,Y-09 Longbow Synthesis,12
+87,9,igordennis,2447423793,3.0,The Last Word,9
+88,9,Boricua44109,2790109143,3.0,SUROS PDX-45,13
+89,9,Boricua44109,1200540135,1.0,Y-09 Longbow Synthesis,12
+90,9,Boricua44109,2808364178,1.0,Truth,10
+91,9,reaperslayer216,788138260,1.0,The Vacancy,11
+92,9,DeedzNuts,4068577415,1.0,Grasp of Malok,13
+93,10,JohnOfMars,3491886957,2.0,Cocytus SR4,14
+94,10,igordennis,2447423793,3.0,The Last Word,9
+95,10,igordennis,1703777169,4.0,1000-Yard Stare,12
+96,10,XpLiCiTOnE,1200540135,3.0,Y-09 Longbow Synthesis,12
+97,10,XpLiCiTOnE,4068577415,3.0,Grasp of Malok,13
+98,10,kidwavy123,3452625744,1.0,Haakon's Hatchet,6
+99,10,kidwavy123,486279087,1.0,Conspiracy Theory-D,7
+100,10,Nuffikins,3052681344,3.0,Imago Loop,9
+101,10,Nuffikins,3736078343,2.0,Her Fury,12
+102,10,Im-Skep,1173766591,3.0,Doctrine of Passing (Adept),6
+103,11,JohnOfMars,3675783241,1.0,The Chaperone,7
+104,11,JohnOfMars,3491886957,2.0,Cocytus SR4,14
+105,11,igordennis,2447423793,7.0,The Last Word,9
+106,11,igordennis,1703777169,1.0,1000-Yard Stare,12
+107,11,XpLiCiTOnE,1200540135,1.0,Y-09 Longbow Synthesis,12
+108,11,XpLiCiTOnE,4068577415,1.0,Grasp of Malok,13
+109,11,foosh_foosh,3688594190,3.0,The Jade Rabbit,14
+110,11,originalgamer943,1201310194,1.0,Hawksaw,13
+111,12,JohnOfMars,3491886959,3.0,SUROS DIS-43,14
+112,12,JohnOfMars,3675783241,2.0,The Chaperone,7
+113,12,XpLiCiTOnE,4068577415,2.0,Grasp of Malok,13
+114,12,XpLiCiTOnE,1200540135,3.0,Y-09 Longbow Synthesis,12
+115,12,igordennis,2447423793,4.0,The Last Word,9
+116,12,igordennis,1703777169,3.0,1000-Yard Stare,12
+117,12,Zangetsu141,1201310194,3.0,Hawksaw,13
+118,12,Zangetsu141,1287343925,3.0,Party Crasher +1,7
+119,12,Ballsmigue1,2869186762,1.0,Not Like the Others,14
+120,12,Ballsmigue1,99462852,2.0,Invective,7
+121,12,Ballsmigue1,3536592559,1.0,Tormod's Bellows,10
+122,12,supersteathy491,3497087277,2.0,Colovance's Duty,14
+123,12,supersteathy491,1703777169,1.0,1000-Yard Stare,12
+124,12,supersteathy491,2072624878,2.0,The Nightmare,10
+125,12,supersteathy491,99462852,2.0,Invective,7
+126,13,JohnOfMars,3675783241,2.0,The Chaperone,7
+127,13,JohnOfMars,1475134443,1.0,Hung Jury SR4,14
+128,13,XpLiCiTOnE,1200540135,1.0,Y-09 Longbow Synthesis,12
+129,13,XpLiCiTOnE,2808364178,1.0,Truth,10
+130,13,XpLiCiTOnE,4068577415,1.0,Grasp of Malok,13
+131,13,igordennis,2447423793,5.0,The Last Word,9
+132,13,igordennis,1703777169,1.0,1000-Yard Stare,12
+133,13,ourpartyof4,1287343925,2.0,Party Crasher +1,7
+134,13,VolcomStone2015,2447423792,1.0,Hawkmoon,9
+135,13,VolcomStone2015,1505957929,1.0,The Tamarind,10
