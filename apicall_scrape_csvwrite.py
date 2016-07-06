@@ -15,7 +15,17 @@ import sys
 sys.path.append("..") # Adds higher directory to python modules path.
 import destiny
 
-head = {'X-API-Key':'071b767b1d014435b36264bf4f6234fc'}
+# Get my API key and construct the URL
+try:
+  with open('bungie_api_key.txt') as rcfile:
+	for line in rcfile:
+	  k, v = line.split(':')
+	  if k.strip() == 'APIkey':
+		APIkey = v.strip()
+	head = {'X-API-Key':APIkey}
+except (IOError, NameError):
+  print "Failed to get API key"
+  exit()
 
 #First Card
 #gameID = ['3212367691','3212434371','3212472566','3212543938','3212576971','3212609456','3212639440','3212686179']
