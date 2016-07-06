@@ -8,6 +8,7 @@ Created on Sat May 21 21:07:32 2016
 import requests
 import json
 import pandas as pd
+import numpy as np
 from datetime import datetime
 
 import sys

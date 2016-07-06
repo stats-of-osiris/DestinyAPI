@@ -18,7 +18,7 @@ dfGames = pd.read_csv('dfGames.csv')
 dfIndiv = pd.read_csv('dfIndiv.csv')
 
 
-file_name = datetime.strptime(dfGames.iloc[0]['date'], '%Y-%m-%dT%H:%M:%SZ').strftime('%Y%m%d')+re.sub('[^A-Za-z0-9]+', '', dfIndiv.iloc[0]['map_name'])+'ReptCard.md'
+file_name = datetime.strptime(dfGames.iloc[0]['date'], '%Y-%m-%dT%H:%M:%SZ').strftime('%Y-%m-%d')+re.sub('[^A-Za-z0-9]+', '', dfIndiv.iloc[0]['map_name'])+'ReptCard.md'
 #file_name = 'report_card.md'
 
 #---------------HEADER----------------------
@@ -210,13 +210,14 @@ indiv2 = """
 | Super Kills                	| {p1s}          	| {p2s}          	| {p3s}          	|
 {: .table}
 
+
 | Resurrections & Orbs      	| {Player1}      	| {Player2}      	| {Player3}      	|
 |:--------|--------:|--------:|--------:|
 | Resurrections Performed    	| {p1rez}        	| {p2rez}        	| {p3rez}        	|
-| Resurrections Recieved        	| {p1rezd}       	| {p2rezd}       	| {p3rezd}       	|
+| Resurrections Received        	| {p1rezd}       	| {p2rezd}       	| {p3rezd}       	|
 | Deaths Un-rezzed           	| {p1fail}       	| {p2fail}       	| {p3fail}       	|
 | Orbs Generated             	| {p1ogen}       	| {p2ogen}       	| {p3ogen}       	|
-| Orbs Missed                	| {p1ogath}      	| {p2ogath}      	| {p3ogath}      	|
+| Orbs Gathered                	| {p1ogath}      	| {p2ogath}      	| {p3ogath}      	|
 {: .table}
 
 ###### Definitions
