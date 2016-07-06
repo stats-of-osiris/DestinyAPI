@@ -9,8 +9,7 @@ that are also useful for external consumption.
 
 """
 
-from __future__ import print_function
-import requests, os, sys, time, zipfile, sqlite3, json
+import requests, os, sys, time
 from datetime import datetime
 
 from . import constants
@@ -28,7 +27,9 @@ def get_json(path, **kwargs):
     """
     url = URL_BASE + path
     params = kwargs.get('params')
-    session = build_session(**kwargs)
+    session = kwargs.get('session')
+    if session is None:
+        session = build_session()
     api_wait = 1
     while api_wait > 0:
         if params is None:
@@ -44,7 +45,8 @@ def get_json(path, **kwargs):
                   format(api_wait))
             time.sleep(api_wait + 1)
     validate_json_response(response, url)
-    close_session(session, **kwargs)
+    if session is None:
+        close_session(session, **kwargs)
     return response
 
 

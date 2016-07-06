@@ -10,46 +10,44 @@ destipy.Game
 
 """
 from . import utils, constants
-from .guardian import Guardian
+from .manifest import get_map
 
 
 class Game(object):
     """
     :param activity_id: The ID of the activity whose PGCR is requested.
+    :param guardian:
     :kwarg api_key: API key to authorize access to Destiny API (optional)
     :kwarg params: Query parameters to pass to the `requests.get()` call
     """
 
     def __init__(self, activity_id, guardian=None, **kwargs):
-        self.activity_id = str(activity_id)
+        self.activity_id = activity_id
         self.data = utils.get_json(constants.API_PATHS[
             'get_post_game_carnage_report'
         ].format(**locals()), **kwargs)
         self.data = self.get('Response.data')
-        self.mode = self.get('activityDetails.mode')
         self.time = self.data.get('period')
+        self.map = get_map(self.get('activityDetails.referenceId'))
         # separate player data and game data via dict.pop()
-        self.guardians = Guardian.guardians_from_data(self.data.pop('entries'))
-        self.outcome = None
-        if guardian:
-            self.outcome = self.guardians[guardian.guardian_id].get(
-                'values.standing.basic.displayValue')
+        self.guardian_data = self.data.pop('entries')
+        self.team_data = self.data.pop('teams')
 
     @classmethod
     def games_from_ids(cls, game_ids: list, guardian=None, **kwargs):
         """
-        Pass a list of game_ids and return a list of CarnageReport objects
+        Pass a list of game_ids and return a list of Game objects
         :param game_ids: List of game_ids
         :param guardian: ???
-        :return: List of CarnageReport objects
+        :return: List of Game objects
         """
-        games = {}
+        games = []
         for game_id in game_ids:
-            games[game_id] = cls(game_id, guardian, **kwargs)
+            games.append(cls(game_id, guardian, **kwargs))
         return games
 
     @classmethod
-    def games_from_guardian(cls, guardian, n=25, game_mode='trials',
+    def games_from_guardian(cls, guardian, n=10, game_mode='trials',
                             last_game_id=None, **kwargs):
         """
         Pass Guardian object and return a dict of Game objects
@@ -96,6 +94,26 @@ class Game(object):
             # map for activity: a['activityDetails']['referenceId']
         games = cls.games_from_ids(game_ids, guardian, **kwargs)
         return games
+
+    def pull_team_stat(self, stat, team_name,
+                       extended=False, display=False):
+        if display:
+            value = 'displayValue'
+        else:
+            value = 'value'
+        if extended:
+            return [
+                g['extended']['values'][stat]['basic'][value]
+                for g in self.guardian_data
+                if g['values']['team']['basic']['displayValue'] == team_name and
+                stat in g['extended']['values'].keys()
+                ]
+        else:
+            return [
+                g['values'][stat]['basic'][value] for g in self.guardian_data
+                if g['values']['team']['basic']['displayValue'] == team_name and
+                stat in g['values'].keys()
+                ]
 
     def get(self, data_path):
         return utils.crawl_data(self, data_path)

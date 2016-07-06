@@ -20,8 +20,8 @@ API_PATHS = {
 
 # Platform decode
 PLATFORMS = {
-    'xbox': '1',
-    'psn':  '2'
+    'xbox': 1,
+    'psn':  2
 }
 
 MAN_DIR = 'manifest'

@@ -174,40 +174,24 @@ def get_item(hash_key, **kwargs):
         description = item['itemDescription']
     except KeyError:
         description = None
-    return pd.Series(
+    return pd.DataFrame(
         {
-            'item_id': hash_key,
+            'item_id': item['itemHash'],
             'item_name': item['itemName'],
             'item_rarity': item['tierTypeName'],
             'item_type': item['itemTypeName'],
             'icon': item['icon'],
             'item_description': description,
             'item_category': bucket
-        }
-    )
+        },
+        index=[item['itemHash']]
+    ).rename_axis('item_id')
 
 
 def get_items(hash_keys: list, **kwargs):
     items = []
     for key in hash_keys:
-        item = get_row(key, 'DestinyInventoryItemDefinition', **kwargs)
-        bucket_hash = item['bucketTypeHash']
-        bucket = get_bucket(bucket_hash)
-        try:
-            description = item['itemDescription']
-        except KeyError:
-            description = None
-        item = pd.DataFrame(
-            {
-                'item_name': item['itemName'],
-                'item_rarity': item['tierTypeName'],
-                'item_type': item['itemTypeName'],
-                'icon': item['icon'],
-                'item_description': description,
-                'item_category': bucket
-            },
-            index=[key]
-        ).rename_axis('item_id')
+        item = get_item(key)
         items.append(item)
     return pd.concat(items)
 
@@ -225,3 +209,15 @@ def get_class(hash_key, **kwargs):
 def get_race(hash_key, **kwargs):
     race = get_row(hash_key, 'DestinyRaceDefinition', **kwargs)
     return race['raceName']
+
+
+def get_map(hash_key, **kwargs):
+    game_map = get_row(hash_key, 'DestinyActivityDefinition', **kwargs)
+    return {k: game_map[k] for k in game_map.keys() & {
+        'activityName', 'pgcrImage', 'activityDescription', 'activityHash'
+    }}
+
+
+def get_activity_type(hash_key, **kwargs):
+    activity_type = get_row(hash_key, 'DestinyActivityTypeDefinition')
+    return activity_type['activityTypeName']

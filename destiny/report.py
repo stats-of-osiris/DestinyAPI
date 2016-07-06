@@ -1,61 +1,124 @@
 # -*- coding: utf-8 -*-
 
 """
-destipy.ReportContext
+stats_osiris.report
 ~~~~~~~~~~~~~~~~
 
-    This class wraps several method calls to build everything
-    needed for a report.
+    This is the primary module of stats_osiris. It returns exports several
+    DataFrames as CSV files to enable further analysis of a player's
+    Trials of Osiris performance.
 
 """
 
-from .utils import build_session
-from .player import Player
+from . import utils
+from .player import Guardian
 from .game import Game
-from .fireteam import Fireteam
+from .manifest import get_map
+import csv
+from datetime import datetime
+from tzlocal import get_localzone
+import pytz
 
 
-class ReportContext(object):
-    """
-    :param console: 'xbox' or 'psn', needed to locate player
-    :param name: PSN Online ID or Xbox Gamertag of the player
-    :kwarg guardian_id: Guardian ID to pull Games
-    :kwarg game_mode: game mode to pull Games
-    :kwarg last_n: specify to pull the last n Games
-    :kwarg last_game_id: ending point for last n Games
-    :kwarg start_datetime: maybe?
-    :kwarg end_datetime: maybe?
-    :kwarg api_key: API key to authorize access to Destiny API (optional)
-    """
+def get_report(console, name, guardian_id=None,
+               games=10, last_game_id=None):
 
-    def __init__(self, console, name, **kwargs):
-        self.session = build_session(**kwargs)
-        self.player = Player(console, name, session=self.session, **kwargs)
-        kwargs = {} if not kwargs else kwargs
-        guardian_id = kwargs.get('guardian_id')
-        game_mode = kwargs.get('game_mode')
-        last_n = kwargs.get('last_n')
-        last_game_id = kwargs.get('last_game_id')
-        start_datetime = kwargs.get('start_datetime')
-        end_datetime = kwargs.get('end_datetime')
+    # Collect data from API
+    with utils.build_session() as s:
+        guardian = Guardian(console, name, guardian_id=guardian_id, session=s)
+        game_data = Game.games_from_guardian(
+            guardian, games, last_game_id=last_game_id, session=s)
 
-        if guardian_id in self.player.guardians:
-            guardian = self.player.guardians[guardian_id]
-        else:
-            if guardian_id is not None:
-                print("Guardian ID {guardian_id} not found using\
-                    Player ID {self.player.id}".format(**locals()))
-            guardian = self.player.last_guardian
-        
-        self.games = Game.games_from_guardian(guardian, last_n=last_n,
-                                              last_game_id=last_game_id,
-                                              session=self.session, **kwargs)
-        
-        self.teams = []
-        # seed the first Fireteam with this Guardian
-        self.teams.append(Fireteam(guardian))
-        # TODO: add other Guardians to Fireteams
+    # Initialize list of desired game data
+    csv_games = []
+    csv_teams = []
 
-        # shortcuts
-        self.home_team = self.teams[0]
-        #self.away_team = self.teams[1]
+    # Set timezone info
+    tz = get_localzone()
+
+    # Get game level metrics for each game
+    for game in game_data:
+
+        # Convert period to datetime
+        period = pytz.utc.localize(datetime.strptime(
+                game.get('period'), '%Y-%m-%dT%H:%M:%SZ'))
+
+        # Set which guardian entry is the user
+        user_data = [g for g in game.guardian_data
+                     if int(g['characterId']) == guardian.guardian_id][0]
+        user_team = user_data['values']['team']['basic']['displayValue']
+
+        # Set which team is 'us' and which is 'them'
+        us = [team for team in game.team_data
+              if team['teamName'] == user_team][0]
+        them = [team for team in game.team_data
+                if team['teamName'] != user_team][0]
+
+        us_score = us['score']['basic']['value']
+        them_score = them['score']['basic']['value']
+        sweaty = them_score >= 3
+        rounds = us_score + them_score
+
+        # Calculate length of the game
+        play_time = (
+            user_data['values']['activityDurationSeconds']['basic']['value'] +
+            user_data['values']['leaveRemainingSeconds']['basic']['value']
+        )
+
+        # Pull map info from manifest
+        pvp_map = get_map(game.get('activityDetails.referenceId'))
+
+        # Combine into game-level dict
+        game_level_stats = {
+            'activity_id': game.activity_id,
+            'date': period.astimezone(tz),
+            'map_name': pvp_map['activityName'],
+            'map_image': pvp_map['pgcrImage'],
+            'team': us['teamName'],
+            'standing': us['standing']['basic']['displayValue'],
+            'score': us_score,
+            'enemy_score': them_score,
+            'sweaty?': sweaty,
+            'play_time': play_time,
+            'avg_round_time': play_time / rounds
+        }
+        csv_games.append(game_level_stats)
+
+        # Combine into team-level dict
+        for t in game.team_data:
+            team_name = t['teamName']
+            team_level_stats = {
+                'activity_id': game.activity_id,
+                'team': team_name,
+                'kills': sum(game.pull_team_stat('kills', team_name)),
+                'deaths': sum(game.pull_team_stat('deaths', team_name)),
+                'assists': sum(game.pull_team_stat('assists', team_name)),
+                'rezzed_count': sum(game.pull_team_stat(
+                    'resurrectionsReceived', team_name, True)),
+                'rez_count': sum(game.pull_team_stat(
+                    'resurrectionsPerformed', team_name, True)),
+                'orbs_gathered': sum(game.pull_team_stat(
+                    'orbsGathered', team_name, True))
+            }
+            csv_teams.append(team_level_stats)
+
+    # Write game data to csv file
+    with open('game_stats.csv', 'w') as csv_file:
+        headers = ['activity_id', 'date', 'map_name', 'map_image', 'team',
+                   'standing', 'score', 'enemy_score', 'sweaty?',
+                   'play_time', 'avg_round_time']
+        writer = csv.DictWriter(csv_file, fieldnames=headers)
+        writer.writeheader()
+        writer.writerows(csv_games)
+    print('Game CSV created!')
+
+    # Write team data to csv file
+    with open('team_stats.csv', 'w') as csv_file:
+        headers = team_level_stats.keys()
+        writer = csv.DictWriter(csv_file, fieldnames=headers)
+        writer.writeheader()
+        writer.writerows(csv_teams)
+    print('Team CSV created!')
+
+
+
