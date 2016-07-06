@@ -60,10 +60,9 @@ Oh, and potentially a list of columns to return as an optional argument as well.
 	- list of `KEY_STATS` to collect from API response, currently based on needs of a Trials Report.
 
 ## Trials Report Template
-[Template located here.](https://github.com/yergi/DestinyAPI/blob/master/report_card.md) Sections for Team Summary, Overall Team Performance & Detailed Individual Performance.
+[Template located here.](http://johnofmars.github.io/articles/WidowsCourtReptCard/) Sections for Team Summary, Overall Team Performance & Detailed Individual Performance.
 
 # Report Context
-
 
 ## `apicall_scrape_csvwrite.py`
 
@@ -93,24 +92,19 @@ This script imports the `.csv` into a single dataframe (`dfStats`) with all data
 TO DO:
 
 - Need function to find teammates
-- Need to incorporate `manifest` for
-	- finding Map name & photo
-	- finding player loadouts
-- Plot games graph
+- Change name of games graph to include date, map name.
+- Change csv exports to be in `outputs` folder.
 
 
 ## `report_card_prototype.py`
 
 # TODO:
 
-## Plotting
-- Change file names to include map/date.
-
 ##Display Best Weapon
-- Find max kill weapon for each class
-- Write values to ReportContext
+- Write max kill weapons for each guardian
 
 ## General Report Fixes
 - Updated description:
-	"Scores are tabulated across all games for individuals and the team. And then a player's contribution is shown as their percent of the team's total score."
-- Format Time better to include seconds
+- Format Time better to include seconds.
+- Format Date better to handle Easter Time Zone instead of UTC.
+- Change output of `md` file to `outputs` folder.
