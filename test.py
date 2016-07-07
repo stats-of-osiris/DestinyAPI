@@ -1,4 +1,4 @@
-import stats_osiris as so
+import destiny as so
 
 titan = so.Guardian('psn', 'JohnOfMars', 2305843009215820974)
 

@@ -4,8 +4,8 @@
 stats_osiris.report
 ~~~~~~~~~~~~~~~~
 
-    This is the primary module of stats_osiris. It returns exports several
-    DataFrames as CSV files to enable further analysis of a player's
+    This is the primary module of stats_osiris. It returns several
+    various dictionaries of game stats to enable further analysis of a player's
     Trials of Osiris performance.
 
 """
@@ -13,112 +13,92 @@ stats_osiris.report
 from . import utils
 from .player import Guardian
 from .game import Game
-from .manifest import get_map
-import csv
-from datetime import datetime
 from tzlocal import get_localzone
-import pytz
 
 
-def get_report(console, name, guardian_id=None,
-               games=10, last_game_id=None):
+class Report(object):
+    def __init__(self, console, name, guardian_id=None,
+                 games=10, last_game_id=None):
+        # Collect data from API
+        with utils.build_session() as s:
+            self.guardian = Guardian(console, name, guardian_id=guardian_id,
+                                     session=s)
+            self.game_data = Game.games_from_guardian(
+                self.guardian, games, last_game_id, session=s)
+        self.game_report = self.create_game_report()
+        self.team_report = self.create_team_report()
 
-    # Collect data from API
-    with utils.build_session() as s:
-        guardian = Guardian(console, name, guardian_id=guardian_id, session=s)
-        game_data = Game.games_from_guardian(
-            guardian, games, last_game_id=last_game_id, session=s)
+    def create_game_report(self):
+        # Initialize list of desired game data
+        report_list = []
 
-    # Initialize list of desired game data
-    csv_games = []
-    csv_teams = []
+        # Set timezone info
+        tz = get_localzone()
 
-    # Set timezone info
-    tz = get_localzone()
+        # Get game level metrics for each game
+        for game in self.game_data:
 
-    # Get game level metrics for each game
-    for game in game_data:
+            # Determine score and round count
+            us_score = game.us['score']['basic']['value']
+            them_score = game.them['score']['basic']['value']
+            rounds = us_score + them_score
 
-        # Convert period to datetime
-        period = pytz.utc.localize(datetime.strptime(
-                game.get('period'), '%Y-%m-%dT%H:%M:%SZ'))
+            # Calculate length of the game
+            play_time = (
+                game.user_data[
+                    'values']['activityDurationSeconds']['basic']['value'] +
+                game.user_data[
+                    'values']['leaveRemainingSeconds']['basic']['value']
+            )
 
-        # Set which guardian entry is the user
-        user_data = [g for g in game.guardian_data
-                     if int(g['characterId']) == guardian.guardian_id][0]
-        user_team = user_data['values']['team']['basic']['displayValue']
-
-        # Set which team is 'us' and which is 'them'
-        us = [team for team in game.team_data
-              if team['teamName'] == user_team][0]
-        them = [team for team in game.team_data
-                if team['teamName'] != user_team][0]
-
-        us_score = us['score']['basic']['value']
-        them_score = them['score']['basic']['value']
-        sweaty = them_score >= 3
-        rounds = us_score + them_score
-
-        # Calculate length of the game
-        play_time = (
-            user_data['values']['activityDurationSeconds']['basic']['value'] +
-            user_data['values']['leaveRemainingSeconds']['basic']['value']
-        )
-
-        # Pull map info from manifest
-        pvp_map = get_map(game.get('activityDetails.referenceId'))
-
-        # Combine into game-level dict
-        game_level_stats = {
-            'activity_id': game.activity_id,
-            'date': period.astimezone(tz),
-            'map_name': pvp_map['activityName'],
-            'map_image': pvp_map['pgcrImage'],
-            'team': us['teamName'],
-            'standing': us['standing']['basic']['displayValue'],
-            'score': us_score,
-            'enemy_score': them_score,
-            'sweaty?': sweaty,
-            'play_time': play_time,
-            'avg_round_time': play_time / rounds
-        }
-        csv_games.append(game_level_stats)
-
-        # Combine into team-level dict
-        for t in game.team_data:
-            team_name = t['teamName']
-            team_level_stats = {
+            # Combine into game-level dict
+            game_level_stats = {
                 'activity_id': game.activity_id,
-                'team': team_name,
-                'kills': sum(game.pull_team_stat('kills', team_name)),
-                'deaths': sum(game.pull_team_stat('deaths', team_name)),
-                'assists': sum(game.pull_team_stat('assists', team_name)),
-                'rezzed_count': sum(game.pull_team_stat(
-                    'resurrectionsReceived', team_name, True)),
-                'rez_count': sum(game.pull_team_stat(
-                    'resurrectionsPerformed', team_name, True)),
-                'orbs_gathered': sum(game.pull_team_stat(
-                    'orbsGathered', team_name, True))
+                'date': game.time.astimezone(tz),
+                'map_name': game.map['activityName'],
+                'map_image': game.map['pgcrImage'],
+                'team': game.user_team,
+                'standing': game.result,
+                'score': us_score,
+                'enemy_score': them_score,
+                'sweaty?': game.sweaty,
+                'play_time': play_time,
+                'avg_round_time': play_time / rounds
             }
-            csv_teams.append(team_level_stats)
+            report_list.append(game_level_stats)
+        return report_list
 
-    # Write game data to csv file
-    with open('game_stats.csv', 'w') as csv_file:
-        headers = ['activity_id', 'date', 'map_name', 'map_image', 'team',
-                   'standing', 'score', 'enemy_score', 'sweaty?',
-                   'play_time', 'avg_round_time']
-        writer = csv.DictWriter(csv_file, fieldnames=headers)
-        writer.writeheader()
-        writer.writerows(csv_games)
-    print('Game CSV created!')
+    def create_team_report(self):
+        report_list = []
 
-    # Write team data to csv file
-    with open('team_stats.csv', 'w') as csv_file:
-        headers = team_level_stats.keys()
-        writer = csv.DictWriter(csv_file, fieldnames=headers)
-        writer.writeheader()
-        writer.writerows(csv_teams)
-    print('Team CSV created!')
+        for game in self.game_data:
+            for t in game.team_data:
 
+                # Grab common metrics
+                team_name = t['teamName']
+                kills = sum(game.pull_team_stat('kills', team_name))
+                deaths = sum(game.pull_team_stat('deaths', team_name))
+                assists = sum(game.pull_team_stat('assists', team_name, False))
+                if game.user_team == team_name:
+                    allegiance = 'us'
+                else:
+                    allegiance = 'them'
 
-
+                # Combine into team-level dict
+                team_level_stats = {
+                    'activity_id': game.activity_id,
+                    'team': team_name,
+                    'allegiance': allegiance,
+                    'kills': kills,
+                    'deaths': deaths,
+                    'assists': assists,
+                    'kd_ratio': kills / deaths,
+                    'rezzed_count': sum(game.pull_team_stat(
+                        'resurrectionsReceived', team_name)),
+                    'rez_count': sum(game.pull_team_stat(
+                        'resurrectionsPerformed', team_name)),
+                    'orbs_gathered': sum(game.pull_team_stat(
+                        'orbsGathered', team_name))
+                }
+                report_list.append(team_level_stats)
+        return report_list

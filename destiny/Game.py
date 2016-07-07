@@ -11,30 +11,43 @@ destipy.Game
 """
 from . import utils, constants
 from .manifest import get_map
+import pytz
+from datetime import datetime
 
 
 class Game(object):
     """
     :param activity_id: The ID of the activity whose PGCR is requested.
-    :param guardian:
+    :param guardian: guardian_id to determine teams and outcome
     :kwarg api_key: API key to authorize access to Destiny API (optional)
     :kwarg params: Query parameters to pass to the `requests.get()` call
     """
 
-    def __init__(self, activity_id, guardian=None, **kwargs):
+    def __init__(self, activity_id, guardian_id, **kwargs):
         self.activity_id = activity_id
         self.data = utils.get_json(constants.API_PATHS[
             'get_post_game_carnage_report'
         ].format(**locals()), **kwargs)
         self.data = self.get('Response.data')
-        self.time = self.data.get('period')
+        self.time = pytz.utc.localize(datetime.strptime(
+                    self.get('period'), '%Y-%m-%dT%H:%M:%SZ'))
         self.map = get_map(self.get('activityDetails.referenceId'))
         # separate player data and game data via dict.pop()
         self.guardian_data = self.data.pop('entries')
         self.team_data = self.data.pop('teams')
+        self.user_guardian = [g for g in self.guardian_data
+                              if int(g['characterId']) == int(guardian_id)][0]
+        self.user_team = self.user_guardian[
+            'values']['team']['basic']['displayValue']
+        self.us = [team for team in self.team_data
+                  if team['teamName'] == self.user_team][0]
+        self.them = them = [team for team in self.team_data
+                    if team['teamName'] != self.user_team][0]
+        self.sweaty = self.determine_sweaty()
+        self.result = self.us['standing']['basic']['displayValue']
 
     @classmethod
-    def games_from_ids(cls, game_ids: list, guardian=None, **kwargs):
+    def games_from_ids(cls, game_ids: list, guardian, **kwargs):
         """
         Pass a list of game_ids and return a list of Game objects
         :param game_ids: List of game_ids
@@ -96,7 +109,7 @@ class Game(object):
         return games
 
     def pull_team_stat(self, stat, team_name,
-                       extended=False, display=False):
+                       extended=True, display=False):
         if display:
             value = 'displayValue'
         else:
@@ -114,6 +127,12 @@ class Game(object):
                 if g['values']['team']['basic']['displayValue'] == team_name and
                 stat in g['values'].keys()
                 ]
+
+    def determine_sweaty(self):
+        them_score = self.them['score']['basic']['value']
+        if self.get('activityDetail.mode') == 14:
+            return them_score >= 3
+        return False
 
     def get(self, data_path):
         return utils.crawl_data(self, data_path)
