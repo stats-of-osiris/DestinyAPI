@@ -9,4 +9,4 @@ game_report = pd.DataFrame(titan_report.game_report)
 
 team_report = pd.DataFrame(titan_report.team_report)
 
-print(team_report.loc[:, 'kills_primary'])
+print(team_report)

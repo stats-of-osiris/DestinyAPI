@@ -10,7 +10,7 @@ stats_osiris.report
 
 """
 
-from . import utils
+from. import constants
 from .player import Guardian
 from .game import Game
 from tzlocal import get_localzone
@@ -98,7 +98,7 @@ class Report(object):
                 kills_heavy = sum(
                     game.pull_team_stat('weaponKillsRocketLauncher', team_name)
                 ) + sum(
-                    game.pull_team_stat('weaponKills')
+                    game.pull_team_stat('weaponKillsMachineGun', team_name)
                 )
                 deaths = sum(game.pull_team_stat('deaths', team_name))
                 assists = sum(game.pull_team_stat('assists', team_name, False))
@@ -110,31 +110,25 @@ class Report(object):
                 # Combine into team-level dict
                 team_level_stats = {
                     'activity_id': game.activity_id,
-                    'team': team_name,
-                    'allegiance': allegiance,
-                    'kills': kills,
-                    'deaths': deaths,
-                    'assists': assists,
-                    'kd_ratio': kills / deaths,
-                    'rezzed_count': sum(game.pull_team_stat(
-                        'resurrectionsReceived', team_name)),
-                    'rez_count': sum(game.pull_team_stat(
-                        'resurrectionsPerformed', team_name)),
-                    'orbs_gathered': sum(game.pull_team_stat(
-                        'orbsGathered', team_name)),
-                    'orbs_dropped': sum(game.pull_team_stat(
-                        'orbsDropped', team_name)),
-                    'longest_life': max(game.pull_team_stat(
-                        'longestSingleLife', team_name)),
-                    'avg_life': mean(game.pull_team_stat(
-                        'averageLifespan', team_name)),
-                    'longest_kill_spree': max(game.pull_team_stat(
-                        'longestKillSpree', team_name)),
-                    'avg_kill_distance': mean(game.pull_team_stat(
-                        'averageKillDistance', team_name)),
-                    'kills_precision': kills_prec,
-                    'kills_prec_rate': kills_prec / kills,
-                    'kills_primary': kills_primary
+                    'team_name': team_name,
+                    'allegiance': allegiance
                 }
+                for k, v in constants.KEY_STATS.items():
+                    if k in ['longest_life', 'longest_kill_spree']:
+                        team_level_stats[k] = max(
+                            game.pull_team_stat(v, team_name)
+                        )
+                    elif k in ['avg_life', 'avg_kill_distance']:
+                        team_level_stats[k] = mean(
+                            game.pull_team_stat(v, team_name)
+                        )
+                    elif k == 'assists':
+                        team_level_stats[k] = sum(
+                            game.pull_team_stat(v, team_name, False)
+                        )
+                    else:
+                        team_level_stats[k] = sum(
+                            game.pull_team_stat(v, team_name)
+                        )
                 report_list.append(team_level_stats)
         return report_list
