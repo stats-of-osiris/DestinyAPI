@@ -56,7 +56,7 @@ class Game(object):
         """
         games = []
         for game_id in game_ids:
-            games.append(cls(game_id, guardian, **kwargs))
+            games.append(cls(game_id, guardian.guardian_id, **kwargs))
         return games
 
     @classmethod
@@ -130,7 +130,7 @@ class Game(object):
 
     def determine_sweaty(self):
         them_score = self.them['score']['basic']['value']
-        if self.get('activityDetail.mode') == 14:
+        if self.get('activityDetails.mode') == 14:
             return them_score >= 3
         return False
 

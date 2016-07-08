@@ -27,15 +27,10 @@ def get_json(path, **kwargs):
     """
     url = URL_BASE + path
     params = kwargs.get('params')
-    session = kwargs.get('session')
-    if session is None:
-        session = build_session()
+    session = build_session(**kwargs)
     api_wait = 1
     while api_wait > 0:
-        if params is None:
-            response = session.get(url)
-        else:
-            response = session.get(url, params=params)
+        response = session.get(url, params=params)
         response.raise_for_status()
         response = response.json()
         api_wait = response['ThrottleSeconds']
@@ -45,8 +40,7 @@ def get_json(path, **kwargs):
                   format(api_wait))
             time.sleep(api_wait + 1)
     validate_json_response(response, url)
-    if session is None:
-        close_session(session, **kwargs)
+    close_session(session, **kwargs)
     return response
 
 
@@ -67,7 +61,7 @@ def validate_json_response(response, url):
 def build_session(**kwargs):
     kwargs.setdefault('api_key', os.environ['BUNGIE_NET_API_KEY'])
     session = kwargs.get('session')
-    if session is None:
+    if not session:
         api_key = kwargs.get('api_key')
         headers = {'X-API-Key': api_key}
         session = requests.Session()

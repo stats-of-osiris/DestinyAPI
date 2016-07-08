@@ -14,21 +14,19 @@ from . import utils
 from .player import Guardian
 from .game import Game
 from tzlocal import get_localzone
+from numpy import mean
 
 
 class Report(object):
     def __init__(self, console, name, guardian_id=None,
                  games=10, last_game_id=None):
-        # Collect data from API
-        with utils.build_session() as s:
-            self.guardian = Guardian(console, name, guardian_id=guardian_id,
-                                     session=s)
-            self.game_data = Game.games_from_guardian(
-                self.guardian, games, last_game_id, session=s)
-        self.game_report = self.create_game_report()
-        self.team_report = self.create_team_report()
+        self.guardian = Guardian(console, name, guardian_id=guardian_id)
+        self.game_data = Game.games_from_guardian(
+            self.guardian, n=games, last_game_id=last_game_id)
+        self.game_report = self.__create_game_report()
+        self.team_report = self.__create_team_report()
 
-    def create_game_report(self):
+    def __create_game_report(self):
         # Initialize list of desired game data
         report_list = []
 
@@ -45,9 +43,9 @@ class Report(object):
 
             # Calculate length of the game
             play_time = (
-                game.user_data[
+                game.user_guardian[
                     'values']['activityDurationSeconds']['basic']['value'] +
-                game.user_data[
+                game.user_guardian[
                     'values']['leaveRemainingSeconds']['basic']['value']
             )
 
@@ -68,7 +66,7 @@ class Report(object):
             report_list.append(game_level_stats)
         return report_list
 
-    def create_team_report(self):
+    def __create_team_report(self):
         report_list = []
 
         for game in self.game_data:
@@ -77,6 +75,31 @@ class Report(object):
                 # Grab common metrics
                 team_name = t['teamName']
                 kills = sum(game.pull_team_stat('kills', team_name))
+                kills_prec = sum(game.pull_team_stat(
+                    'precisionKills', team_name))
+                kills_primary = sum(
+                    game.pull_team_stat('weaponKillsAutoRifle', team_name)
+                ) + sum(
+                    game.pull_team_stat('weaponKillsHandCannon', team_name)
+                ) + sum(
+                    game.pull_team_stat('weaponKillsScoutRifle', team_name)
+                ) + sum(
+                    game.pull_team_stat('weaponKillsPulseRifle', team_name)
+                )
+                kills_special = sum(
+                    game.pull_team_stat('weaponKillsSniper', team_name)
+                ) + sum(
+                    game.pull_team_stat('weaponKillsShotgun', team_name)
+                ) + sum(
+                    game.pull_team_stat('weaponKillsFusionRifle', team_name)
+                ) + sum(
+                    game.pull_team_stat('weaponKillsSidearm', team_name)
+                )
+                kills_heavy = sum(
+                    game.pull_team_stat('weaponKillsRocketLauncher', team_name)
+                ) + sum(
+                    game.pull_team_stat('weaponKills')
+                )
                 deaths = sum(game.pull_team_stat('deaths', team_name))
                 assists = sum(game.pull_team_stat('assists', team_name, False))
                 if game.user_team == team_name:
@@ -98,7 +121,20 @@ class Report(object):
                     'rez_count': sum(game.pull_team_stat(
                         'resurrectionsPerformed', team_name)),
                     'orbs_gathered': sum(game.pull_team_stat(
-                        'orbsGathered', team_name))
+                        'orbsGathered', team_name)),
+                    'orbs_dropped': sum(game.pull_team_stat(
+                        'orbsDropped', team_name)),
+                    'longest_life': max(game.pull_team_stat(
+                        'longestSingleLife', team_name)),
+                    'avg_life': mean(game.pull_team_stat(
+                        'averageLifespan', team_name)),
+                    'longest_kill_spree': max(game.pull_team_stat(
+                        'longestKillSpree', team_name)),
+                    'avg_kill_distance': mean(game.pull_team_stat(
+                        'averageKillDistance', team_name)),
+                    'kills_precision': kills_prec,
+                    'kills_prec_rate': kills_prec / kills,
+                    'kills_primary': kills_primary
                 }
                 report_list.append(team_level_stats)
         return report_list
