@@ -72,36 +72,23 @@ class Report(object):
         for game in self.game_data:
             for t in game.team_data:
 
-                # Grab common metrics
+                # Grab some initial metrics
                 team_name = t['teamName']
-                kills = sum(game.pull_team_stat('kills', team_name))
-                kills_prec = sum(game.pull_team_stat(
-                    'precisionKills', team_name))
-                kills_primary = sum(
-                    game.pull_team_stat('weaponKillsAutoRifle', team_name)
-                ) + sum(
-                    game.pull_team_stat('weaponKillsHandCannon', team_name)
-                ) + sum(
-                    game.pull_team_stat('weaponKillsScoutRifle', team_name)
-                ) + sum(
-                    game.pull_team_stat('weaponKillsPulseRifle', team_name)
+                kill_primary = sum(
+                    [sum(
+                        game.pull_team_stat(v, team_name)
+                    ) for v in constants.PRIMARY_WEAPON_STATS.values()]
                 )
                 kills_special = sum(
-                    game.pull_team_stat('weaponKillsSniper', team_name)
-                ) + sum(
-                    game.pull_team_stat('weaponKillsShotgun', team_name)
-                ) + sum(
-                    game.pull_team_stat('weaponKillsFusionRifle', team_name)
-                ) + sum(
-                    game.pull_team_stat('weaponKillsSidearm', team_name)
+                    [sum(
+                        game.pull_team_stat(v, team_name)
+                    ) for v in constants.SPECIAL_WEAPON_STATS.values()]
                 )
                 kills_heavy = sum(
-                    game.pull_team_stat('weaponKillsRocketLauncher', team_name)
-                ) + sum(
-                    game.pull_team_stat('weaponKillsMachineGun', team_name)
+                    [sum(
+                        game.pull_team_stat(v, team_name)
+                    ) for v in constants.HEAVY_WEAPON_STATS.values()]
                 )
-                deaths = sum(game.pull_team_stat('deaths', team_name))
-                assists = sum(game.pull_team_stat('assists', team_name, False))
                 if game.user_team == team_name:
                     allegiance = 'us'
                 else:
@@ -111,7 +98,15 @@ class Report(object):
                 team_level_stats = {
                     'activity_id': game.activity_id,
                     'team_name': team_name,
-                    'allegiance': allegiance
+                    'allegiance': allegiance,
+                    'kd_ratio': sum(game.pull_team_stat(
+                        constants.KEY_STATS['kills'], team_name
+                    )) / sum(game.pull_team_stat(
+                        constants.KEY_STATS['deaths'], team_name
+                    )),
+                    'kills_primary': kill_primary,
+                    'kills_special': kills_special,
+                    'kills_heavy': kills_heavy
                 }
                 for k, v in constants.KEY_STATS.items():
                     if k in ['longest_life', 'longest_kill_spree']:
