@@ -10,7 +10,6 @@ SQLite database and pulling values from said database.
 from . import utils, constants
 import sqlite3
 import json
-import pandas as pd
 import os
 import sys
 import zipfile
@@ -122,33 +121,34 @@ def check_for_update(force_update=False):
         update_version(meta_version)
 
 
+# def get_row(hash_key, table, **kwargs):
+#     """
+#     Method to pull a single row from the manifest database and return it
+#     as a JSON formatted string
+#     :param hash_key: hash key of item requested
+#     :param table: DB table name where hash_key resides
+#     :return: JSON formatted string of requested row
+#     """
+#
+#     # Get table from manifest
+#     data = get_table(table, **kwargs)
+#
+#     # Convert hash to unsigned 32bit int and return the value in the
+#     # json db column as json.
+#     # Not sure why some tables behave differently from others.
+#     hash_key = int(hash_key)
+#     try:
+#         hash_id = hash(hash_key)
+#         return json.loads(data.loc[hash_id].values[0])
+#     except KeyError:
+#         hash_id = hash_key - 4294967296
+#         return json.loads(data.loc[hash_id].values[0])
+
+
 def get_row(hash_key, table, **kwargs):
     """
-    Method to pull a single row from the manifest database and return it
-    as a JSON formatted string
-    :param hash_key: hash key of item requested
-    :param table: DB table name where hash_key resides
-    :return: JSON formatted string of requested row
-    """
-
-    # Get table from manifest
-    data = get_table(table, **kwargs)
-
-    # Convert hash to unsigned 32bit int and return the value in the
-    # json db column as json.
-    # Not sure why some tables behave differently from others.
-    hash_key = int(hash_key)
-    try:
-        hash_id = hash(hash_key)
-        return json.loads(data.loc[hash_id].values[0])
-    except KeyError:
-        hash_id = hash_key - 4294967296
-        return json.loads(data.loc[hash_id].values[0])
-
-
-def get_table(table, **kwargs):
-    """
     Helper function to connect to the manifest sqlite database.
+    :param hash_key:
     :param table: Table name to connect to as pulled from constants.TABLES
     :kwargs force_update: Defaults to False. If True, will force an API call
     to see if a new manifest version exists
@@ -157,8 +157,10 @@ def get_table(table, **kwargs):
     kwargs.setdefault('force_update', False)
     check_for_update(force_update=kwargs.get('force_update'))
     conn = sqlite3.connect(constants.MANIFEST['db'])
-    query = 'SELECT * FROM {0}'.format(table)
-    return pd.read_sql(query, conn, index_col='id')
+    c = conn.cursor()
+    t = (hash_key,)
+    c.execute('SELECT json FROM {} WHERE id=?'.format(table), t)
+    return json.loads(c.fetchone()[0])
 
 
 def get_bucket(hash_key, **kwargs):
@@ -174,8 +176,7 @@ def get_item(hash_key, **kwargs):
         description = item['itemDescription']
     except KeyError:
         description = None
-    return pd.DataFrame(
-        {
+    return {
             'item_id': item['itemHash'],
             'item_name': item['itemName'],
             'item_rarity': item['tierTypeName'],
@@ -183,17 +184,12 @@ def get_item(hash_key, **kwargs):
             'icon': item['icon'],
             'item_description': description,
             'item_category': bucket
-        },
-        index=[item['itemHash']]
-    ).rename_axis('item_id')
+    }
 
 
 def get_items(hash_keys: list, **kwargs):
-    items = []
-    for key in hash_keys:
-        item = get_item(key)
-        items.append(item)
-    return pd.concat(items)
+    items = [get_item(key, **kwargs) for key in hash_keys]
+    return items
 
 
 def get_gender(hash_key, **kwargs):
