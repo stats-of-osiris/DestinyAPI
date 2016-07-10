@@ -144,6 +144,13 @@ def get_row(hash_key, table, **kwargs):
         return json.loads(c.fetchone()[0])
 
 
+def get_table(table):
+    conn = sqlite3.connect(constants.MANIFEST['db'])
+    c = conn.cursor()
+    c.execute('SELECT json FROM {}'.format(table))
+    return c.fetchall()
+
+
 def get_bucket(hash_key, **kwargs):
     bucket = get_row(hash_key, 'DestinyInventoryBucketDefinition', **kwargs)
     return bucket['bucketName']

@@ -1,5 +1,6 @@
-x = {'test': [1, 2]}
+from destiny import manifest
+import json
 
 print(
-    x['test'][0]
+        manifest.get_table('DestinyRaceDefinition')[2][0]
 )

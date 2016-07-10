@@ -10,7 +10,7 @@ destiny.Player
 
 """
 from . import utils, constants
-from .manifest import get_class, get_gender, get_race, get_items, get_row
+from .manifest import get_row
 
 
 class Player(object):
@@ -33,27 +33,31 @@ class Player(object):
             'get_destiny_account_summary'
         ].format(**locals()), **kwargs)
         self.data = self.get('Response.data')
-        self.guardians = self.pull_guardians()
+        self.guardians = self.__pull_guardians()
 
-    def pull_guardians(self):
+    def __pull_guardians(self):
         json = self.data.pop('characters')
         guardians = []
         for entry in json:
             guardians.append(
-                {'guardian_id': entry['characterBase']['characterId'],
-                 'class': get_class(entry['characterBase']['classHash']),
-                 'race': get_race(entry['characterBase']['raceHash']),
-                 'gender': get_gender(entry['characterBase']['genderHash']),
+                {'guardian_id':
+                     entry['characterBase']['characterId'],
+                 'class':
+                     constants.CLASS[entry['characterBase']['classHash']],
+                 'race':
+                     constants.RACE[entry['characterBase']['raceHash']],
+                 'gender':
+                     constants.GENDER[entry['characterBase']['genderHash']],
                  'light_lvl':
                      entry['characterBase']['stats']['STAT_LIGHT']['value'],
                  'emblem':
                     get_row(
-                        entry['emblemHash'],
-                        'DestinyInventoryItemDefinition'
+                        entry['emblemHash'],'DestinyInventoryItemDefinition'
                     )['itemName'],
                  'minutes_played':
                     int(entry['characterBase']['minutesPlayedTotal']),
-                 'date_last_played': entry['characterBase']['dateLastPlayed']
+                 'date_last_played':
+                     entry['characterBase']['dateLastPlayed']
                  }
             )
         return guardians
@@ -68,15 +72,15 @@ class Guardian(Player):
         if guardian_id:
             self.guardian_id = int(guardian_id)
         else:
-            self.guardian_id = self.get_last_guardian()
-        self.data = self.filter_guardian()
+            self.guardian_id = self.__get_last_guardian()
+        self.data = self.__filter_guardian()
 
-    def filter_guardian(self):
+    def __filter_guardian(self):
         for guardian in self.guardians:
             if guardian['guardian_id'] == self.guardian_id:
                 return guardian
 
-    def get_last_guardian(self):
+    def __get_last_guardian(self):
         """
         Finds the last guardian played.
         :return: Guardian Id as string
