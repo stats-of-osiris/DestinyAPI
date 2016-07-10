@@ -180,21 +180,6 @@ def get_items(hash_keys: list, **kwargs):
     return items
 
 
-def get_gender(hash_key, **kwargs):
-    gender = get_row(hash_key, 'DestinyGenderDefinition', **kwargs)
-    return gender['genderName']
-
-
-def get_class(hash_key, **kwargs):
-    class_row = get_row(hash_key, 'DestinyClassDefinition', **kwargs)
-    return class_row['className']
-
-
-def get_race(hash_key, **kwargs):
-    race = get_row(hash_key, 'DestinyRaceDefinition', **kwargs)
-    return race['raceName']
-
-
 def get_map(hash_key, **kwargs):
     game_map = get_row(hash_key, 'DestinyActivityDefinition', **kwargs)
     return {k: game_map[k] for k in game_map.keys() & {

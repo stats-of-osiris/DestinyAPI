@@ -22,10 +22,8 @@ class Report(object):
         self.guardian = Guardian(console, name, guardian_id=guardian_id)
         self.game_data = Game.games_from_guardian(
             self.guardian, n=games, last_game_id=last_game_id)
-        self.game_report = self.__create_game_report()
-        self.team_report = self.__create_team_report()
 
-    def __create_game_report(self):
+    def report_games(self):
         # Initialize list of desired game data
         report_list = []
 
@@ -36,8 +34,11 @@ class Report(object):
         for game in self.game_data:
 
             # Determine score and round count
-            us_score = game.us['score']['basic']['value']
-            them_score = game.them['score']['basic']['value']
+            if game.result == 'Victory':
+                us_score = 5.0
+            else:
+                us_score = game.us[0]['values']['teamScore']['basic']['value']
+            them_score = game.them[0]['values']['teamScore']['basic']['value']
             rounds = us_score + them_score
 
             # Calculate length of the game
@@ -65,7 +66,7 @@ class Report(object):
             report_list.append(game_level_stats)
         return report_list
 
-    def __create_team_report(self):
+    def report_teams(self):
         report_list = []
 
         for game in self.game_data:
@@ -172,3 +173,132 @@ class Report(object):
                         )
                 report_list.append(team_level_stats)
         return report_list
+
+    def report_my_team(self):
+        report_list = []
+
+        for g in self.game_data[0].us:
+            user_name = g['player']['destinyUserInfo']['displayName']
+
+            # Compute the derived metrics
+            kills_primary = sum(
+                    [sum(
+                        self._get_player_stat(v[0], user_name)
+                    ) for v in constants.PRIMARY_WEAPON_STATS.values()]
+                )
+            kills_prec_primary = sum(
+                    [sum(
+                        self._get_player_stat(v[1], user_name)
+                    ) for v in constants.PRIMARY_WEAPON_STATS.values()]
+                )
+            kills_special = sum(
+                    [sum(
+                        self._get_player_stat(v[0], user_name)
+                    ) for v in constants.SPECIAL_WEAPON_STATS.values()]
+                )
+            kills_prec_special = sum(
+                    [sum(
+                        self._get_player_stat(v[1], user_name)
+                    ) for v in constants.SPECIAL_WEAPON_STATS.values()]
+                )
+            kills_heavy = sum(
+                    [sum(
+                        self._get_player_stat(v[0], user_name)
+                    ) for v in constants.HEAVY_WEAPON_STATS.values()]
+                )
+            kills_prec_heavy = sum(
+                    [sum(
+                        self._get_player_stat(v[1], user_name)
+                    ) for v in constants.HEAVY_WEAPON_STATS.values()]
+                )
+
+            kills = sum(self._get_player_stat('kills', user_name))
+            deaths = sum(self._get_player_stat('deaths', user_name))
+
+            try:
+                kd_ratio = kills / deaths
+            except ZeroDivisionError:
+                kd_ratio = kills
+
+            try:
+                avg_kill_distance = sum(
+                    self._get_player_stat('averageKillDistance', user_name)
+                ) / kills
+            except ZeroDivisionError:
+                avg_kill_distance = 0
+
+            try:
+                avg_life = sum(
+                    self._get_player_stat(
+                        'activityDurationSeconds', user_name, False)
+                ) / deaths
+            except ZeroDivisionError:
+                avg_life = sum(
+                    self._get_player_stat(
+                        'activityDurationSeconds', user_name, False)
+                )
+
+            us_stats = {
+                'user_name': user_name,
+                'kd_ratio': kd_ratio,
+                'kills_primary': kills_primary,
+                'kills_prec_primary': kills_prec_primary,
+                'kills_special': kills_special,
+                'kills_prec_special': kills_prec_special,
+                'kills_heavy': kills_heavy,
+                'kills_prec_heavy': kills_prec_heavy,
+                'avg_life': avg_life,
+                'avg_kill_distance': avg_kill_distance
+            }
+            for k, v in constants.KEY_STATS.items():
+                if k in ['longest_life', 'longest_kill_spree']:
+                    try:
+                        us_stats[k] = max(
+                            self._get_player_stat(v, user_name)
+                        )
+                    except ValueError:
+                        us_stats[k] = 0
+                elif k == 'assists':
+                    us_stats[k] = sum(
+                        self._get_player_stat(v, user_name, False)
+                    )
+                else:
+                    us_stats[k] = sum(
+                        self._get_player_stat(v, user_name)
+                    )
+            report_list.append(us_stats)
+        return report_list
+
+    def _get_player_stat(self, stat, player, extended=True, display=False):
+        if display:
+            value = 'displayValue'
+        else:
+            value = 'value'
+        if extended:
+            if stat == 'averageKillDistance':
+                return [
+                    g['extended']['values'][stat]['basic'][value] *
+                    g['extended']['values']['kills']['basic'][value]
+                    for game in self.game_data
+                    for g in game.us
+                    if
+                    g['player']['destinyUserInfo']['displayName'] == player and
+                    stat in g['extended']['values'].keys()
+                ]
+            else:
+                return [
+                    g['extended']['values'][stat]['basic'][value]
+                    for game in self.game_data
+                    for g in game.us
+                    if
+                    g['player']['destinyUserInfo']['displayName'] == player and
+                    stat in g['extended']['values'].keys()
+                ]
+        else:
+            return [
+                g['values'][stat]['basic'][value]
+                for game in self.game_data
+                for g in game.us
+                if g['player']['destinyUserInfo']['displayName'] == player and
+                stat in g['values'].keys()
+            ]

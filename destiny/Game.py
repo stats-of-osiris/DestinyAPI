@@ -32,6 +32,7 @@ class Game(object):
         self.time = pytz.utc.localize(datetime.strptime(
                     self.get('period'), '%Y-%m-%dT%H:%M:%SZ'))
         self.map = get_map(self.get('activityDetails.referenceId'))
+
         # separate player data and game data via dict.pop()
         self.guardian_data = self.data.pop('entries')
         self.team_data = self.data.pop('teams')
@@ -39,12 +40,15 @@ class Game(object):
                               if int(g['characterId']) == int(guardian_id)][0]
         self.user_team = self.user_guardian[
             'values']['team']['basic']['displayValue']
-        self.us = [team for team in self.team_data
-                  if team['teamName'] == self.user_team][0]
-        self.them = them = [team for team in self.team_data
-                    if team['teamName'] != self.user_team][0]
-        self.sweaty = self.determine_sweaty()
-        self.result = self.us['standing']['basic']['displayValue']
+        self.us = [g for g in self.guardian_data
+                   if g['values']['team']['basic']['displayValue'] ==
+                   self.user_team]
+        self.them = [g for g in self.guardian_data
+                     if g['values']['team']['basic']['displayValue'] !=
+                     self.user_team]
+        self.sweaty = self._set_sweaty()
+        self.result = self.user_guardian[
+            'values']['standing']['basic']['displayValue']
 
     @classmethod
     def games_from_ids(cls, game_ids: list, guardian, **kwargs):
@@ -89,7 +93,7 @@ class Game(object):
                     if len(game_ids) > n - 1:
                         break
             else:
-                last_game_time = Game(last_game_id).time
+                last_game_time = Game(last_game_id, guardian).time
                 for a in data['Response']['data']['activities']:
                     if utils.compare_dates(a['period'], last_game_time,
                                            newest=False) == a['period']:
@@ -102,9 +106,7 @@ class Game(object):
                 page += 1
             else:
                 break
-            # TODO: Add error checking for when more games are requested than exist
-            # date for activity: a['period']
-            # map for activity: a['activityDetails']['referenceId']
+        # TODO: Add error checking for when more games are requested than exist
         games = cls.games_from_ids(game_ids, guardian, **kwargs)
         return games
 
@@ -120,24 +122,26 @@ class Game(object):
                     g['extended']['values'][stat]['basic'][value] *
                     g['extended']['values']['kills']['basic'][value]
                     for g in self.guardian_data
-                    if g['values']['team']['basic']['displayValue'] == team_name and
-                    stat in g['extended']['values'].keys()
+                    if g['values']['team']['basic']['displayValue'] ==
+                    team_name and stat in g['extended']['values'].keys()
                 ]
-            return [
-                g['extended']['values'][stat]['basic'][value]
-                for g in self.guardian_data
-                if g['values']['team']['basic']['displayValue'] == team_name and
-                stat in g['extended']['values'].keys()
-                ]
+            else:
+                return [
+                    g['extended']['values'][stat]['basic'][value]
+                    for g in self.guardian_data
+                    if
+                    g['values']['team']['basic']['displayValue'] ==
+                    team_name and stat in g['extended']['values'].keys()
+            ]
         else:
             return [
                 g['values'][stat]['basic'][value] for g in self.guardian_data
-                if g['values']['team']['basic']['displayValue'] == team_name and
-                stat in g['values'].keys()
-                ]
+                if g['values']['team']['basic']['displayValue'] ==
+                team_name and stat in g['values'].keys()
+            ]
 
-    def determine_sweaty(self):
-        them_score = self.them['score']['basic']['value']
+    def _set_sweaty(self):
+        them_score = self.them[0]['values']['teamScore']['basic']['value']
         if self.get('activityDetails.mode') == 14:
             return them_score >= 3
         return False
