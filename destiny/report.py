@@ -10,8 +10,6 @@ stats_osiris.report
 
 """
 
-import warnings
-import numpy as np
 from . import constants
 from .player import Guardian
 from .game import Game
@@ -75,39 +73,61 @@ class Report(object):
                 team_name = t['teamName']
 
                 # Compute the derived metrics
-                kill_primary = sum(
+                kills_primary = sum(
                     [sum(
-                        game.pull_team_stat(v, team_name)
+                        game.pull_team_stat(v[0], team_name)
                     ) for v in constants.PRIMARY_WEAPON_STATS.values()]
                 )
+                kills_prec_primary = sum(
+                    [sum(
+                        game.pull_team_stat(v[1], team_name)
+                    ) for v in constants.PRIMARY_WEAPON_STATS.values()]
+                )
+
                 kills_special = sum(
                     [sum(
-                        game.pull_team_stat(v, team_name)
+                        game.pull_team_stat(v[0], team_name)
                     ) for v in constants.SPECIAL_WEAPON_STATS.values()]
                 )
+                kills_prec_special = sum(
+                    [sum(
+                        game.pull_team_stat(v[1], team_name)
+                    ) for v in constants.SPECIAL_WEAPON_STATS.values()]
+                )
+
                 kills_heavy = sum(
                     [sum(
-                        game.pull_team_stat(v, team_name)
+                        game.pull_team_stat(v[0], team_name)
                     ) for v in constants.HEAVY_WEAPON_STATS.values()]
                 )
+                kills_prec_heavy = sum(
+                    [sum(
+                        game.pull_team_stat(v[1], team_name)
+                    ) for v in constants.HEAVY_WEAPON_STATS.values()]
+                )
+
                 kills = sum(game.pull_team_stat(
                     constants.KEY_STATS['kills'], team_name))
                 deaths = sum(game.pull_team_stat(
                     constants.KEY_STATS['deaths'], team_name))
+
                 try:
                     kd_ratio = kills / deaths
                 except ZeroDivisionError:
                     kd_ratio = kills
+
                 if game.user_team == team_name:
                     allegiance = 'us'
                 else:
                     allegiance = 'them'
+
                 try:
                     avg_kill_distance = sum(
                         game.pull_team_stat('averageKillDistance', team_name)
                     ) / kills
                 except ZeroDivisionError:
                     avg_kill_distance = 0
+
                 try:
                     avg_life = sum(
                         game.pull_team_stat(
@@ -125,9 +145,14 @@ class Report(object):
                     'team_name': team_name,
                     'allegiance': allegiance,
                     'kd_ratio': kd_ratio,
-                    'kills_primary': kill_primary,
+                    'kills_primary': kills_primary,
+                    'kills_prec_primary': kills_prec_primary,
                     'kills_special': kills_special,
-                    'kills_heavy': kills_heavy
+                    'kills_prec_special': kills_prec_special,
+                    'kills_heavy': kills_heavy,
+                    'kills_prec_heavy': kills_prec_heavy,
+                    'avg_life': avg_life,
+                    'avg_kill_distance': avg_kill_distance
                 }
                 for k, v in constants.KEY_STATS.items():
                     if k in ['longest_life', 'longest_kill_spree']:
@@ -137,10 +162,6 @@ class Report(object):
                             )
                         except ValueError:
                             team_level_stats[k] = 0
-                    elif k in ['avg_life']:
-                        team_level_stats[k] = avg_life
-                    elif k in ['avg_kill_distance']:
-                        team_level_stats[k] = avg_kill_distance
                     elif k == 'assists':
                         team_level_stats[k] = sum(
                             game.pull_team_stat(v, team_name, False)
