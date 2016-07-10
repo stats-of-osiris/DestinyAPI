@@ -121,30 +121,6 @@ def check_for_update(force_update=False):
         update_version(meta_version)
 
 
-# def get_row(hash_key, table, **kwargs):
-#     """
-#     Method to pull a single row from the manifest database and return it
-#     as a JSON formatted string
-#     :param hash_key: hash key of item requested
-#     :param table: DB table name where hash_key resides
-#     :return: JSON formatted string of requested row
-#     """
-#
-#     # Get table from manifest
-#     data = get_table(table, **kwargs)
-#
-#     # Convert hash to unsigned 32bit int and return the value in the
-#     # json db column as json.
-#     # Not sure why some tables behave differently from others.
-#     hash_key = int(hash_key)
-#     try:
-#         hash_id = hash(hash_key)
-#         return json.loads(data.loc[hash_id].values[0])
-#     except KeyError:
-#         hash_id = hash_key - 4294967296
-#         return json.loads(data.loc[hash_id].values[0])
-
-
 def get_row(hash_key, table, **kwargs):
     """
     Helper function to connect to the manifest sqlite database.
@@ -158,9 +134,14 @@ def get_row(hash_key, table, **kwargs):
     check_for_update(force_update=kwargs.get('force_update'))
     conn = sqlite3.connect(constants.MANIFEST['db'])
     c = conn.cursor()
-    t = (hash_key,)
-    c.execute('SELECT json FROM {} WHERE id=?'.format(table), t)
-    return json.loads(c.fetchone()[0])
+    try:
+        t = (hash(hash_key),)
+        c.execute('SELECT json FROM {} WHERE id=?'.format(table), t)
+        return json.loads(c.fetchone()[0])
+    except TypeError:
+        t = (hash_key - 4294967296,)
+        c.execute('SELECT json FROM {} WHERE id=?'.format(table), t)
+        return json.loads(c.fetchone()[0])
 
 
 def get_bucket(hash_key, **kwargs):

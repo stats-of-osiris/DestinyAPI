@@ -3,10 +3,10 @@ import destiny
 
 titan_report = destiny.Report('psn', 'JohnOfMars', 2305843009215820974)
 
-game_report = pd.DataFrame(titan_report.game_report)
-
+# game_report = pd.DataFrame(titan_report.game_report)
+#
 # print(game_report)
 
 team_report = pd.DataFrame(titan_report.team_report)
 
-print(team_report.kills_primary)
+print(team_report.loc[:, ['activity_id', 'kills', 'deaths', 'avg_kill_distance']])

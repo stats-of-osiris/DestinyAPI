@@ -115,6 +115,14 @@ class Game(object):
         else:
             value = 'value'
         if extended:
+            if stat == 'averageKillDistance':
+                return [
+                    g['extended']['values'][stat]['basic'][value] *
+                    g['extended']['values']['kills']['basic'][value]
+                    for g in self.guardian_data
+                    if g['values']['team']['basic']['displayValue'] == team_name and
+                    stat in g['extended']['values'].keys()
+                ]
             return [
                 g['extended']['values'][stat]['basic'][value]
                 for g in self.guardian_data
