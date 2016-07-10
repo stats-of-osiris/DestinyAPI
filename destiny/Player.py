@@ -20,6 +20,7 @@ class Player(object):
     :kwarg api_key: API key to authorize access to Destiny API (optional)
     :kwarg params: Query parameters to pass to the `requests.get()` call
     """
+
     def __init__(self, console, player_name, **kwargs):
         if isinstance(console, int):
             self.console_id = console
@@ -30,37 +31,41 @@ class Player(object):
             constants.API_PATHS['get_membership_id_by_display_name'].format(
                 **locals()), **kwargs)['Response']
         self.data = utils.get_json(constants.API_PATHS[
-            'get_destiny_account_summary'
-        ].format(**locals()), **kwargs)
+                                       'get_destiny_account_summary'
+                                   ].format(**locals()), **kwargs)
         self.data = self.get('Response.data')
-        self.guardians = self.__pull_guardians()
+        self.guardians = self._set_guardians()
 
-    def __pull_guardians(self):
+    def _set_guardians(self):
+        """
+
+        :return:
+        """
         json = self.data.pop('characters')
-        guardians = []
-        for entry in json:
-            guardians.append(
-                {'guardian_id':
-                     entry['characterBase']['characterId'],
-                 'class':
-                     constants.CLASS[entry['characterBase']['classHash']],
-                 'race':
-                     constants.RACE[entry['characterBase']['raceHash']],
-                 'gender':
-                     constants.GENDER[entry['characterBase']['genderHash']],
-                 'light_lvl':
-                     entry['characterBase']['stats']['STAT_LIGHT']['value'],
-                 'emblem':
+        guardians_list = [
+            {
+                'guardian_id':
+                    entry['characterBase']['characterId'],
+                'class':
+                    constants.CLASS[entry['characterBase']['classHash']],
+                'race':
+                    constants.RACE[entry['characterBase']['raceHash']],
+                'gender':
+                    constants.GENDER[entry['characterBase']['genderHash']],
+                'light_lvl':
+                    entry['characterBase']['stats']['STAT_LIGHT']['value'],
+                'emblem':
                     get_row(
-                        entry['emblemHash'],'DestinyInventoryItemDefinition'
+                        entry['emblemHash'], 'DestinyInventoryItemDefinition'
                     )['itemName'],
-                 'minutes_played':
+                'minutes_played':
                     int(entry['characterBase']['minutesPlayedTotal']),
-                 'date_last_played':
-                     entry['characterBase']['dateLastPlayed']
-                 }
-            )
-        return guardians
+                'date_last_played':
+                    entry['characterBase']['dateLastPlayed']
+            }
+            for entry in json
+        ]
+        return guardians_list
 
     def get(self, data_path):
         return utils.crawl_data(self, data_path)
@@ -72,15 +77,15 @@ class Guardian(Player):
         if guardian_id:
             self.guardian_id = int(guardian_id)
         else:
-            self.guardian_id = self.__get_last_guardian()
-        self.data = self.__filter_guardian()
+            self.guardian_id = self._get_last_guardian()
+        self.data = self._filter_guardian()
 
-    def __filter_guardian(self):
+    def _filter_guardian(self):
         for guardian in self.guardians:
             if guardian['guardian_id'] == self.guardian_id:
                 return guardian
 
-    def __get_last_guardian(self):
+    def _get_last_guardian(self):
         """
         Finds the last guardian played.
         :return: Guardian Id as string
@@ -93,4 +98,3 @@ class Guardian(Player):
                 last_guardian = guardian['guardian_id']
                 compare_date = last_played
         return last_guardian
-
