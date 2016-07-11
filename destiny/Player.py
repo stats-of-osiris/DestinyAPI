@@ -101,9 +101,9 @@ class Guardian(Player):
         Finds the last guardian played.
         :return: String
         """
-        fmt = '%Y-%m-%dT%H:%M:%SZ'
         dates_played = {
-            datetime.strptime(g['date_last_played'], fmt): g['guardian_id']
+            datetime.strptime(g['date_last_played'],
+                              constants.TS): g['guardian_id']
             for g in self.guardians
         }
         last_played = dates_played[max(dates_played.keys())]

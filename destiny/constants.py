@@ -33,6 +33,9 @@ PLATFORMS = {
     'psn':  2
 }
 
+# API Timestamp format
+TS = '%Y-%m-%dT%H:%M:%SZ'
+
 # File paths to Manifest files
 MAN_DIR = 'manifest'
 

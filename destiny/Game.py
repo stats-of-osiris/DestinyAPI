@@ -29,7 +29,7 @@ class Game(object):
         ].format(**locals()), **kwargs)
         self.data = self.get('Response.data')
         self.time = pytz.utc.localize(datetime.strptime(
-                    self.get('period'), '%Y-%m-%dT%H:%M:%SZ'))
+                    self.get('period'), constants.TS))
         self.map = get_map(self.get('activityDetails.referenceId'))
 
         # separate player data and game data via dict.pop()
@@ -84,23 +84,30 @@ class Game(object):
             data = utils.get_json(constants.API_PATHS[
                 'get_activity_history'].format(
                 **locals()), params=params, **kwargs)
+            data = data['Response']['data']['activities']
             if last_game_id is None:
-                for a in data['Response']['data']['activities']:
-                    game_ids.append(a['activityDetails']['instanceId'])
-                    # Stop append once we hit the requested number of games
-                    if len(game_ids) > n - 1:
-                        break
+                game_ids = game_ids + [
+                    a['activityDetails']['instanceId'] for a in data
+                ]
+                # Stop append once we hit the requested number of games
+                if len(game_ids) >= n:
+                    game_ids = game_ids[:n]
+                    break
             else:
                 last_game_time = Game(last_game_id, guardian).time
-                for a in data['Response']['data']['activities']:
-                    if utils.compare_dates(a['period'], last_game_time,
-                                           newest=False) == a['period']:
-                        game_ids.append(a['activityDetails']['instanceId'])
-                        # Stop append once we have the # of games requested
-                        if len(game_ids) > n - 1:
-                            break
+                game_ids = game_ids + [
+                    a['activityDetails']['instanceId']
+                    for a in data
+                    if pytz.utc.localize(
+                        datetime.strptime(a['period'], constants.TS)) <=
+                    last_game_time
+                ]
+                # Stop append once we have the # of games requested
+                if len(game_ids) >= n:
+                    game_ids = game_ids[:n]
+                    break
             # Ask for next page if we need more games, else break the loop
-            if len(game_ids) < n - 1:
+            if len(game_ids) < n:
                 page += 1
             else:
                 break

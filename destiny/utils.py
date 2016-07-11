@@ -104,28 +104,3 @@ def crawl_data(destipy_object, data_path, throw_error=True):
         else:
             return None
     return loc
-
-
-def compare_dates(date_1, date_2, newest=True):
-    """
-    Helper function to convert string-formatted dates to datetime objects
-    and compare which ones come first
-    :param date_1: First date to compare
-    :param date_2: Second date to compare
-    :param newest: Determines if we return the newest of the two
-        dates (if True), or the oldest (if False)
-    :return: Newest or oldest date (based on :param newest:) as a string
-    """
-    fmt = '%Y-%m-%dT%H:%M:%SZ'
-    date_1_dt = datetime.strptime(date_1, fmt)
-    date_2_dt = datetime.strptime(date_2, fmt)
-    if newest is True:
-        if date_1_dt >= date_2_dt:
-            return date_1
-        else:
-            return date_2
-    else:
-        if date_1_dt <= date_2_dt:
-            return date_1
-        else:
-            return date_2
