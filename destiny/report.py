@@ -19,11 +19,27 @@ from tzlocal import get_localzone
 class Report(object):
     def __init__(self, console, name, guardian_id=None,
                  games=10, last_game_id=None):
+        """
+        Cylcle through creating a Guardian and then calling
+        `games_from_guardian` in order to pull raw data to create reports
+        :param console: 'xbox' or 'psn'; needed to accurately locate player
+        :param player_name: Screen name of the player
+        :param guardian_id: Id of specific guardian to find.
+                            If None, defaults to last played guardian.
+        :param games: number of games to pull (defaults to 10; 25 is the max
+            for a single API call
+        :param last_game_id: final game_id in the series to be pulled
+        """
         self.guardian = Guardian(console, name, guardian_id=guardian_id)
-        self.game_data = Game.games_from_guardian(
+        self.data = Game.games_from_guardian(
             self.guardian, n=games, last_game_id=last_game_id)
 
     def report_games(self):
+        """
+        Aggregate self.data to a game level, filtered to stats defined in
+        `constants`.
+        :return: List of dicts
+        """
         # Initialize list of desired game data
         report_list = []
 
@@ -31,7 +47,7 @@ class Report(object):
         tz = get_localzone()
 
         # Get game level metrics for each game
-        for game in self.game_data:
+        for game in self.data:
 
             # Determine score and round count
             if game.result == 'Victory':
@@ -67,9 +83,13 @@ class Report(object):
         return report_list
 
     def report_teams(self):
+        """
+        Aggregate self.data to a team per game level.
+        :return: List of dicts
+        """
         report_list = []
 
-        for game in self.game_data:
+        for game in self.data:
             for t in game.team_data:
                 team_name = t['teamName']
 
@@ -175,9 +195,13 @@ class Report(object):
         return report_list
 
     def report_my_team(self):
+        """
+        Aggregate self.data to a fireteam level, across all games.
+        :return: List of dicts
+        """
         report_list = []
 
-        for g in self.game_data[0].us:
+        for g in self.data[0].us:
             user_name = g['player']['destinyUserInfo']['displayName']
 
             # Compute the derived metrics
@@ -270,6 +294,20 @@ class Report(object):
         return report_list
 
     def _get_player_stat(self, stat, player, extended=True, display=False):
+        """
+        Function to find stats for a given player across all Games present
+        in self.data.
+        :param stat: Name of stat to pull. Must be in constants.
+        :param player: Display_name of player
+        :param extended: If True, searches down the `extended` tree of values
+                         If False, searches down the base `values` tree.
+                         Defaults to True.
+        :param display: Determines which value type to retun.
+                        If True, returns `displayValue` from the API.
+                        If False, returns `value` from the API.
+                        Defaults to False.
+        :return: A list of values for the stat and player specified.
+        """
         if display:
             value = 'displayValue'
         else:
@@ -279,7 +317,7 @@ class Report(object):
                 return [
                     g['extended']['values'][stat]['basic'][value] *
                     g['extended']['values']['kills']['basic'][value]
-                    for game in self.game_data
+                    for game in self.data
                     for g in game.us
                     if
                     g['player']['destinyUserInfo']['displayName'] == player and
@@ -288,7 +326,7 @@ class Report(object):
             else:
                 return [
                     g['extended']['values'][stat]['basic'][value]
-                    for game in self.game_data
+                    for game in self.data
                     for g in game.us
                     if
                     g['player']['destinyUserInfo']['displayName'] == player and
@@ -297,7 +335,7 @@ class Report(object):
         else:
             return [
                 g['values'][stat]['basic'][value]
-                for game in self.game_data
+                for game in self.data
                 for g in game.us
                 if g['player']['destinyUserInfo']['displayName'] == player and
                 stat in g['values'].keys()

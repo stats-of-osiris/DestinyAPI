@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
 """
-destiny.Player
+stats_osiris.Player
 ~~~~~~~~~~~~~~~~
 
-    This class provides access to the
-        `GetDestinyAccountSummary`
-    endpoint of the Destiny API.
+    This module defines the Player and Guardian classes, which pull from the
+    `GetDestinyAccountSummary` endpoint of the Destiny API.
 
 """
 from . import utils, constants
@@ -14,14 +13,13 @@ from .manifest import get_row
 
 
 class Player(object):
-    """
-    :param console: 'xbox' or 'psn'; needed to accurately locate player
-    :param player_name: Screen name of the player
-    :kwarg api_key: API key to authorize access to Destiny API (optional)
-    :kwarg params: Query parameters to pass to the `requests.get()` call
-    """
-
     def __init__(self, console, player_name, **kwargs):
+        """
+        :param console: 'xbox' or 'psn'; needed to accurately locate player
+        :param player_name: Screen name of the player
+        :kwarg api_key: API key to authorize access to Destiny API
+        :kwarg params: Query parameters to pass to the `requests.get()` call
+        """
         if isinstance(console, int):
             self.console_id = console
         else:
@@ -38,8 +36,8 @@ class Player(object):
 
     def _set_guardians(self):
         """
-
-        :return:
+        Pull summary data of each guardian belonging to the Player.
+        :return: List of dicts
         """
         json = self.data.pop('characters')
         guardians_list = [
@@ -73,6 +71,14 @@ class Player(object):
 
 class Guardian(Player):
     def __init__(self, console, player_name, guardian_id=None, **kwargs):
+        """
+        :param console: 'xbox' or 'psn'; needed to accurately locate player
+        :param player_name: Screen name of the player
+        :param guardian_id: Id of specific guardian to find.
+                            If None, defaults to last played guardian.
+        :kwarg api_key: API key to authorize access to Destiny API
+        :kwarg params: Query parameters to pass to the `requests.get()` call
+        """
         Player.__init__(self, console, player_name, **kwargs)
         if guardian_id:
             self.guardian_id = int(guardian_id)
@@ -81,6 +87,10 @@ class Guardian(Player):
         self.data = self._filter_guardian()
 
     def _filter_guardian(self):
+        """
+        Take the full guardian list from Player and filter to single Guardian.
+        :return: Dict
+        """
         for guardian in self.guardians:
             if guardian['guardian_id'] == self.guardian_id:
                 return guardian
@@ -88,7 +98,7 @@ class Guardian(Player):
     def _get_last_guardian(self):
         """
         Finds the last guardian played.
-        :return: Guardian Id as string
+        :return: String
         """
         compare_date = '2010-01-01T00:00:00Z'
         for guardian in self.guardians:
