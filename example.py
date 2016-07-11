@@ -13,7 +13,8 @@ print('Win Rate: {0:.0f}%'.format(win_rate * 100))
 
 team_report = pd.DataFrame(titan_report.report_teams())
 
-kills_by_game = team_report[(team_report.allegiance == 'us')
+kills_by_game = team_report[
+    (team_report.allegiance == 'us')
 ].groupby(by=['activity_id']).kills.sum()
 
 print(kills_by_game)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-destiny.Manifest
+stats_osiris.Manifest
 
 This module handles the creation and updating of the Destiny Manifest
 SQLite database and pulling values from said database.
@@ -123,12 +123,12 @@ def check_for_update(force_update=False):
 
 def get_row(hash_key, table, **kwargs):
     """
-    Helper function to connect to the manifest sqlite database.
-    :param hash_key:
-    :param table: Table name to connect to as pulled from constants.TABLES
+    Function to pull an individual row from a given manifest table.
+    :param hash_key: Hash key (aka id) of the requested row.
+    :param table: Table name to connect to
     :kwargs force_update: Defaults to False. If True, will force an API call
     to see if a new manifest version exists
-    :return: Table from manifest as a DataFrame object
+    :return: Nested dict
     """
     kwargs.setdefault('force_update', False)
     check_for_update(force_update=kwargs.get('force_update'))
@@ -145,6 +145,11 @@ def get_row(hash_key, table, **kwargs):
 
 
 def get_table(table):
+    """
+    Function that returns the `json` column of an entire requested table
+    :param table: Table name to connect to
+    :return: List of tuples
+    """
     conn = sqlite3.connect(constants.MANIFEST['db'])
     c = conn.cursor()
     c.execute('SELECT json FROM {}'.format(table))
@@ -152,11 +157,23 @@ def get_table(table):
 
 
 def get_bucket(hash_key, **kwargs):
+    """
+    Shortcut function to find an item's bucket.
+    :param hash_key: bucketTypeHash
+    :param kwargs: force_update to pass through to `get_row()`
+    :return: String
+    """
     bucket = get_row(hash_key, 'DestinyInventoryBucketDefinition', **kwargs)
     return bucket['bucketName']
 
 
 def get_item(hash_key, **kwargs):
+    """
+    Shortcut function that finds an item and returns summary data.
+    :param hash_key: itemHash
+    :param kwargs: force_update to pass through to `get_row()`
+    :return: Dict
+    """
     item = get_row(hash_key, 'DestinyInventoryItemDefinition', **kwargs)
     bucket_hash = item['bucketTypeHash']
     bucket = get_bucket(bucket_hash)
@@ -176,17 +193,24 @@ def get_item(hash_key, **kwargs):
 
 
 def get_items(hash_keys: list, **kwargs):
+    """
+    Shortcut funciton to look up multiple items at once.
+    :param hash_keys: List of itemHash
+    :param kwargs: force_update to pass through to `get_row()`
+    :return: List of dicts
+    """
     items = [get_item(key, **kwargs) for key in hash_keys]
     return items
 
 
 def get_map(hash_key, **kwargs):
+    """
+    Helper function to look up a Crucible map and return summary data
+    :param hash_key: activityHash
+    :param kwargs: force_update to pass through to `get_row()`
+    :return: Dict
+    """
     game_map = get_row(hash_key, 'DestinyActivityDefinition', **kwargs)
     return {k: game_map[k] for k in game_map.keys() & {
         'activityName', 'pgcrImage', 'activityDescription', 'activityHash'
     }}
-
-
-def get_activity_type(hash_key, **kwargs):
-    activity_type = get_row(hash_key, 'DestinyActivityTypeDefinition')
-    return activity_type['activityTypeName']

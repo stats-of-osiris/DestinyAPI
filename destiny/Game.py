@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
 """
-destipy.Game
+stats_osiris.game
 ~~~~~~~~~~~~~~~~
 
-    This class provides access to the
-        `PostGameCarnageReport`
-    endpoint of the Destiny API.
+    This module defines the `Game` class which provides access to the
+    `PostGameCarnageReport` endpoint of the Destiny API. This class is used by
+    the `Report` class to generate the data for analysis.
 
 """
 from . import utils, constants
@@ -16,14 +16,13 @@ from datetime import datetime
 
 
 class Game(object):
-    """
-    :param activity_id: The ID of the activity whose PGCR is requested.
-    :param guardian: guardian_id to determine teams and outcome
-    :kwarg api_key: API key to authorize access to Destiny API (optional)
-    :kwarg params: Query parameters to pass to the `requests.get()` call
-    """
-
     def __init__(self, activity_id, guardian_id, **kwargs):
+        """
+        :param activity_id: The ID of the activity whose PGCR is requested.
+        :param guardian_id: guardian_id to determine teams and outcome
+        :kwarg api_key: API key to authorize access to Destiny API (optional)
+        :kwarg params: Query parameters to pass to the `requests.get()` call
+        """
         self.activity_id = activity_id
         self.data = utils.get_json(constants.API_PATHS[
             'get_post_game_carnage_report'
@@ -55,7 +54,7 @@ class Game(object):
         """
         Pass a list of game_ids and return a list of Game objects
         :param game_ids: List of game_ids
-        :param guardian: ???
+        :param guardian: Guardian object to pass through to Game
         :return: List of Game objects
         """
         games = []
@@ -69,11 +68,10 @@ class Game(object):
         """
         Pass Guardian object and return a dict of Game objects
         :param guardian: Guardian object
-        :param n: number of games to pull (defaults to 25, which is the max
+        :param n: number of games to pull (defaults to 10; 25 is the max
             for a single API call
         :param game_mode: game mode (defaults to Trials)
         :param last_game_id: final game_id in the series to be pulled
-            (optional)
         :return: List of Game objects
         """
         page = 0
@@ -112,11 +110,26 @@ class Game(object):
 
     def pull_team_stat(self, stat, team_name,
                        extended=True, display=False):
+        """
+        Finds the desired stat for the specified team (Alpha | Bravo)
+        for a given Game.
+        :param stat: Name of stat to pull. Must be in constants.
+        :param team_name: Which team to aggregate.
+        :param extended: If True, searches down the `extended` tree of values
+                         If False, searches down the base `values` tree.
+                         Defaults to True.
+        :param display: Determines which value type to retun.
+                        If True, returns `displayValue` from the API.
+                        If False, returns `value` from the API.
+                        Defaults to False.
+        :return: A list of values for the stat and team specified.
+        """
         if display:
             value = 'displayValue'
         else:
             value = 'value'
         if extended:
+            # Find Total Kill Distance so average can be aggregated properly.
             if stat == 'averageKillDistance':
                 return [
                     g['extended']['values'][stat]['basic'][value] *
@@ -141,6 +154,11 @@ class Game(object):
             ]
 
     def _set_sweaty(self):
+        """
+        Determine whether a Trials game was "sweaty". Defined as enemy team
+        scoring 3 or greater.
+        :return: Boolean
+        """
         them_score = self.them[0]['values']['teamScore']['basic']['value']
         if self.get('activityDetails.mode') == 14:
             return them_score >= 3
