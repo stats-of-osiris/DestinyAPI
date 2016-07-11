@@ -1,9 +1,0 @@
-game_N,activity_id,date,play_time,team,standing,score,map_name,map_path,enemy_score,sweaty,round_time,sweaty_round_time
-0.0,4784376208.0,2016-03-21T00:05:28Z,252.0,Alpha,Victory,5.0,Widow's Court,/img/theme/destiny/bgs/pgcrs/widows_court.jpg,0.0,no,50.4,
-1.0,4784395782.0,2016-03-21T00:10:49Z,309.0,Bravo,Victory,5.0,Widow's Court,/img/theme/destiny/bgs/pgcrs/widows_court.jpg,0.0,no,61.8,
-2.0,4784423429.0,2016-03-21T00:17:02Z,439.0,Bravo,Victory,5.0,Widow's Court,/img/theme/destiny/bgs/pgcrs/widows_court.jpg,1.0,no,73.1666666667,
-3.0,4784444986.0,2016-03-21T00:25:27Z,304.0,Bravo,Victory,5.0,Widow's Court,/img/theme/destiny/bgs/pgcrs/widows_court.jpg,0.0,no,60.8,
-4.0,4784478654.0,2016-03-21T00:31:40Z,582.0,Bravo,Victory,5.0,Widow's Court,/img/theme/destiny/bgs/pgcrs/widows_court.jpg,3.0,yes,72.75,72.75
-5.0,4784505400.0,2016-03-21T00:42:46Z,556.0,Alpha,Victory,5.0,Widow's Court,/img/theme/destiny/bgs/pgcrs/widows_court.jpg,3.0,yes,69.5,69.5
-6.0,4784538623.0,2016-03-21T00:53:30Z,649.0,Bravo,Defeat,4.0,Widow's Court,/img/theme/destiny/bgs/pgcrs/widows_court.jpg,5.0,yes,72.1111111111,72.1111111111
-7.0,4784578379.0,2016-03-21T01:05:37Z,682.0,Alpha,Victory,5.0,Widow's Court,/img/theme/destiny/bgs/pgcrs/widows_court.jpg,3.0,yes,85.25,85.25
