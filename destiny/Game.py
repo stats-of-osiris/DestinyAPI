@@ -84,7 +84,12 @@ class Game(object):
             data = utils.get_json(constants.API_PATHS[
                 'get_activity_history'].format(
                 **locals()), params=params, **kwargs)
-            data = data['Response']['data']['activities']
+            try:
+                data = data['Response']['data']['activities']
+            except KeyError:
+                print('More games requested than exist. '
+                      'Returning {} games instead'.format(len(game_ids)))
+                break
             if last_game_id is None:
                 game_ids = game_ids + [
                     a['activityDetails']['instanceId'] for a in data
@@ -108,10 +113,14 @@ class Game(object):
                     break
             # Ask for next page if we need more games, else break the loop
             if len(game_ids) < n:
-                page += 1
+                if len(data) < 25:
+                    print('More games requested than exist. '
+                          'Returning {} games instead'.format(len(game_ids)))
+                    break
+                else:
+                    page += 1
             else:
                 break
-        # TODO: Add error checking for when more games are requested than exist
         games = cls.games_from_ids(game_ids, guardian, **kwargs)
         return games
 
