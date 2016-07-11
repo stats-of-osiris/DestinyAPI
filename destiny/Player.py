@@ -10,6 +10,7 @@ stats_osiris.Player
 """
 from . import utils, constants
 from .manifest import get_row
+from datetime import datetime
 
 
 class Player(object):
@@ -100,11 +101,10 @@ class Guardian(Player):
         Finds the last guardian played.
         :return: String
         """
-        compare_date = '2010-01-01T00:00:00Z'
-        for guardian in self.guardians:
-            last_played = guardian['date_last_played']
-            if utils.compare_dates(
-                    last_played, compare_date) == last_played:
-                last_guardian = guardian['guardian_id']
-                compare_date = last_played
-        return last_guardian
+        fmt = '%Y-%m-%dT%H:%M:%SZ'
+        dates_played = {
+            datetime.strptime(g['date_last_played'], fmt): g['guardian_id']
+            for g in self.guardians
+        }
+        last_played = dates_played[max(dates_played.keys())]
+        return last_played
