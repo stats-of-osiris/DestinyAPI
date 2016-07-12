@@ -13,17 +13,17 @@ api_key = None
 
 games = destiny.Game.games_from_ids(game_ids, api_key=api_key)
 
-for game_id in game_ids:
-    guardians = games[game_id].guardians
-    for guardian in guardians.values():
-        dfAppend = pd.DataFrame(
-            {
-                'Player Name':
-                    [guardian.player_name],
-                'Team Name':
-                    [guardian.get('values.team.basic.displayValue')]
-            })
-        dfStats = dfStats.append(dfAppend, ignore_index=True)
+# for game_id in game_ids:
+#     guardians = games[game_id].guardians
+#     for guardian in guardians.values():
+#         dfAppend = pd.DataFrame(
+#             {
+#                 'Player Name':
+#                     [guardian.player_name],
+#                 'Team Name':
+#                     [guardian.get('values.team.basic.displayValue')]
+#             })
+#         dfStats = dfStats.append(dfAppend, ignore_index=True)
 
 print(dfStats, '\n')
 
@@ -34,15 +34,15 @@ titan = john.guardians['2305843009215820974']
 print(titan.id, 'Light level {0} {1} {2} {3}'.format(
     titan.light_level, titan.g_class, titan.gender, titan.race), '\n')
 
-last_10_trials = destiny.Game.games_from_guardian(titan, n=14)
+last_10_trials = destiny.Game.games_from_guardian(titan, n=9)
 print('TRIALS, SON')
 for game in last_10_trials.values():
     print(game.id, game.mode, game.outcome)
 
-items = destiny.Manifest().items
-hash_code = 1274330687
-ghorn = items[hash_code]
-print('Name: {}'.format(ghorn['itemName']))
-print('Type: {}'.format(ghorn['itemTypeName']))
-print('Tier: {}'.format(ghorn['tierTypeName']))
-print(ghorn['itemDescription'])
+# items = destiny.Manifest().items
+# hash_code = 1274330687
+# ghorn = items[hash_code]
+# print('Name: {}'.format(ghorn['itemName']))
+# print('Type: {}'.format(ghorn['itemTypeName']))
+# print('Tier: {}'.format(ghorn['tierTypeName']))
+# print(ghorn['itemDescription'])
