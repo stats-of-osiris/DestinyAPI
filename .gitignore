@@ -62,8 +62,6 @@ target/
 #Ipython Notebook
 .ipynb_checkpoints
 
-# Manifest files from Destiny API
+# Manifest files and John’s reports
 manifest/
-reportcontext/~$format string creator.xlsx
-*.content
-manifest/manifest.content
+reportcontext/
