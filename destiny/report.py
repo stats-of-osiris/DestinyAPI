@@ -131,7 +131,7 @@ class Report(object):
                 )
 
                 kills = sum(game.pull_team_stat(
-                    constants.KEY_STATS['kills'], team_name))
+                    constants.KEY_STATS['kills_total'], team_name))
                 deaths = sum(game.pull_team_stat(
                     constants.KEY_STATS['deaths'], team_name))
 

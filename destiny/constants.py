@@ -99,7 +99,7 @@ RATE_LIMIT_ERRORS = [31, 35, 36, 37]
 
 # List of stats to pull for reports where 'k: v' is 'column name: API name'
 KEY_STATS = {
-    'kills': 'kills',
+    'kills_total': 'kills',
     'deaths': 'deaths',
     'assists': 'assists',
     'rez_count': 'resurrectionsPerformed',
@@ -130,32 +130,32 @@ RATIOS = {
 
 PRIMARY_WEAPON_STATS = {
     'kills_auto': ['weaponKillsAutoRifle',
-                   'weaponKillsPrecisionKillsAutoRifle'],
+                   'weaponPrecisionKillsAutoRifle'],
     'kills_hcannon': ['weaponKillsHandCannon',
-                      'weaponKillsPrecisionKillsHandCannon'],
+                      'weaponPrecisionKillsHandCannon'],
     'kills_scout': ['weaponKillsScoutRifle',
-                    'weaponKillsPrecisionKillsScoutRifle'],
+                    'weaponPrecisionKillsScoutRifle'],
     'kills_pulse': ['weaponKillsPulseRifle',
-                    'weaponKillsPrecisionKillsPulseRifle']
+                    'weaponPrecisionKillsPulseRifle']
 }
 
 SPECIAL_WEAPON_STATS = {
     'kills_sniper': ['weaponKillsSniper',
-                     'weaponKillsPrecisionKillsSniper'],
+                     'weaponPrecisionKillsSniper'],
     'kills_shotgun': ['weaponKillsShotgun',
-                      'weaponKillsPrecisionKillsShotgun'],
+                      'weaponPrecisionKillsShotgun'],
     'kills_fusion': ['weaponKillsFusionRifle',
-                     'weaponKillsPrecisionKillsFusionRifle'],
+                     'weaponPrecisionKillsFusionRifle'],
     'kills_sidearm': ['weaponKillsSidearm',
-                      'weaponKillsPrecisionKillsSidearm']
+                      'weaponPrecisionKillsSidearm']
 }
 
 HEAVY_WEAPON_STATS = {
     'kills_rocket': ['weaponKillsRocketLauncher',
-                     'weaponKillsPrecisionKillsRocketLauncher'],
+                     'weaponPrecisionKillsRocketLauncher'],
     'kills_hmg': ['weaponKillsMachineGun',
-                  'weaponKillsPrecisionKillsMachineGun'],
+                  'weaponPrecisionKillsMachineGun'],
     'kills_sword': ['weaponKillsSword',
-                    'weaponKillsPrecisionKillsSword']
+                    'weaponPrecisionKillsSword']
 }
 
