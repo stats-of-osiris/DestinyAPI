@@ -1,4 +1,4 @@
-# DestiPy
+# Stats of Osiris
 Project to pull stats from Destiny's API to support a performance analysis for Destiny games.
 
 - [Unofficial API Github](http://destinydevs.github.io/BungieNetPlatform/)
@@ -15,7 +15,7 @@ The ideal case for when the user builds the data set is for them to give these a
 * console system
 * display name
 * game mode
-* number of games
+* number of games (not yet implemented at a high level)
 
 And these as optional:
 
@@ -30,9 +30,12 @@ Oh, and potentially a list of columns to return as an optional argument as well.
 ## Architecture
 
 - `example.py` is a working development script & imports the `destiny` folder
-- `trialsreport_write.py` is the script for writing the final report card to a `.md` Markdown file. Not currently connected to the rest of the project for inputs.
+- `destiny.report.py` is generates the final stats returned to the user divided into 3 data sets:
+- 	Summary of Games
+- 	Summary of Teams for said Games (`us`, `them`)
+- 	Summary of Teammates for said Games
 
-### Report Scripts in `destiny` folder
+### Calculation Scripts in `destiny` folder
 
 - `player.py`
 	- This module defines the Player and Guardian classes, which pull from the `GetDestinyAccountSummary` endpoint of the Destiny API.
@@ -82,6 +85,3 @@ Oh, and potentially a list of columns to return as an optional argument as well.
 		- `get_item`
 		- `get_items`
 		- `get_map`
-
-## Trials Report Template
-[Template located here.](http://johnofmars.github.io/articles/FirebaseDelphiReptCard/) Sections for Team Summary, Overall Team Performance & Detailed Individual Performance.
