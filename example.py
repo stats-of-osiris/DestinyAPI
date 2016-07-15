@@ -1,48 +1,33 @@
-
-from __future__ import print_function
 import pandas as pd
+import numpy as np
 import destiny
 
-game_ids = ['4892996696']
-dfStats = pd.DataFrame(columns=())
+titan_report = destiny.Report('psn', 'JohnOfMars', 2305843009215820974)
 
-# either pass in API key here or set as an environment variable
-# by either pasting following line into terminal or adding to ~/.profile
-# export BUNGIE_NET_API_KEY='key'
-api_key = None
+game_report = pd.DataFrame(titan_report.report_games())
 
-games = destiny.Game.games_from_ids(game_ids, api_key=api_key)
+wins = game_report[(game_report.standing == 'Victory')].standing.count()
 
-# for game_id in game_ids:
-#     guardians = games[game_id].guardians
-#     for guardian in guardians.values():
-#         dfAppend = pd.DataFrame(
-#             {
-#                 'Player Name':
-#                     [guardian.player_name],
-#                 'Team Name':
-#                     [guardian.get('values.team.basic.displayValue')]
-#             })
-#         dfStats = dfStats.append(dfAppend, ignore_index=True)
+win_rate = wins / len(game_report.index)
 
-print(dfStats, '\n')
+print(
+    'Win Rate: {0:.0f}%'.format(win_rate * 100)
+)
 
-john = destiny.Player('psn', 'JohnOfMars')
+team_report = pd.DataFrame(titan_report.report_teams())
 
-# Player.guardians dict needs a better index
-titan = john.guardians['2305843009215820974']
-print(titan.id, 'Light level {0} {1} {2} {3}'.format(
-    titan.light_level, titan.g_class, titan.gender, titan.race), '\n')
+kill_cols = [col for col in team_report.columns if 'kills_' in col]
 
-last_10_trials = destiny.Game.games_from_guardian(titan, n=9)
-print('TRIALS, SON')
-for game in last_10_trials.values():
-    print(game.id, game.mode, game.outcome)
+kills_by_allegiance = team_report.groupby('allegiance')[kill_cols]
 
-# items = destiny.Manifest().items
-# hash_code = 1274330687
-# ghorn = items[hash_code]
-# print('Name: {}'.format(ghorn['itemName']))
-# print('Type: {}'.format(ghorn['itemTypeName']))
-# print('Tier: {}'.format(ghorn['tierTypeName']))
-# print(ghorn['itemDescription'])
+print(
+    kills_by_allegiance.aggregate(np.sum)
+)
+
+teammate_report = pd.DataFrame(
+    titan_report.report_my_team()
+).set_index('user_name')
+
+print(
+    teammate_report.kills_total
+)
