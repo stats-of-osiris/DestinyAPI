@@ -9,8 +9,7 @@ that are also useful for external consumption.
 
 """
 
-from __future__ import print_function
-import requests, os, sys, time, zipfile, sqlite3, json
+import requests, os, sys, time
 from datetime import datetime
 
 from . import constants
@@ -26,9 +25,6 @@ def get_json(path, **kwargs):
     :kwarg params: Query parameters to pass to the `requests.get()` call
     :return: JSON object
     """
-    # check kwargs to see if the api_key was passed in,
-    # use environment variable if not
-    kwargs = {} if not kwargs else kwargs
     url = URL_BASE + path
     params = kwargs.get('params')
     session = build_session(**kwargs)
@@ -52,7 +48,7 @@ def validate_json_response(response, url):
     """
     Check the response for error messages.
     :param response: the full JSON response
-    :param url: ???
+    :param url: url of the API response
     :return: True if response has no error message, throws error otherwise
     """
     if response['ErrorCode'] != 1:
@@ -63,11 +59,10 @@ def validate_json_response(response, url):
 
 
 def build_session(**kwargs):
-    kwargs = {} if not kwargs else kwargs
+    kwargs.setdefault('api_key', os.environ['BUNGIE_NET_API_KEY'])
     session = kwargs.get('session')
     if not session:
         api_key = kwargs.get('api_key')
-        api_key = os.environ['BUNGIE_NET_API_KEY'] if not api_key else api_key
         headers = {'X-API-Key': api_key}
         session = requests.Session()
         session.headers.update(headers)
@@ -75,9 +70,8 @@ def build_session(**kwargs):
 
 
 def close_session(session, **kwargs):
-    kwargs = {} if not kwargs else kwargs
     existing_session = kwargs.get('session')
-    if not existing_session:
+    if existing_session is None:
         session.close()
 
 
@@ -85,7 +79,7 @@ def crawl_data(destipy_object, data_path, throw_error=True):
     """
     Crawl dict tree via period-delimited string. Used to more easily
         reference data not explicitly gathered by Destipy.
-    :param destiny_object: Destipy object with a data variable
+    :param destipy_object: Destipy object with a data variable
         containing the JSON response to crawl
     :param data_path: period-delimited string that
         specifies which value to return
@@ -110,28 +104,3 @@ def crawl_data(destipy_object, data_path, throw_error=True):
         else:
             return None
     return loc
-
-
-def compare_dates(date_1, date_2, newest=True):
-    """
-    Helper function to convert string-formatted dates to datetime objects
-    and compare which ones come first
-    :param date_1: First date to compare
-    :param date_2: Second date to compare
-    :param newest: Determines if we return the newest of the two
-        dates (if True), or the oldest (if False)
-    :return: Newest or oldest date (based on :param newest:) as a string
-    """
-    fmt = '%Y-%m-%dT%H:%M:%SZ'
-    date_1_dt = datetime.strptime(date_1, fmt)
-    date_2_dt = datetime.strptime(date_2, fmt)
-    if newest is True:
-        if date_1_dt >= date_2_dt:
-            return date_1
-        else:
-            return date_2
-    else:
-        if date_1_dt <= date_2_dt:
-            return date_1
-        else:
-            return date_2
