@@ -1,4 +1,4 @@
-# DestiPy
+# Stats of Osiris
 Project to pull stats from Destiny's API to support a performance analysis for Destiny games.
 
 - [Unofficial API Github](http://destinydevs.github.io/BungieNetPlatform/)
@@ -15,7 +15,7 @@ The ideal case for when the user builds the data set is for them to give these a
 * console system
 * display name
 * game mode
-* number of games
+* number of games (not yet implemented at a high level)
 
 And these as optional:
 
@@ -30,27 +30,33 @@ Oh, and potentially a list of columns to return as an optional argument as well.
 ## Architecture
 
 - `example.py` is a working development script & imports the `destiny` folder
-- `trialsreport_write.py` is the script for writing the final report card to a `.md` Markdown file. Not currently connected to the rest of the project for inputs.
+- `destiny.report.py` is generates the final stats returned to the user divided into 3 data sets:
+- 	Summary of Games
+- 	Summary of Teams for said Games (`us`, `them`)
+- 	Summary of Teammates for said Games
+
+### Calculation Scripts in `destiny` folder
+
+- `player.py`
+	- This module defines the Player and Guardian classes, which pull from the `GetDestinyAccountSummary` endpoint of the Destiny API.
+	- `Player` class: "Pull summary data of each guardian belonging to the Player."
+	- `Guardian` class: 
+		- `_filter_guardian`: "Take the full guardian list from Player and filter to single Guardian."
+		- `_get_last_guardian`: "Finds the last guardian played.."
+- `game.py`
+	- This module defines the `Game` class which provides access to the `PostGameCarnageReport` endpoint of the Destiny API. This class is used by the `Report` class to generate the data for analysis.
+	- `games_from_ids` classmethod: "Pass a list of game_ids and return a list of Game objects"
+	- `games_from_guardian` classmethod: "Pass Guardian object and return a dict of Game objects"
+	- `pull team stats` class: "Finds the desired stat for the specified team (Alpha | Bravo) for a given Game."
+	- `sweaty status` class: "Determine whether a Trials game was "sweaty". Defined as enemy team scoring 3 or greater."
+- `report.py`
+	- This is the primary module of stats_osiris. It returns several various dictionaries of game stats to enable further analysis of a player's Trials of Osiris performance.
+	- `report_games` class: "Aggregate self.data to a game level, filtered to stats defined in `constants`."
+	- `report_teams` class: "Aggregate self.data to a team per game level."
+	- `report_my_team` class: "Aggregate self.data to a fireteam level, across all games."
+	- `_get_player_stat` class: "Function to find stats for a given player across all Games present in self.data."
 
 ### API Scripts in `destiny` folder
-
-- `utils.py` 
-	- `get_json`: API call, dict transform & returns the response. 
-	- `validate_json`: reports errors 
-	- `crawl_data`: Response crawl to look for stats & return possible values for stats not found.
-- `Account.py`
-	- Create Account object using JSON data from the `GetDestinyAccountSummary` endpoint.
-- `Guardian.py`
-	- Create Guardian object using JSON data from the `GetDestinyAccountSummary` endpoint.
-- `CarnageReport.py`
-	- This class provides access to the `PostGameCarnageReport` endpoint of the Destiny API, which includes:
-	- `class` for `CarnageReport`
-		- `classmethod` for `reports_from_ids`
-		- `classmethod` for `reports_from_guardians`
-	- `class` for `CarnagePlayers`
-		- `classmethod` for `players_from_data`
-
-### Support Scripts in `destiny` folder
 
 - `constants.py` 
 	- Central location for `API_PATHS` to improve readability in other scripts.
@@ -58,53 +64,24 @@ Oh, and potentially a list of columns to return as an optional argument as well.
 	- Hashes for `GUARDIAN_TYPE`, `GUARDIAN_RACE`, `GUARDIAN_GENDER`
 	- Codes for `ACTIVITY_MODES`.
 	- list of `KEY_STATS` to collect from API response, currently based on needs of a Trials Report.
-
-## Trials Report Template
-[Template located here.](http://johnofmars.github.io/articles/WidowsCourtReptCard/) Sections for Team Summary, Overall Team Performance & Detailed Individual Performance.
-
-# Report Context
-
-## `apicall_scrape_csvwrite.py`
-
-This script is totally redundant with work done in the main `DestiPy` folder, but I can't make heads or tails of that, so I took an already working solution and used that so I could do report context work instead.
-
-This is based on James' first `fruit2.py` script for doing a simple API call and writing stats to a csv. I have modified to include all of the KEY_STATS listed in `constants.py` as well as a few others as I have been working.
-
-TO DO: 
-
-- Deprecate this script in favor of main `DestiPy` functions.
-- Update `KEY_STATS` in `constants.py`
-- Update naming convention in `KEY_STATS` to use lowercase snakecase naming convention rather than normal speech (e.g. `ar_kills` instead of `Auto Rifle Kills`).
-
-
-## `data_crunch.py`
-
-This script imports the `.csv` into a single dataframe (`dfStats`) with all data. And from that it generates 3 results dataframes:
-
-- Teams Summary across all games (`dfTeams`)
-	- us
-	- them
-- Games Summary based on allegiance to queried player (`dfGames`)
-- Individual Performance Summary across all games  (`dfIndiv`)
-	- player
-	- teammate(s)
-
-TO DO:
-
-- Need function to find teammates
-- Change name of games graph to include date, map name.
-- Change csv exports to be in `outputs` folder.
-
-
-## `report_card_prototype.py`
-
-# TODO:
-
-##Display Best Weapon
-- Write max kill weapons for each guardian
-
-## General Report Fixes
-- Updated description:
-- Format Time better to include seconds.
-- Format Date better to handle Easter Time Zone instead of UTC.
-- Change output of `md` file to `outputs` folder.
+- `utils.py` 
+	- `get_json`: API call, dict transform & returns the response. 
+	- `validate_json`: reports errors
+	- `build_session` : handles the API request header creation
+	- `close_session` : clean up after yourself, your mama ain't here.	- 
+	- `crawl_data`: Response crawl to look for stats & return possible values for stats not found.
+- `manifest.py`
+	- Manifest work is divided into two halves, one handling the manifest from Bungie, and one making it easily accessible to other scripts. 
+	- Manifest file work:
+		- `update_version` : "Update the current version of the locally stored manfiest file and when an update check was last performed"
+		- `check_version`  : "When pulling data from the manifest, this will check for an updated version every 30 days, or if the `force_update` flag is flipped"
+		- `update_manifest` : "Download the zipped manifest file. Shows a progress bar where '=' == 2%"
+		- `unzip_manifest` : "Helper function to unzip manifest file, and delete the zip file"
+		- `check_for_update`  : "    When pulling data from the manifest, this will check for an updated version every 30 days, or if the `force_update` flag is flipped"
+	- Accessibility functions take hashes and returns the Manifest entries.
+		- `get_row`
+		- `get_table`
+		- `get_bucket`
+		- `get_item`
+		- `get_items`
+		- `get_map`
