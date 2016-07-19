@@ -1,4 +1,6 @@
-
+## Current missing stats (in output files):
+- player class
+- sweaty stats (K/D, round times)
 
 ## User inputs:
 
