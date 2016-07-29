@@ -119,6 +119,22 @@ class Report(object):
                     ) for v in constants.SPECIAL_WEAPON_STATS.values()]
                 )
 
+                kills_sniper = sum(
+                    [sum(game.pull_team_stat(constants.SPECIAL_WEAPON_STATS['kills_sniper'][0], team_name))]
+                )
+
+                kills_prec_sniper = sum(
+                    [sum(game.pull_team_stat(constants.SPECIAL_WEAPON_STATS['kills_sniper'][1], team_name))]
+                )
+
+                kills_shotgun = sum(
+                    [sum(game.pull_team_stat(constants.SPECIAL_WEAPON_STATS['kills_shotgun'][0], team_name))]
+                )
+
+                kills_prec_shotgun = sum(
+                    [sum(game.pull_team_stat(constants.SPECIAL_WEAPON_STATS['kills_shotgun'][1], team_name))]
+                )
+
                 kills_heavy = sum(
                     [sum(
                         game.pull_team_stat(v[0], team_name)
@@ -171,8 +187,14 @@ class Report(object):
                     'kd_ratio': kd_ratio,
                     'kills_primary': kills_primary,
                     'kills_prec_primary': kills_prec_primary,
+
                     'kills_special': kills_special,
                     'kills_prec_special': kills_prec_special,
+                    'kills_sniper': kills_sniper,
+                    'kills_prec_sniper': kills_prec_sniper,
+                    'kills_shotgun': kills_shotgun,
+                    'kills_prec_shotgun': kills_prec_shotgun,
+
                     'kills_heavy': kills_heavy,
                     'kills_prec_heavy': kills_prec_heavy,
                     'avg_life': avg_life,
@@ -194,6 +216,11 @@ class Report(object):
                         team_level_stats[k] = sum(
                             game.pull_team_stat(v, team_name)
                         )
+
+                team_level_stats['score'] = team_level_stats['kills_total'] * 100 + team_level_stats['deaths'] * -100 + team_level_stats[
+                                                                                                    'assists'] * 30 + \
+                                    team_level_stats['rez_count'] * 25 + team_level_stats['rezzed_count'] * 12.5
+
                 report_list.append(team_level_stats)
         return report_list
 
@@ -228,6 +255,23 @@ class Report(object):
                         self._get_player_stat(v[1], user_name)
                     ) for v in constants.SPECIAL_WEAPON_STATS.values()]
                 )
+
+            kills_sniper = sum(
+                [sum(self._get_player_stat(constants.SPECIAL_WEAPON_STATS['kills_sniper'][0], user_name))]
+            )
+
+            kills_prec_sniper = sum(
+                [sum(self._get_player_stat(constants.SPECIAL_WEAPON_STATS['kills_sniper'][1], user_name))]
+            )
+
+            kills_shotgun = sum(
+                [sum(self._get_player_stat(constants.SPECIAL_WEAPON_STATS['kills_shotgun'][0], user_name))]
+            )
+
+            kills_prec_shotgun = sum(
+                [sum(self._get_player_stat(constants.SPECIAL_WEAPON_STATS['kills_shotgun'][1], user_name))]
+            )
+
             kills_heavy = sum(
                     [sum(
                         self._get_player_stat(v[0], user_name)
@@ -270,8 +314,14 @@ class Report(object):
                 'kd_ratio': kd_ratio,
                 'kills_primary': kills_primary,
                 'kills_prec_primary': kills_prec_primary,
+
                 'kills_special': kills_special,
                 'kills_prec_special': kills_prec_special,
+                'kills_sniper': kills_sniper,
+                'kills_prec_sniper': kills_prec_sniper,
+                'kills_shotgun': kills_shotgun,
+                'kills_prec_shotgun': kills_prec_shotgun,
+
                 'kills_heavy': kills_heavy,
                 'kills_prec_heavy': kills_prec_heavy,
                 'avg_life': avg_life,
@@ -293,7 +343,10 @@ class Report(object):
                     us_stats[k] = sum(
                         self._get_player_stat(v, user_name)
                     )
+
+            us_stats['score'] = us_stats['kills_total']*100+us_stats['deaths']*-100+us_stats['assists']*30+us_stats['rez_count']*25+us_stats['rezzed_count']*12.5
             report_list.append(us_stats)
+
         return report_list
 
     def _get_player_stat(self, stat, player, extended=True, display=False):
