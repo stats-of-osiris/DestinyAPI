@@ -12,7 +12,8 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 import re
 
-titan_report = destiny.Report('psn', 'JohnOfMars', 2305843009215820974)
+#titan_report = destiny.Report('psn', 'JohnOfMars', 2305843009215820974)
+titan_report = destiny.Report('psn', 'RealKraftyy', 2305843009215738423)
 
 game_report = pd.DataFrame(titan_report.report_games())
 game_report = game_report[::-1]
@@ -93,7 +94,7 @@ ax.barh(bar_locations, prim, height, color='#B2B2B2')
 ax.barh(bar_locations, spec, height, color='#72B96C', left=prim)
 ax.barh(bar_locations, heavy, height, color='#896CB7', left =(spec+prim))
 ax.barh(bar_locations, abil, height, color='#CE3F3F', left=(spec+prim+heavy))
-ax.barh(bar_locations, supers, height, color='#3F73CE', left=(spec+prim+abil))
+ax.barh(bar_locations, supers, height, color='#3F73CE', left=(spec+prim+heavy+abil))
 
 # Shrink current axis's height by 10% on the bottom
 box = ax.get_position()

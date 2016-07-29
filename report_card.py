@@ -13,7 +13,8 @@ import re
 import destiny
 import math
 
-titan_report = destiny.Report('psn', 'JohnOfMars', 2305843009215820974)
+#titan_report = destiny.Report('psn', 'JohnOfMars', 2305843009215820974)
+titan_report = destiny.Report('psn', 'RealKraftyy', 2305843009215738423)
 
 game_report = pd.DataFrame(titan_report.report_games())
 
@@ -259,7 +260,7 @@ indiv_context2 = {
     "p1shs":	"%.0f" % 	(teammate_report.iloc[0]['kills_prec_sniper']),
     "p1sk":	"%.0f" % 	(teammate_report.iloc[0]['kills_sniper']),
     "p1sg":	"%.0f" % 	(teammate_report.iloc[0]['kills_shotgun']),
-    "p1os":	"%.0f" % 	(teammate_report.iloc[0]['kills_special'] - teammate_report.iloc[0]['kills_shotgun']-teammate_report.iloc[0]['kills_shotgun']),
+    "p1os":	"%.0f" % 	(teammate_report.iloc[0]['kills_special'] - teammate_report.iloc[0]['kills_sniper']-teammate_report.iloc[0]['kills_shotgun']),
     "p1hk":	"%.0f" % 	(teammate_report.iloc[0]['kills_heavy']),
     "p1g":	"%.0f" % 	(teammate_report.iloc[0]['kills_melee']),
     "p1m":	"%.0f" % 	(teammate_report.iloc[0]['kills_grenade']),
@@ -276,7 +277,7 @@ indiv_context2 = {
     "p2shs":	"%.0f" % 	(teammate_report.iloc[1]['kills_prec_sniper']),
     "p2sk": 	"%.0f" % 	(teammate_report.iloc[1]['kills_sniper']),
     "p2sg": 	"%.0f" % 	(teammate_report.iloc[1]['kills_shotgun']),
-    "p2os": 	"%.0f" % 	(teammate_report.iloc[1]['kills_special'] - teammate_report.iloc[1]['kills_shotgun']-teammate_report.iloc[1]['kills_shotgun']),
+    "p2os": 	"%.0f" % 	(teammate_report.iloc[1]['kills_special'] - teammate_report.iloc[1]['kills_sniper']-teammate_report.iloc[1]['kills_shotgun']),
     "p2hk": 	"%.0f" % 	(teammate_report.iloc[1]['kills_heavy']),
     "p2g":	      "%.0f" % 	(teammate_report.iloc[1]['kills_melee']),
     "p2m":	"%.0f" % 	(teammate_report.iloc[1]['kills_grenade']),
@@ -293,7 +294,7 @@ indiv_context2 = {
     "p3shs":	"%.0f" % 	(teammate_report.iloc[2]['kills_prec_sniper']),
     "p3sk":	"%.0f" % 	(teammate_report.iloc[2]['kills_sniper']),
     "p3sg":	"%.0f" % 	(teammate_report.iloc[2]['kills_shotgun']),
-    "p3os":	"%.0f" % 	(teammate_report.iloc[2]['kills_special'] - teammate_report.iloc[2]['kills_shotgun']-teammate_report.iloc[2]['kills_shotgun']),
+    "p3os":	"%.0f" % 	(teammate_report.iloc[2]['kills_special'] - teammate_report.iloc[2]['kills_sniper']-teammate_report.iloc[2]['kills_shotgun']),
     "p3hk":	"%.0f" % 	(teammate_report.iloc[2]['kills_heavy']),
     "p3g":	"%.0f" % 	(teammate_report.iloc[2]['kills_melee']),
     "p3m":	"%.0f" % 	(teammate_report.iloc[2]['kills_grenade']),

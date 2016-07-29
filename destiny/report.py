@@ -18,7 +18,7 @@ from tzlocal import get_localzone
 
 class Report(object):
     def __init__(self, console, name, guardian_id=None,
-                 games=10, last_game_id=None, **kwargs):
+                 games=9, last_game_id=None, **kwargs):
         """
         Cylcle through creating a Guardian and then calling
         `games_from_guardian` in order to pull raw data to create reports
