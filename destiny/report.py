@@ -20,7 +20,7 @@ class Report(object):
     def __init__(self, console, name, guardian_id=None,
                  games=10, last_game_id=None, **kwargs):
         """
-        Cylcle through creating a Guardian and then calling
+        Cycle through creating a Guardian and then calling
         `games_from_guardian` in order to pull raw data to create reports
         :param console: 'xbox' or 'psn'; needed to accurately locate player
         :param player_name: Screen name of the player
@@ -56,16 +56,16 @@ class Report(object):
             if game.result == 'Victory':
                 us_score = 5.0
             else:
-                us_score = game.us[0]['values']['teamScore']['basic']['value']
-            them_score = game.them[0]['values']['teamScore']['basic']['value']
+                us_score = game.us[0]['info']['score']['value']
+            them_score = game.them[0]['info']['score']['value']
             rounds = us_score + them_score
 
             # Calculate length of the game
             play_time = (
                 game.user_guardian[
-                    'values']['activityDurationSeconds']['basic']['value'] +
+                    'info']['activityDurationSeconds']['value'] +
                 game.user_guardian[
-                    'values']['leaveRemainingSeconds']['basic']['value']
+                    'info']['leaveRemainingSeconds']['value']
             )
 
             # Combine into game-level dict
@@ -343,3 +343,16 @@ class Report(object):
                 if g['player']['destinyUserInfo']['displayName'] == player and
                 stat in g['values'].keys()
             ]
+
+    def build_data(self):
+        data = [
+            {
+                **{'activity_id': game.activity_id},
+                **{'character_id': g['character_id']},
+                **{k: v for k, v in g['stats'].items()}
+
+            }
+            for game in self.data
+            for g in game.guardian_data
+        ]
+        return data
