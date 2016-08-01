@@ -99,40 +99,40 @@ class Report(object):
                 # Compute the derived metrics
                 kills_primary = sum(
                     [sum(
-                        game.pull_team_stat(v[0], team_name)
+                        game._pull_team_stat(v[0], team_name)
                     ) for v in constants.PRIMARY_WEAPON_STATS.values()]
                 )
                 kills_prec_primary = sum(
                     [sum(
-                        game.pull_team_stat(v[1], team_name)
+                        game._pull_team_stat(v[1], team_name)
                     ) for v in constants.PRIMARY_WEAPON_STATS.values()]
                 )
 
                 kills_special = sum(
                     [sum(
-                        game.pull_team_stat(v[0], team_name)
+                        game._pull_team_stat(v[0], team_name)
                     ) for v in constants.SPECIAL_WEAPON_STATS.values()]
                 )
                 kills_prec_special = sum(
                     [sum(
-                        game.pull_team_stat(v[1], team_name)
+                        game._pull_team_stat(v[1], team_name)
                     ) for v in constants.SPECIAL_WEAPON_STATS.values()]
                 )
 
                 kills_heavy = sum(
                     [sum(
-                        game.pull_team_stat(v[0], team_name)
+                        game._pull_team_stat(v[0], team_name)
                     ) for v in constants.HEAVY_WEAPON_STATS.values()]
                 )
                 kills_prec_heavy = sum(
                     [sum(
-                        game.pull_team_stat(v[1], team_name)
+                        game._pull_team_stat(v[1], team_name)
                     ) for v in constants.HEAVY_WEAPON_STATS.values()]
                 )
 
-                kills = sum(game.pull_team_stat(
+                kills = sum(game._pull_team_stat(
                     constants.KEY_STATS['kills_total'], team_name))
-                deaths = sum(game.pull_team_stat(
+                deaths = sum(game._pull_team_stat(
                     constants.KEY_STATS['deaths'], team_name))
 
                 try:
@@ -147,21 +147,21 @@ class Report(object):
 
                 try:
                     avg_kill_distance = sum(
-                        game.pull_team_stat('averageKillDistance', team_name)
+                        game._pull_team_stat('averageKillDistance', team_name)
                     ) / kills
                 except ZeroDivisionError:
                     avg_kill_distance = 0
 
                 try:
                     avg_life = sum(
-                        game.pull_team_stat(
+                        game._pull_team_stat(
                             'activityDurationSeconds', team_name, False)
                     ) / deaths
                 except ZeroDivisionError:
                     avg_life = sum(
-                        game.pull_team_stat(
+                        game._pull_team_stat(
                             'activityDurationSeconds', team_name, False)
-                    ) / len(game.pull_team_stat('kills', team_name))
+                    ) / len(game._pull_team_stat('kills', team_name))
 
                 # Combine into team-level dict
                 team_level_stats = {
@@ -182,17 +182,17 @@ class Report(object):
                     if k in ['longest_life', 'longest_kill_spree']:
                         try:
                             team_level_stats[k] = max(
-                                game.pull_team_stat(v, team_name)
+                                game._pull_team_stat(v, team_name)
                             )
                         except ValueError:
                             team_level_stats[k] = 0
                     elif k == 'assists':
                         team_level_stats[k] = sum(
-                            game.pull_team_stat(v, team_name, False)
+                            game._pull_team_stat(v, team_name, False)
                         )
                     else:
                         team_level_stats[k] = sum(
-                            game.pull_team_stat(v, team_name)
+                            game._pull_team_stat(v, team_name)
                         )
                 report_list.append(team_level_stats)
         return report_list
