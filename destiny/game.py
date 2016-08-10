@@ -43,80 +43,75 @@ class Game(object):
     def _set_guardian_data(self):
         guardian_data = self.data['entries']
         guardian_data = [
-            {'guardian_id': g['characterId'],
-             'guardian': {
-                 **{
-                     'lightLevel': g['player']['lightLevel'],
-                     'characterClass': g['player']['characterClass'],
-                     'weaponBestType':
-                         g['extended']['values'][
-                             'weaponBestType']['basic']['displayValue']
-                     if 'weaponBestType' in g['extended']['values'].keys()
-                     else None
-                 },
-                 **{
-                     k: v for k, v in g['player']['destinyUserInfo'].items()
-                     if k in ['displayName', 'iconPath']
-                 },
-                 **{
-                     k: v['basic']['value']
-                     for k, v in g['values'].items()
-                     if k in ['leaveRemainingSeconds',
-                              'activityDurationSeconds']
-                     },
-                 **{
-                     k: v['basic']['displayValue']
-                     for k, v in g['values'].items()
-                     if k in ['standing', 'team']
-                     }
+            {'activity_id': self.activity_id,
+             'guardian_id': g['characterId'],
+             # Core Guardian Data
+             **{
+                 'lightLevel': g['player']['lightLevel'],
+                 'characterClass': g['player']['characterClass'],
+                 'weaponBestType':
+                     g['extended']['values'][
+                         'weaponBestType']['basic']['displayValue']
+                 if 'weaponBestType' in g['extended']['values'].keys()
+                 else None
              },
-             'stats': {
-                 **{
-                     k: v['basic']['value']
-                     for k, v in g['extended']['values'].items()
-                     if k in constants.CORE_STATS
-                     },
-                 **{
-                     k: v['basic']['value']
-                     for k, v in g['values'].items()
-                     if k == 'assists'
-                     }
+             **{
+                 k: v for k, v in g['player']['destinyUserInfo'].items()
+                 if k in ['displayName', 'iconPath']
              },
-             'medals': {
+             **{
+                 k: v['basic']['value']
+                 for k, v in g['values'].items()
+                 if k in ['leaveRemainingSeconds',
+                          'activityDurationSeconds']
+             },
+             **{
+                 k: v['basic']['displayValue']
+                 for k, v in g['values'].items()
+                 if k in ['standing', 'team']
+             },
+             # Core Stats
+             **{
+                 k: v['basic']['value']
+                 for k, v in g['extended']['values'].items()
+                 if k in constants.CORE_STATS
+             },
+             **{
+                 k: v['basic']['value']
+                 for k, v in g['values'].items()
+                 if k == 'assists'
+             },
+             # Medals
+             **{
                  k: v['basic']['value']
                  for k, v in g['extended']['values'].items()
                  if 'medals' in k
-                 },
-             'weapon_kills': {
+             },
+             # Weapon Kill Stats
+             **{
                  k: v['basic']['value']
                  for k, v in g['extended']['values'].items()
                  if 'weaponKills' in k
-                 },
-             'player_kills': {
+             },
+             **{
                  k: v['basic']['value']
                  for k, v in g['extended']['values'].items()
                  if 'OfPlayer' in k
-             },
-             'weapons:': [
-                 {
-                     **get_item(w['referenceId']),
-                     **{
-                         k: v['basic']['value']
-                         for k, v in w['values'].items()
-                         if k != 'uniqueWeaponKillsPrecisionKills'
-                         }
-                 } for w in g['extended']['weapons']
-                 ] if 'weapons' in g['extended'].keys() else None
+             }
              } for g in guardian_data
             ]
         return guardian_data
 
     def _set_user_guardian(self):
+        user_guardian = None
         for g in self.guardian_data:
             if int(g['guardian_id']) == int(self.guardian_id):
                 user_guardian = g
             else:
                 pass
+        # Fail safe is guardian_id provided isn't in the game
+        if not user_guardian:
+            raise Exception('Guardian provided not found in game data.')
         return user_guardian
 
     def _set_team_data(self):
@@ -130,7 +125,7 @@ class Game(object):
                     'standing']['basic']['displayValue'] == "Victory"
                 else t['score']['basic']['value'],
                 'allegiance': 'us' if t['teamName'] == self.user_guardian[
-                    'guardian']['team'] else 'them',
+                    'team'] else 'them',
 
             } for t in team_data
         ]
@@ -144,8 +139,8 @@ class Game(object):
         game_map = get_map(self.get('activityDetails.referenceId'))
         scores = {t['allegiance']: t['score'] for t in self.team_data}
         sweaty = True if (scores['them'] >= 3) else False
-        play_time = (self.user_guardian['guardian']['leaveRemainingSeconds'] +
-                     self.user_guardian['guardian']['activityDurationSeconds'])
+        play_time = (self.user_guardian['leaveRemainingSeconds'] +
+                     self.user_guardian['activityDurationSeconds'])
         rounds = scores['us'] + scores['them']
 
         activity_data = {
@@ -153,11 +148,11 @@ class Game(object):
             'date': time.astimezone(tz),
             'map_name': game_map['activityName'],
             'map_image': game_map['pgcrImage'],
-            'team_us': self.user_guardian['guardian']['team'],
-            'result': self.user_guardian['guardian']['standing'],
+            'team_us': self.user_guardian['team'],
+            'result': self.user_guardian['standing'],
             'score_us': scores['us'],
             'score_them': scores['them'],
-            'sweaty?': sweaty,
+            'sweaty': sweaty,
             'play_time': play_time,
             'rounds': rounds,
             'avg_round_time': play_time / rounds
@@ -211,11 +206,11 @@ class Game(object):
 
     def _set_allegiance(self):
         for guardian in self.guardian_data:
-            if (guardian['guardian']['team'] ==
-                    self.user_guardian['guardian']['team']):
-                guardian['guardian']['allegiance'] = 'us'
+            if (guardian['team'] ==
+                    self.user_guardian['team']):
+                guardian['allegiance'] = 'us'
             else:
-                guardian['guardian']['allegiance'] = 'them'
+                guardian['allegiance'] = 'them'
 
     @classmethod
     def games_from_ids(cls, game_ids: list, guardian, **kwargs):
@@ -298,3 +293,15 @@ class Game(object):
 
     def get(self, data_path):
         return utils.crawl_data(self, data_path)
+
+# To be implemented later:
+# 'weapons:': [
+#                  {
+#                      **get_item(w['referenceId']),
+#                      **{
+#                          k: v['basic']['value']
+#                          for k, v in w['values'].items()
+#                          if k != 'uniqueWeaponKillsPrecisionKills'
+#                          }
+#                  } for w in g['extended']['weapons']
+#                  ] if 'weapons' in g['extended'].keys() else None

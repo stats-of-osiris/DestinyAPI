@@ -13,7 +13,6 @@ stats_osiris.report
 from . import constants
 from .player import Guardian
 from .game import Game
-from tzlocal import get_localzone
 
 
 class Report(object):
@@ -37,52 +36,12 @@ class Report(object):
             self.guardian, n=games, last_game_id=last_game_id, **kwargs
         )
 
-    def report_games(self):
+    def report_games(self) -> list:
         """
-        Aggregate self.data to a game level, filtered to stats defined in
-        `constants`.
+        Combines activity_data for each game
         :return: List of dicts
         """
-        # Initialize list of desired game data
-        report_list = []
-
-        # Set timezone info
-        tz = get_localzone()
-
-        # Get game level metrics for each game
-        for game in self.data:
-
-            # Determine score and round count
-            if game.result == 'Victory':
-                us_score = 5.0
-            else:
-                us_score = game.us[0]['info']['score']['value']
-            them_score = game.them[0]['info']['score']['value']
-            rounds = us_score + them_score
-
-            # Calculate length of the game
-            play_time = (
-                game.user_guardian[
-                    'info']['activityDurationSeconds']['value'] +
-                game.user_guardian[
-                    'info']['leaveRemainingSeconds']['value']
-            )
-
-            # Combine into game-level dict
-            game_level_stats = {
-                'activity_id': game.activity_id,
-                'date': game.time.astimezone(tz),
-                'map_name': game.map['activityName'],
-                'map_image': game.map['pgcrImage'],
-                'team': game.user_team,
-                'standing': game.result,
-                'score': us_score,
-                'enemy_score': them_score,
-                'sweaty?': game.sweaty,
-                'play_time': play_time,
-                'avg_round_time': play_time / rounds
-            }
-            report_list.append(game_level_stats)
+        report_list = [g.activity_data for g in self.data]
         return report_list
 
     def report_teams(self):
@@ -294,6 +253,12 @@ class Report(object):
                         self._get_player_stat(v, user_name)
                     )
             report_list.append(us_stats)
+        return report_list
+
+    def report_guardians(self) -> list:
+        report_list = [
+            guardian for g in self.data for guardian in g.guardian_data
+        ]
         return report_list
 
     def _get_player_stat(self, stat, player, extended=True, display=False):
