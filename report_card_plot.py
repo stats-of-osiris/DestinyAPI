@@ -13,13 +13,16 @@ from datetime import datetime
 import re
 
 #titan_report = destiny.Report('psn', 'JohnOfMars', 2305843009215820974)
-titan_report = destiny.Report('psn', 'RealKraftyy', 2305843009215738423)
+titan_report = destiny.Report('psn', 'JohnOfMars', 2305843009244596520, games=7)
 
 game_report = pd.DataFrame(titan_report.report_games())
 game_report = game_report[::-1]
 
 team_report = pd.DataFrame(titan_report.report_teams())
 
+teammate_report = pd.DataFrame(
+    titan_report.report_my_team()
+).set_index('user_name')
 
 # Plotting here--------------------------------------------
 
@@ -68,11 +71,11 @@ plt.savefig('round_scores.png', transparent=True)
 
 # % kill method
 
-prim = team_report.iloc[0]['kills_primary']
-spec = team_report.iloc[0]['kills_special']
-heavy = team_report.iloc[0]['kills_heavy']
-abil = team_report.iloc[0]['kills_melee']+team_report.iloc[0]['kills_grenade']
-supers = team_report.iloc[0]['kills_super']
+prim = int(teammate_report['kills_primary'].sum())
+spec = int(teammate_report['kills_special'].sum())
+heavy = int(teammate_report['kills_heavy'].sum())
+abil = int(teammate_report['kills_melee'].sum())+int(teammate_report['kills_grenade'].sum())
+supers = int(teammate_report['kills_super'].sum())
 
 total = prim+spec+heavy+abil+supers
 

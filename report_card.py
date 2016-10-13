@@ -13,8 +13,8 @@ import re
 import destiny
 import math
 
-#titan_report = destiny.Report('psn', 'JohnOfMars', 2305843009215820974)
-titan_report = destiny.Report('psn', 'RealKraftyy', 2305843009215738423)
+#titan_report = destiny.Report('psn', 'JohnOfMars', 2305843009215820974, games=7)
+titan_report = destiny.Report('psn', 'JohnOfMars', 2305843009244596520, games=7)
 
 game_report = pd.DataFrame(titan_report.report_games())
 
@@ -201,7 +201,7 @@ indiv_context = {
     "p3ll":	"%.0f" % 	(teammate_report.iloc[2]['longest_life']),
     "p3cc":	"%.0f" % 	(teammate_report.iloc[2]['medals_close_call']),
 
-    "format_code": "{: .table)"
+    "format_code": "{: .table}"
  }
 
 with  open(file_name,'a') as myfile:
@@ -305,7 +305,7 @@ indiv_context2 = {
     "p3ogen":	"%.0f" % 	(teammate_report.iloc[2]['orbs_dropped']),
     "p3ogath":	"%.0f" % 	(teammate_report.iloc[2]['orbs_gathered']),
 
-    "format_code": "{: .table)"
+    "format_code": "{: .table}"
  }
 
 with  open(file_name,'a') as myfile:
