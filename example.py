@@ -3,7 +3,11 @@ import pandas as pd
 
 import destiny
 
-titan_report = destiny.Report('psn', 'JohnOfMars', 2305843009215820974)
+titan_report = destiny.Report('psn',
+                              'igordennis',
+                              2305843009242964293,
+                              games=7,
+                              last_game_id=5626785836)
 
 # game_report = pd.DataFrame(titan_report.report_games())
 #

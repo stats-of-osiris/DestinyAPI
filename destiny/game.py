@@ -10,7 +10,7 @@ stats_osiris.game
 
 """
 from . import utils, constants
-from .manifest import get_map, get_item
+from .manifest import get_map
 import pytz
 from tzlocal import get_localzone
 from datetime import datetime
@@ -36,7 +36,7 @@ class Game(object):
         # Also separate out data specific to the user
         self.guardian_data = self._set_guardian_data()
         self.user_guardian = self._set_user_guardian()
-        self._set_allegiance() # Update guardian_data now we know user_guardian
+        self._set_allegiance()  # Update guardian_data
         self.team_data = self._set_team_data()
         self.activity_data = self._set_activity_data()
 
@@ -145,7 +145,7 @@ class Game(object):
 
         activity_data = {
             'activity_id': self.activity_id,
-            'date': time.astimezone(tz),
+            'time': time.astimezone(tz),
             'map_name': game_map['activityName'],
             'map_image': game_map['pgcrImage'],
             'team_us': self.user_guardian['team'],
