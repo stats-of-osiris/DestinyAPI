@@ -1,8 +1,11 @@
 ,activity_id,avg_round_time,date,enemy_score,map_image,map_name,play_time,score,standing,sweaty?,team
-0,5641271414,64.83333333333333,2016-10-01 23:55:40-04:00,1.0,/img/theme/destiny/bgs/pgcrs/last_exit.jpg,Last Exit,389.0,5.0,Victory,False,Bravo
-1,5641215200,50.0,2016-10-01 23:48:30-04:00,2.0,/img/theme/destiny/bgs/pgcrs/last_exit.jpg,Last Exit,350.0,5.0,Victory,False,Alpha
-2,5641155565,64.6,2016-10-01 23:42:25-04:00,0.0,/img/theme/destiny/bgs/pgcrs/last_exit.jpg,Last Exit,323.0,5.0,Victory,False,Bravo
-3,5641099496,57.4,2016-10-01 23:36:22-04:00,0.0,/img/theme/destiny/bgs/pgcrs/last_exit.jpg,Last Exit,287.0,5.0,Victory,False,Alpha
-4,5641060721,65.33333333333333,2016-10-01 23:29:01-04:00,1.0,/img/theme/destiny/bgs/pgcrs/last_exit.jpg,Last Exit,392.0,5.0,Victory,False,Alpha
-5,5640994264,66.33333333333333,2016-10-01 23:21:08-04:00,1.0,/img/theme/destiny/bgs/pgcrs/last_exit.jpg,Last Exit,398.0,5.0,Victory,False,Bravo
-6,5640925855,73.57142857142857,2016-10-01 23:10:54-04:00,2.0,/img/theme/destiny/bgs/pgcrs/last_exit.jpg,Last Exit,515.0,5.0,Victory,False,Alpha
+0,5269995652,85.71428571428571,2016-07-23 21:48:47-04:00,2.0,/img/theme/destiny/bgs/pgcrs/crucible_exodus_blue.jpg,Exodus Blue,600.0,5.0,Victory,False,Alpha
+1,5269951280,91.28571428571429,2016-07-23 21:33:33-04:00,2.0,/img/theme/destiny/bgs/pgcrs/crucible_exodus_blue.jpg,Exodus Blue,639.0,5.0,Victory,False,Alpha
+2,5269915827,55.857142857142854,2016-07-23 21:26:02-04:00,2.0,/img/theme/destiny/bgs/pgcrs/crucible_exodus_blue.jpg,Exodus Blue,391.0,5.0,Victory,False,Alpha
+3,5269892366,82.44444444444444,2016-07-23 21:12:19-04:00,4.0,/img/theme/destiny/bgs/pgcrs/crucible_exodus_blue.jpg,Exodus Blue,742.0,5.0,Victory,True,Alpha
+4,5269849774,75.8,2016-07-23 21:05:03-04:00,0.0,/img/theme/destiny/bgs/pgcrs/crucible_exodus_blue.jpg,Exodus Blue,379.0,5.0,Victory,False,Alpha
+5,5269830286,51.0,2016-07-23 20:59:47-04:00,0.0,/img/theme/destiny/bgs/pgcrs/crucible_exodus_blue.jpg,Exodus Blue,255.0,5.0,Victory,False,Alpha
+6,5269815515,60.8,2016-07-23 20:54:04-04:00,0.0,/img/theme/destiny/bgs/pgcrs/crucible_exodus_blue.jpg,Exodus Blue,304.0,5.0,Victory,False,Bravo
+7,5269778482,69.88888888888889,2016-07-23 20:37:03-04:00,5.0,/img/theme/destiny/bgs/pgcrs/crucible_exodus_blue.jpg,Exodus Blue,629.0,4.0,Defeat,True,Alpha
+8,5269743650,64.2,2016-07-23 20:30:23-04:00,0.0,/img/theme/destiny/bgs/pgcrs/crucible_exodus_blue.jpg,Exodus Blue,321.0,5.0,Victory,False,Bravo
+9,5269725130,52.2,2016-07-23 20:24:56-04:00,0.0,/img/theme/destiny/bgs/pgcrs/crucible_exodus_blue.jpg,Exodus Blue,261.0,5.0,Victory,False,Alpha

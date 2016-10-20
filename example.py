@@ -2,8 +2,7 @@ import pandas as pd
 import numpy as np
 import destiny
 
-# titan_report = destiny.Report('psn', 'JohnOfMars', 2305843009215820974, games=10)
-titan_report = destiny.Report('psn', 'JohnOfMars', 2305843009244596520, games=7)
+titan_report = destiny.Report('psn', 'JohnOfMars', 2305843009215820974, games=10)
 
 game_report = pd.DataFrame(titan_report.report_games())
 
